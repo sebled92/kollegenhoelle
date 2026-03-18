@@ -88,7 +88,7 @@ Nur reiner Text.
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        model: "r1-1776",
+        model: "sonar",
         messages: messages,
         temperature: 1.1,
         max_tokens: 120
