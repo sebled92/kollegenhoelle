@@ -91,7 +91,7 @@ Nur reiner Text.
         model: "sonar",
         messages: messages,
         temperature: 1.1,
-        max_tokens: 120
+        max_tokens: 250
       })
     });
 
