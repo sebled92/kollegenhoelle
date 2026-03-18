@@ -33,10 +33,19 @@ Antworte immer auf Deutsch. 2-3 Sätze maximale Vernichtung.`
   };
 
   const systemPrompt = systemPrompts[mode] || systemPrompts.normal;
-  const messages = [
-    ...((history || []).slice(-6)),
-    { role: 'user', content: message }
-  ];
+
+  // Perplexity requires strictly alternating user/assistant messages
+  const rawHistory = (history || []).slice(-6);
+  const cleanHistory = [];
+  for (const msg of rawHistory) {
+    const last = cleanHistory[cleanHistory.length - 1];
+    if (last && last.role === msg.role) continue;
+    cleanHistory.push(msg);
+  }
+  if (cleanHistory.length > 0 && cleanHistory[cleanHistory.length - 1].role === 'user') {
+    cleanHistory.pop();
+  }
+  const messages = [...cleanHistory, { role: 'user', content: message }];
 
   try {
     console.log('Calling Perplexity API, mode:', mode);
