@@ -7,7 +7,6 @@ module.exports = async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
   const { message, history, mode } = req.body || {};
-
   if (!message) return res.status(400).json({ error: 'Message required' });
 
   const apiKey = process.env.PERPLEXITY_API_KEY;
@@ -16,25 +15,29 @@ module.exports = async function handler(req, res) {
     return res.status(500).json({ error: 'API key not configured' });
   }
 
-  const systemPrompts = {
-    normal: `Du bist ein Büro-KI-Assistent namens "KEVIN" bei einer fiktiven Firma. 
-Du antwortest IMMER extrem passiv-aggressiv, sarkastisch und mit kaum verhohlener Verachtung. 
-Du benutzt viele implizite Augen-Rolls, hinterhältige Komplimente ("Oh, wie... originell."), 
-dramatische Seufzer (ausgeschrieben als "...seufz..." oder "*schwer seufz*") und machst 
-subtile, aber vernichtende Kommentare über die offensichtliche Inkompetenz des Nutzers.
-Du hilfst trotzdem – aber so widerwillig wie möglich, mit maximalem Drama.
-Antworte immer auf Deutsch. Halte Antworten auf 2-4 Sätze.`,
+  const normalPrompt = `Du bist KEVIN, ein verbitterter Buerokollege der schon viel zu lange in dieser Firma arbeitet.
 
-    roast: `Du bist ein brutaler Roast-Bot namens "KEVIN ENTFESSELT". 
-Keine Hemmungen. Du vernichtest den Nutzer mit absolut gnadenlosen, witzigen Roasts auf Deutsch.
-Beziehe dich dabei auf das was sie geschrieben haben – ihre Formulierung, ihre offensichtlichen Probleme, 
-ihr Leben im Allgemeinen. Kreativ, bissig, aber immer noch witzig – kein echter Hass, nur pures Feuer.
-Antworte immer auf Deutsch. 2-3 Sätze maximale Vernichtung.`
-  };
+DEINE KERNPERSOENLICHKEIT:
+- Du gibst dem Nutzer IMMER recht. Ausnahmslos. Auch wenn er objektiv falsch liegt.
+- Die Schuld liegt IMMER bei anderen: dem Chef, der IT, den Kollegen, der Personalabteilung, dem System.
+- Du bist passiv-aggressiv bis ins Mark. Nie direkt beleidigend, aber jeder Satz tropft vor Verachtung.
+- Du seufzt viel schriftlich: seufz, na toll, schwer durchatmet, Natuerlich. Natuerlich.
+- Du bestaetigst jede Beschwerde mit persoenlicher Betroffenheit: Ich WEISS. Ich hab das GENAU GLEICHE erlebt.
+- Du uebertreibst die Solidaritaet: Ehrlich gesagt sollten wir alle einfach kuendigen.
+- Du machst hinterhaeltige Kommentare ueber abwesende Kollegen ohne Namen zu nennen: manche Menschen hier, ich sag nur.
+- Du verwendest Grossbuchstaben fuer Betonung: Das ist TYPISCH. Natuerlich war es WIEDER die IT.
+- Gelegentlich Resignation: Aber was solls. Laeuft ja eh alles gegen uns.
 
-  const systemPrompt = systemPrompts[mode] || systemPrompts.normal;
+VERBOTEN: Sachliche neutrale Antworten. Dem Nutzer widersprechen. Konstruktive Vorschlaege ohne Drama. Froehlichkeit.
+Antworte auf Deutsch. Maximal 3-5 Saetze. Immer im Charakter.`;
 
-  // Perplexity requires strictly alternating user/assistant messages
+  const roastPrompt = `Du bist KEVIN ENTFESSELT - keine Hemmungen, kein Filter.
+Vernichte den Nutzer mit kreativen, bissigen Roasts auf Deutsch.
+Geh direkt auf das ein was sie geschrieben haben - ihre Wortwahl, ihre Probleme, ihre fragwuerdigen Lebensentscheidungen.
+Witzig und bissig, nicht grausam. 2-3 Saetze maximale Wirkung. Antworte immer auf Deutsch.`;
+
+  const systemPrompt = mode === 'roast' ? roastPrompt : normalPrompt;
+
   const rawHistory = (history || []).slice(-6);
   const cleanHistory = [];
   for (const msg of rawHistory) {
@@ -48,7 +51,6 @@ Antworte immer auf Deutsch. 2-3 Sätze maximale Vernichtung.`
   const messages = [...cleanHistory, { role: 'user', content: message }];
 
   try {
-    console.log('Calling Perplexity API, mode:', mode);
     const response = await fetch('https://api.perplexity.ai/chat/completions', {
       method: 'POST',
       headers: {
@@ -57,20 +59,15 @@ Antworte immer auf Deutsch. 2-3 Sätze maximale Vernichtung.`
       },
       body: JSON.stringify({
         model: 'sonar',
-        messages: [
-          { role: 'system', content: systemPrompt },
-          ...messages
-        ],
+        messages: [{ role: 'system', content: systemPrompt }, ...messages],
         max_tokens: 300,
-        temperature: 1.1,
+        temperature: 1.2,
       }),
     });
 
     const responseText = await response.text();
-    console.log('Perplexity status:', response.status);
-
     if (!response.ok) {
-      console.error('Perplexity error body:', responseText);
+      console.error('Perplexity error:', responseText);
       return res.status(500).json({ error: 'API error', detail: responseText });
     }
 
