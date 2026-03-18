@@ -1,3 +1,4 @@
+```javascript
 module.exports = async function handler(req, res) {
 
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -88,27 +89,27 @@ Nur reiner Text.
     cleanHistory.pop();
   }
 
-const messages = [
-  { role: 'system', content: systemPrompt },
-  ...cleanHistory,
-  { role: 'user', content: message }
-];
+  const messages = [
+    { role: 'system', content: systemPrompt },
+    ...cleanHistory,
+    { role: 'user', content: message }
+  ];
 
   try {
 
- const response = await fetch('https://api.perplexity.ai/chat/completions', {
-  method: 'POST',
-  headers: {
-    'Authorization': `Bearer ${apiKey}`,
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify({
-    model: "sonar",
-    messages: messages,
-    temperature: 1.1,
-    top_p: 0.9,
-    max_tokens: 120
-});
+    const response = await fetch('https://api.perplexity.ai/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${apiKey}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        model: "sonar",
+        messages: messages,
+        temperature: 1.1,
+        top_p: 0.9,
+        max_tokens: 120
+      })
     });
 
     const text = await response.text();
@@ -141,3 +142,4 @@ const messages = [
   }
 
 };
+```
