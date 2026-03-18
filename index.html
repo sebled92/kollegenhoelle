@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -39,23 +40,10 @@ display:flex;
 flex-direction:column;
 }
 
-body::before{
-content:'';
-position:fixed;
-inset:0;
-pointer-events:none;
-background:repeating-linear-gradient(
-0deg,
-transparent,
-transparent 3px,
-rgba(0,0,0,.05) 3px,
-rgba(0,0,0,.05) 4px
-);
-}
+/* HEADER */
 
 header{
-flex-shrink:0;
-padding:.85rem 1.5rem .75rem;
+padding:.9rem 1.5rem;
 border-bottom:1px solid var(--border);
 display:flex;
 align-items:center;
@@ -63,30 +51,15 @@ justify-content:space-between;
 background:var(--bg);
 }
 
-.header-left{
-display:flex;
-align-items:baseline;
-gap:1rem;
-}
-
 h1{
 font-family:var(--font-disp);
-font-size:clamp(2rem,4vw,3rem);
+font-size:2.6rem;
 letter-spacing:.05em;
 text-transform:uppercase;
 }
 
 h1 span{
 color:var(--normal);
-animation:flicker 5s infinite;
-}
-
-.header-sub{
-font-family:var(--font-mono);
-font-size:10px;
-color:var(--muted2);
-letter-spacing:.1em;
-text-transform:uppercase;
 }
 
 .kevin-status{
@@ -96,9 +69,6 @@ color:var(--muted);
 display:flex;
 align-items:center;
 gap:6px;
-padding:5px 10px;
-border:1px solid var(--border);
-border-radius:4px;
 }
 
 .status-dot{
@@ -106,77 +76,19 @@ width:7px;
 height:7px;
 border-radius:50%;
 background:#4CAF50;
-animation:pulse-dot 2.5s infinite;
 }
 
-@keyframes pulse-dot{
-0%,100%{opacity:1}
-50%{opacity:.3}
-}
+/* LIVE COUNTER */
 
-@keyframes flicker{
-0%,94%,100%{opacity:1}
-95%{opacity:.3}
-97%{opacity:1}
-98%{opacity:.1}
-}
-
-.roast-banner{
-display:none;
-padding:5px;
-background:var(--roast);
+#liveCounter{
 font-family:var(--font-mono);
 font-size:10px;
-text-align:center;
-letter-spacing:.1em;
-}
-
-.roast-banner.visible{
-display:block;
-}
-
-.mode-bar{
-padding:.6rem 1.5rem;
-border-bottom:1px solid var(--border);
-background:var(--surface);
-display:flex;
-align-items:center;
-gap:10px;
-}
-
-.mode-label{
-font-family:var(--font-mono);
-font-size:10px;
-letter-spacing:.1em;
+padding:6px 12px;
 color:var(--muted2);
+border-bottom:1px solid var(--border);
 }
 
-.mode-toggle{
-display:flex;
-border:1px solid var(--border2);
-border-radius:6px;
-overflow:hidden;
-}
-
-.mode-btn{
-font-family:var(--font-mono);
-font-size:11px;
-padding:6px 14px;
-border:none;
-cursor:pointer;
-background:transparent;
-color:var(--muted);
-}
-
-.mode-btn.active-normal{
-background:var(--normal);
-color:#000;
-}
-
-.mode-btn.active-roast{
-background:var(--roast);
-color:#fff;
-}
+/* CHAT */
 
 .chat-scroll{
 flex:1;
@@ -209,7 +121,6 @@ align-items:flex-start;
 .msg-label{
 font-family:var(--font-mono);
 font-size:9px;
-letter-spacing:.12em;
 color:var(--muted2);
 }
 
@@ -224,13 +135,11 @@ line-height:1.6;
 .message.user .msg-bubble{
 background:#2a2a2f;
 border:1px solid var(--border2);
-border-bottom-right-radius:3px;
 }
 
 .message.kevin .msg-bubble{
 background:var(--surface);
 border:1px solid var(--border);
-border-bottom-left-radius:3px;
 }
 
 .kevin-avatar{
@@ -246,35 +155,7 @@ align-items:center;
 justify-content:center;
 }
 
-.kevin-avatar.roast{
-background:var(--roast);
-color:#fff;
-}
-
-.typing-bubble{
-display:flex;
-gap:5px;
-padding:10px;
-background:var(--surface);
-border:1px solid var(--border);
-border-radius:10px;
-}
-
-.typing-dot{
-width:6px;
-height:6px;
-background:var(--muted2);
-border-radius:50%;
-animation:bounce .9s infinite;
-}
-
-.typing-dot:nth-child(2){animation-delay:.2s}
-.typing-dot:nth-child(3){animation-delay:.4s}
-
-@keyframes bounce{
-0%,80%,100%{transform:translateY(0);opacity:.3}
-40%{transform:translateY(-5px);opacity:1}
-}
+/* INPUT */
 
 .input-bar{
 background:var(--surface);
@@ -298,16 +179,6 @@ color:var(--text);
 padding:10px 14px;
 resize:none;
 min-height:44px;
-max-height:120px;
-outline:none;
-}
-
-.chat-input:focus{
-border-color:var(--normal);
-}
-
-.chat-input.roast-mode:focus{
-border-color:var(--roast);
 }
 
 .send-btn{
@@ -321,48 +192,22 @@ background:var(--normal);
 height:44px;
 }
 
-.send-btn.roast{
-background:var(--roast);
-color:#fff;
-}
-
-.footer-bar{
-padding:.4rem 1.5rem;
-border-top:1px solid var(--border);
-font-family:var(--font-mono);
-font-size:9px;
-display:flex;
-justify-content:space-between;
-color:var(--muted2);
-}
-
 </style>
 </head>
 
 <body>
 
 <header>
-<div class="header-left">
 <h1>Kollegen<span>hölle</span></h1>
-<span class="header-sub">powered by Sebastian™</span>
-</div>
-
 <div class="kevin-status">
 <span class="status-dot"></span>
 <span>Kevin ist leider anwesend</span>
 </div>
 </header>
 
-<div class="roast-banner" id="roastBanner">
-⚠ ROAST MODUS AKTIV — KEVIN HAT KEINE HEMMUNGEN MEHR ⚠
-</div>
-
-<div class="mode-bar">
-<span class="mode-label">Modus:</span>
-<div class="mode-toggle">
-<button class="mode-btn active-normal" id="btnNormal" onclick="setMode('normal')">😒 Normal</button>
-<button class="mode-btn" id="btnRoast" onclick="setMode('roast')">🔥 Roast</button>
-</div>
+<!-- LIVE COUNTER -->
+<div id="liveCounter">
+23 Kollegen beschweren sich gerade über ihre Arbeit
 </div>
 
 <div class="chat-scroll" id="chatScroll">
@@ -378,44 +223,48 @@ id="chatInput"
 placeholder="Schreib Kevin etwas..."
 rows="1"
 onkeydown="handleKey(event)"
-oninput="autoResize(this)"
 ></textarea>
 
-<button class="send-btn" id="sendBtn" onclick="sendMessage()">Senden →</button>
+<button class="send-btn" onclick="sendMessage()">Senden →</button>
 
 </div>
-</div>
-
-<div class="footer-bar">
-<span>Kollegenhölle v1.0</span>
-<span>Kevin™ GmbH</span>
 </div>
 
 <script>
 
-let currentMode='normal'
-let isLoading=false
 let history=[]
+let isLoading=false
 
-const chatInner=document.getElementById('chatInner')
+function escHtml(s){
+if(!s)return''
+return String(s)
+.replace(/&/g,'&amp;')
+.replace(/</g,'&lt;')
+.replace(/>/g,'&gt;')
+.replace(/\n/g,'<br>')
+}
 
-function setMode(mode){
+function appendMessage(role,text){
 
-currentMode=mode
+const div=document.createElement('div')
+div.className='message '+role
 
-document.getElementById('btnNormal').className='mode-btn'+(mode==='normal'?' active-normal':'')
-document.getElementById('btnRoast').className='mode-btn'+(mode==='roast'?' active-roast':'')
+if(role==='user'){
+div.innerHTML=`<span class="msg-label">Du</span>
+<div class="msg-bubble">${escHtml(text)}</div>`
+}else{
+div.innerHTML=`<span class="msg-label">Kevin</span>
+<div class="msg-bubble">${escHtml(text)}</div>`
+}
 
-document.getElementById('sendBtn').className='send-btn'+(mode==='roast'?' roast':'')
-document.getElementById('chatInput').className='chat-input'+(mode==='roast'?' roast-mode':'')
-
-document.getElementById('roastBanner').className='roast-banner'+(mode==='roast'?' visible':'')
+document.getElementById('chatInner').appendChild(div)
+scrollToBottom()
 
 }
 
-function autoResize(el){
-el.style.height='auto'
-el.style.height=Math.min(el.scrollHeight,120)+'px'
+function scrollToBottom(){
+const s=document.getElementById('chatScroll')
+s.scrollTop=s.scrollHeight
 }
 
 function handleKey(e){
@@ -425,119 +274,63 @@ sendMessage()
 }
 }
 
-function scrollToBottom(){
-requestAnimationFrame(()=>{
-const s=document.getElementById('chatScroll')
-s.scrollTop=s.scrollHeight
-})
-}
-
-function escHtml(s){
-
-if(!s)return''
-
-return String(s)
-.replace(/&/g,'&amp;')
-.replace(/</g,'&lt;')
-.replace(/>/g,'&gt;')
-.replace(/\n/g,'<br>')
-
-}
-
-function appendMessage(role,text,mode){
-
-const div=document.createElement('div')
-
-div.className='message '+role
-
-if(role==='user'){
-
-div.innerHTML=
-`<span class="msg-label">Du</span>
-<div class="msg-bubble">${escHtml(text)}</div>`
-
-}
-
-else{
-
-div.innerHTML=
-`<div style="display:flex;align-items:center;gap:7px">
-<div class="kevin-avatar ${mode==='roast'?'roast':''}">K</div>
-<span class="msg-label">Kevin</span>
-</div>
-<div class="msg-bubble">${escHtml(text)}</div>`
-
-}
-
-chatInner.appendChild(div)
-
-scrollToBottom()
-
-}
-
 async function sendMessage(){
 
 const input=document.getElementById('chatInput')
-const sendBtn=document.getElementById('sendBtn')
-
 const msg=input.value.trim()
 
 if(!msg||isLoading)return
 
-isLoading=true
-
-sendBtn.disabled=true
+appendMessage('user',msg)
 
 input.value=''
-input.style.height='auto'
-
-appendMessage('user',msg,currentMode)
-
-history.push({role:'user',content:msg})
 
 try{
 
 const res=await fetch('/api/chat',{
 method:'POST',
 headers:{'Content-Type':'application/json'},
-body:JSON.stringify({
-message:msg,
-history:history.slice(-6),
-mode:currentMode
-})
+body:JSON.stringify({message:msg})
 })
 
 const data=await res.json()
 
-if(data.error){
+appendMessage('kevin',data.reply||'Kevin schaut nur kurz müde.')
 
-appendMessage('kevin','Kevin starrt kurz auf den Server.\n"'+data.error+'"\nNatürlich funktioniert heute wieder nichts.',currentMode)
+}catch{
 
-}
-
-else{
-
-const reply=data.reply||'*Kevin hat nur kurz aus dem Fenster geschaut.*'
-
-appendMessage('kevin',reply,currentMode)
-
-history.push({role:'assistant',content:reply})
+appendMessage('kevin','Kevin seufzt. Natürlich funktioniert die API wieder nicht.')
 
 }
 
-}catch(err){
+}
 
-appendMessage('kevin','Kevin seufzt.\nDie API ist wieder kaputt.\nNatürlich.',currentMode)
+/* FAKE VISITORS */
+
+function startFakeVisitors(){
+
+let base = 18 + Math.floor(Math.random()*15)
+
+setInterval(()=>{
+
+let change = Math.floor(Math.random()*5) - 2
+
+base += change
+
+if(base < 12) base = 12
+if(base > 45) base = 45
+
+document.getElementById("liveCounter").innerText =
+base + " Kollegen beschweren sich gerade über ihre Arbeit"
+
+},4000)
 
 }
 
-isLoading=false
-sendBtn.disabled=false
-input.focus()
-
-}
+startFakeVisitors()
 
 </script>
 
 </body>
 </html>
+```
