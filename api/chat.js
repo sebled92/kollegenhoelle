@@ -88,12 +88,11 @@ Nur reiner Text.
     cleanHistory.pop();
   }
 
-  const messages = [
-    { role: 'system', content: systemPrompt },
-    { role: 'system', content: 'Reagiere konkret auf die Beschwerde des Nutzers.' },
-    ...cleanHistory,
-    { role: 'user', content: message }
-  ];
+const messages = [
+  { role: 'system', content: systemPrompt },
+  ...cleanHistory,
+  { role: 'user', content: message }
+];
 
   try {
 
