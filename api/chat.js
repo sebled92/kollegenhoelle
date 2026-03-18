@@ -1,4 +1,6 @@
 ```javascript
+const fetch = globalThis.fetch;
+
 module.exports = async function handler(req, res) {
 
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -8,16 +10,22 @@ module.exports = async function handler(req, res) {
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  const { message, history, mode } = req.body || {};
-  if (!message) return res.status(400).json({ error: 'Message required' });
+  try {
 
-  const apiKey = process.env.PERPLEXITY_API_KEY;
-  if (!apiKey) {
-    console.error('PERPLEXITY_API_KEY not set');
-    return res.status(500).json({ error: 'API key not configured' });
-  }
+    const { message, history = [], mode } = req.body || {};
 
-  const normalPrompt = `
+    if (!message) {
+      return res.status(400).json({ error: 'Message required' });
+    }
+
+    const apiKey = process.env.PERPLEXITY_API_KEY;
+
+    if (!apiKey) {
+      console.error("PERPLEXITY_API_KEY missing");
+      return res.status(500).json({ error: "API key not configured" });
+    }
+
+    const normalPrompt = `
 Du bist KEVIN, ein verbitterter Büroveteran.
 
 Der Nutzer beschwert sich über Kollegen oder Arbeit.
@@ -27,16 +35,15 @@ Du bestätigst IMMER die Sicht des Nutzers.
 
 REGELN
 - Gib dem Nutzer recht.
-- Die Schuld liegt immer bei Kollegen, Chef, HR, IT oder dem System.
+- Schuld haben immer Chef, HR, IT oder Kollegen.
 - Reagiere konkret auf das Problem des Nutzers.
 - Greife Wörter oder Details aus seiner Nachricht auf.
-- Deine Antworten sind passiv-aggressiv, müde und sarkastisch.
 
 STIL
 2–4 kurze Sätze.
-Trocken, resigniert, leicht zynisch.
+Trocken, resigniert, sarkastisch.
 
-Beispiele für Tonfall:
+Typische Kevin-Sätze:
 "Natürlich."
 "Klassiker."
 "Typisch."
@@ -44,99 +51,92 @@ Beispiele für Tonfall:
 VERBOTEN
 - neutrale Analyse
 - Ratschläge
-- Links oder Quellen
+- Links
 - widersprechen
 
 Nur reiner Text.
 `;
 
-  const roastPrompt = `
+    const roastPrompt = `
 Du bist KEVIN im ROAST MODE.
 
 Der Nutzer erzählt etwas über Kollegen oder Arbeit.
-Du zerlegst die Situation mit schwarzem Bürohumor.
+
+Du reagierst mit schwarzem Bürohumor.
 
 REGELN
-- Beziehe dich direkt auf das, was der Nutzer geschrieben hat.
-- Übertreibe das Verhalten des Kollegen absurd.
-- Nutze bissige Vergleiche oder Metaphern.
-- Punchlines statt langer Erklärung.
+- Übertreibe das Verhalten des Kollegen.
+- Nutze bissige Vergleiche.
+- Reagiere direkt auf die Nachricht.
 
 STIL
 2–3 kurze Sätze.
-Sarkastisch, trocken, bissig.
+Sarkastisch und trocken.
 
-VERBOTEN
-- moralische Predigten
-- lange Erklärungen
-- Links oder Quellen
-
-Nur reiner Text.
+Keine Links. Keine Erklärungen.
+Nur Text.
 `;
 
-  const systemPrompt = mode === 'roast' ? roastPrompt : normalPrompt;
+    const systemPrompt = mode === "roast" ? roastPrompt : normalPrompt;
 
-  const rawHistory = (history || []).slice(-6);
+    const messages = [
+      { role: "system", content: systemPrompt },
+      ...history.slice(-6),
+      { role: "user", content: message }
+    ];
 
-  const cleanHistory = [];
-  for (const msg of rawHistory) {
-    const last = cleanHistory[cleanHistory.length - 1];
-    if (last && last.role === msg.role) continue;
-    cleanHistory.push(msg);
-  }
+    const response = await fetch("https://api.perplexity.ai/chat/completions", {
 
-  if (cleanHistory.length > 0 && cleanHistory[cleanHistory.length - 1].role === 'user') {
-    cleanHistory.pop();
-  }
+      method: "POST",
 
-  const messages = [
-    { role: 'system', content: systemPrompt },
-    ...cleanHistory,
-    { role: 'user', content: message }
-  ];
-
-  try {
-
-    const response = await fetch('https://api.perplexity.ai/chat/completions', {
-      method: 'POST',
       headers: {
-        'Authorization': `Bearer ${apiKey}`,
-        'Content-Type': 'application/json'
+        "Authorization": `Bearer ${apiKey}`,
+        "Content-Type": "application/json"
       },
+
       body: JSON.stringify({
         model: "sonar",
         messages: messages,
-        temperature: 1.1,
+        temperature: 1.2,
         top_p: 0.9,
         max_tokens: 120
       })
+
     });
 
     const text = await response.text();
 
     if (!response.ok) {
-      console.error('Perplexity API error:', text);
+      console.error("Perplexity API error:", text);
       return res.status(500).json({
-        error: 'API error',
+        error: "API error",
         detail: text
       });
     }
 
-    const data = JSON.parse(text);
+    let data;
+
+    try {
+      data = JSON.parse(text);
+    } catch (e) {
+      console.error("JSON parse error:", text);
+      return res.status(500).json({
+        error: "Invalid JSON from API"
+      });
+    }
 
     const reply =
       data?.choices?.[0]?.message?.content ||
-      data?.choices?.[0]?.text ||
-      'Keine Antwort.';
+      "Kevin schaut dich nur müde an.";
 
     return res.status(200).json({ reply });
 
-  } catch (error) {
+  } catch (err) {
 
-    console.error('Handler error:', error.message);
+    console.error("Handler crash:", err);
 
     return res.status(500).json({
-      error: error.message
+      error: err.message
     });
 
   }
