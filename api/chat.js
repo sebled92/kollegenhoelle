@@ -106,8 +106,8 @@ Nur reiner Text.
       body: JSON.stringify({
         model: 'sonar',
         messages: messages,
-        temperature: 0.9,
-        top_p: 0.95,
+        temperature: 1.1,
+        top_p: 0.9,
         frequency_penalty: 0.4,
         presence_penalty: 0.3,
         max_tokens: 120
