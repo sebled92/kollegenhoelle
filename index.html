@@ -22,7 +22,6 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);display
 body::before{content:'';position:fixed;inset:0;z-index:997;pointer-events:none;
   background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,.05) 3px,rgba(0,0,0,.05) 4px);}
 
-/* HEADER */
 header{flex-shrink:0;padding:.9rem 1.5rem;border-bottom:1px solid var(--border);
   display:flex;align-items:center;justify-content:space-between;background:var(--bg);}
 h1{font-family:var(--font-disp);font-size:clamp(1.8rem,4vw,2.8rem);letter-spacing:.05em;text-transform:uppercase;}
@@ -32,13 +31,11 @@ h1 span{color:var(--normal);animation:flicker 5s infinite;}
 .status-dot{width:7px;height:7px;border-radius:50%;background:#4CAF50;animation:pulse-dot 2.5s infinite;}
 @keyframes pulse-dot{0%,100%{opacity:1}50%{opacity:.2}}
 
-/* ROAST BANNER */
 .roast-banner{display:none;flex-shrink:0;padding:4px 1.5rem;background:var(--roast);
   font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
   color:#fff;text-align:center;font-weight:500;}
 .roast-banner.visible{display:block;}
 
-/* MODE BAR */
 .mode-bar{flex-shrink:0;display:flex;align-items:center;gap:12px;padding:.5rem 1.5rem;
   border-bottom:1px solid var(--border);background:var(--surface);}
 .mode-label{font-family:var(--font-mono);font-size:10px;color:var(--muted2);letter-spacing:.12em;text-transform:uppercase;}
@@ -49,34 +46,36 @@ h1 span{color:var(--normal);animation:flicker 5s infinite;}
 .mode-btn.active-roast{background:var(--roast);color:#fff;}
 .mode-btn:not(.active-normal):not(.active-roast):hover{background:var(--surface2);color:var(--text);}
 
-/* LIVE COUNTER */
+.qod-bar{flex-shrink:0;padding:.5rem 1.5rem;border-bottom:1px solid var(--border);
+  background:var(--surface);display:flex;align-items:center;gap:10px;}
+.qod-label{font-family:var(--font-mono);font-size:9px;color:var(--normal);
+  letter-spacing:.1em;text-transform:uppercase;white-space:nowrap;flex-shrink:0;}
+.qod-text{font-family:var(--font-mono);font-size:10px;color:var(--muted);letter-spacing:.03em;font-style:italic;}
+
 #liveCounter{flex-shrink:0;font-family:var(--font-mono);font-size:10px;
   padding:5px 1.5rem;color:var(--muted2);border-bottom:1px solid var(--border);}
 
-/* STARTER BUTTONS */
 .starters{flex-shrink:0;padding:.6rem 1.5rem;border-bottom:1px solid var(--border);
-  display:flex;gap:8px;flex-wrap:wrap;background:var(--bg);}
+  display:flex;gap:8px;flex-wrap:wrap;align-items:center;background:var(--bg);}
+.starters-label{font-family:var(--font-mono);font-size:10px;color:var(--muted2);
+  letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;}
 .starter-btn{font-family:var(--font-mono);font-size:10px;letter-spacing:.04em;
   padding:5px 12px;border:1px solid var(--border2);border-radius:100px;
   background:transparent;color:var(--muted);cursor:pointer;transition:all .18s;white-space:nowrap;}
 .starter-btn:hover{border-color:var(--normal);color:var(--normal);}
-.starters-label{font-family:var(--font-mono);font-size:10px;color:var(--muted2);
-  letter-spacing:.08em;text-transform:uppercase;align-self:center;white-space:nowrap;}
+.starter-loading{font-family:var(--font-mono);font-size:10px;color:var(--muted2);font-style:italic;}
 
-/* CHAT */
 .chat-scroll{flex:1;overflow-y:auto;padding:1.2rem 1.5rem;}
 .chat-scroll::-webkit-scrollbar{width:3px;}
 .chat-scroll::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px;}
 .chat-inner{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:1rem;min-height:100%;}
 
-/* EMPTY STATE */
 .empty-state{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
   text-align:center;gap:.75rem;padding:2rem 1rem;min-height:180px;}
 .empty-icon{font-size:2.2rem;opacity:.25;}
 .empty-title{font-family:var(--font-disp);font-size:1.9rem;letter-spacing:.06em;color:var(--muted);}
 .empty-sub{font-family:var(--font-mono);font-size:11px;color:var(--muted2);max-width:320px;line-height:1.8;}
 
-/* MESSAGES */
 .message{display:flex;flex-direction:column;gap:4px;animation:msgIn .22s ease;}
 @keyframes msgIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
 .message.user{align-items:flex-end;}
@@ -93,18 +92,13 @@ h1 span{color:var(--normal);animation:flicker 5s infinite;}
   display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 .kevin-avatar.roast{background:var(--roast);color:#fff;}
 
-/* SHARE BUTTON on kevin messages */
-.share-btn{
-  font-family:var(--font-mono);font-size:9px;letter-spacing:.08em;
+.share-btn{font-family:var(--font-mono);font-size:9px;letter-spacing:.08em;
   padding:3px 10px;border:1px solid var(--border2);border-radius:100px;
   background:transparent;color:var(--muted2);cursor:pointer;
-  transition:all .18s;margin-top:4px;align-self:flex-start;
-  text-transform:uppercase;
-}
+  transition:all .18s;margin-top:4px;text-transform:uppercase;}
 .share-btn:hover{border-color:var(--normal);color:var(--normal);}
 .share-btn.copied{border-color:#4CAF50;color:#4CAF50;}
 
-/* TYPING */
 #typingMsg{display:none;}
 .typing-bubble{display:flex;align-items:center;gap:5px;padding:11px 15px;
   background:var(--surface);border:1px solid var(--border);
@@ -114,7 +108,6 @@ h1 span{color:var(--normal);animation:flicker 5s infinite;}
 .typing-dot:nth-child(3){animation-delay:.36s}
 @keyframes bounce{0%,80%,100%{transform:translateY(0);opacity:.35}40%{transform:translateY(-5px);opacity:1}}
 
-/* INPUT */
 .input-bar{flex-shrink:0;background:var(--surface);border-top:1px solid var(--border);padding:.7rem 1.5rem;}
 .input-inner{max-width:760px;margin:0 auto;display:flex;gap:8px;align-items:flex-end;}
 .chat-input{flex:1;background:var(--bg);border:1px solid var(--border2);border-radius:8px;
@@ -133,18 +126,9 @@ h1 span{color:var(--normal);animation:flicker 5s infinite;}
 .send-btn.roast{background:var(--roast);color:#fff;}
 .send-btn:disabled{opacity:.3;cursor:not-allowed;transform:none;filter:none;}
 
-/* FOOTER */
 .footer-bar{flex-shrink:0;padding:.35rem 1.5rem;border-top:1px solid var(--border);
   font-family:var(--font-mono);font-size:9px;color:var(--muted2);
   letter-spacing:.06em;display:flex;justify-content:space-between;background:var(--bg);}
-
-/* KEVIN QUOTE OF DAY */
-.qod-bar{flex-shrink:0;padding:.5rem 1.5rem;border-bottom:1px solid var(--border);
-  background:var(--surface);display:flex;align-items:center;gap:10px;}
-.qod-label{font-family:var(--font-mono);font-size:9px;color:var(--normal);
-  letter-spacing:.1em;text-transform:uppercase;white-space:nowrap;flex-shrink:0;}
-.qod-text{font-family:var(--font-mono);font-size:10px;color:var(--muted);
-  letter-spacing:.03em;font-style:italic;}
 
 @media(max-width:580px){
   header{padding:.65rem 1rem;}
@@ -178,7 +162,6 @@ h1 span{color:var(--normal);animation:flicker 5s infinite;}
   </div>
 </div>
 
-<!-- KEVIN ZITAT DES TAGES -->
 <div class="qod-bar">
   <span class="qod-label">Kevin heute:</span>
   <span class="qod-text" id="qodText"></span>
@@ -186,14 +169,9 @@ h1 span{color:var(--normal);animation:flicker 5s infinite;}
 
 <div id="liveCounter">23 Kollegen beschweren sich gerade über ihre Arbeit</div>
 
-<!-- STARTER BUTTONS -->
 <div class="starters">
   <span class="starters-label">Schnellstart:</span>
-  <button class="starter-btn" onclick="quickSend('Mein Chef hat meine Idee geklaut')">😤 Chef klaut Ideen</button>
-  <button class="starter-btn" onclick="quickSend('Die IT antwortet seit 3 Tagen nicht')">💻 IT antwortet nicht</button>
-  <button class="starter-btn" onclick="quickSend('Ich muss wieder die Arbeit von anderen erledigen')">😩 Arbeit von anderen</button>
-  <button class="starter-btn" onclick="quickSend('Das Meeting hätte eine E-Mail sein können')">📧 Sinnloses Meeting</button>
-  <button class="starter-btn" onclick="quickSend('René riecht nach Wurst')">🌭 René</button>
+  <div id="starterBtns"><span class="starter-loading">Kevin denkt nach...</span></div>
 </div>
 
 <div class="chat-scroll" id="chatScroll">
@@ -238,6 +216,7 @@ h1 span{color:var(--normal);animation:flicker 5s infinite;}
   let currentMode = 'normal';
   let isLoading = false;
   let history = [];
+  let lastUserMsg = '';
   const chatInner = document.getElementById('chatInner');
   const typingMsg = document.getElementById('typingMsg');
 
@@ -256,8 +235,7 @@ h1 span{color:var(--normal);animation:flicker 5s infinite;}
     "Die Kaffeemaschine ist kaputt. Wie mein Wille zu leben.",
     "Feedback-Kultur heißt: alle sagen mir was falsch ist. Toll.",
   ];
-  const todayQuote = quotes[new Date().getDate() % quotes.length];
-  document.getElementById('qodText').textContent = '"' + todayQuote + '"';
+  document.getElementById('qodText').textContent = '"' + quotes[new Date().getDate() % quotes.length] + '"';
 
   // FAKE VISITORS
   let base = 18 + Math.floor(Math.random() * 15);
@@ -267,6 +245,40 @@ h1 span{color:var(--normal);animation:flicker 5s infinite;}
     if (base > 45) base = 45;
     document.getElementById('liveCounter').innerText = base + ' Kollegen beschweren sich gerade über ihre Arbeit';
   }, 4000);
+
+  // RANDOM STARTERS via API
+  const starterEmojis = ['😤','💻','😩','📧','🙄','😴','🤡','📋','😶','🫠','☕','🏖️'];
+
+  async function renderStarters() {
+    try {
+      const res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          message: 'Generiere genau 5 kurze kreative deutsche Beschwerden ueber den Bueroalltag als JSON-Array. Nur das Array, kein anderer Text, keine Erklaerungen. Beispiel: ["Mein Chef nervt","Die IT schlaeft wieder"]. Maximal 6 Woerter pro Satz. Jedes Mal andere Themen.',
+          history: [],
+          mode: 'starters'
+        })
+      });
+      const data = await res.json();
+      const match = (data.reply || '').match(/\[.*?\]/s);
+      const items = match ? JSON.parse(match[0]) : [];
+      if (items.length > 0) {
+        document.getElementById('starterBtns').innerHTML = items.slice(0, 5)
+          .map((msg, i) => `<button class="starter-btn" onclick="quickSend('${escAttr(msg)}')">${starterEmojis[i % starterEmojis.length]} ${escHtml(msg)}</button>`)
+          .join('');
+      } else { fallbackStarters(); }
+    } catch { fallbackStarters(); }
+  }
+
+  function fallbackStarters() {
+    const fallback = ['Chef klaut wieder Ideen','IT antwortet nicht','Sinnloses Meeting','Unbezahlte Überstunden','Kollege wurde befördert'];
+    document.getElementById('starterBtns').innerHTML = fallback
+      .map((msg, i) => `<button class="starter-btn" onclick="quickSend('${escAttr(msg)}')">${starterEmojis[i]} ${msg}</button>`)
+      .join('');
+  }
+
+  renderStarters();
 
   function setMode(mode) {
     currentMode = mode;
@@ -309,11 +321,14 @@ h1 span{color:var(--normal);animation:flicker 5s infinite;}
     return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
   }
 
+  function escAttr(s) {
+    return String(s||'').replace(/'/g,'&#39;').replace(/"/g,'&quot;');
+  }
+
   function shareMessage(userMsg, kevinMsg) {
     const text = `Ich zu Kevin: "${userMsg}"\n\nKevin: "${kevinMsg}"\n\n😑 kollegenhoelle.vercel.app`;
     navigator.clipboard.writeText(text).then(() => {
-      const btns = document.querySelectorAll('.share-btn');
-      btns.forEach(b => {
+      document.querySelectorAll('.share-btn').forEach(b => {
         if (b.dataset.kevin === kevinMsg) {
           b.textContent = '✓ Kopiert!';
           b.classList.add('copied');
@@ -323,25 +338,21 @@ h1 span{color:var(--normal);animation:flicker 5s infinite;}
     });
   }
 
-  let lastUserMsg = '';
-
   function appendMessage(role, text, mode) {
     hideEmpty();
     const div = document.createElement('div');
     div.className = 'message ' + role + (role === 'kevin' && mode === 'roast' ? ' roast-msg' : '');
-
     if (role === 'user') {
       lastUserMsg = text;
       div.innerHTML = `<span class="msg-label">Du</span><div class="msg-bubble">${escHtml(text)}</div>`;
     } else {
-      const escapedText = text.replace(/"/g, '&quot;');
       div.innerHTML = `
         <div class="kevin-header">
           <div class="kevin-avatar ${mode === 'roast' ? 'roast' : ''}">K</div>
           <span class="msg-label">Kevin</span>
         </div>
         <div class="msg-bubble">${escHtml(text)}</div>
-        <button class="share-btn" data-kevin="${escapedText}" onclick="shareMessage('${lastUserMsg.replace(/'/g,"\\'")}', this.dataset.kevin)">↗ Teilen</button>`;
+        <button class="share-btn" data-kevin="${escAttr(text)}" onclick="shareMessage('${escAttr(lastUserMsg)}', this.dataset.kevin)">↗ Teilen</button>`;
     }
     chatInner.insertBefore(div, typingMsg);
     scrollToBottom();
