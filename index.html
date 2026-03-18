@@ -126,9 +126,67 @@ h1 span{color:var(--normal);animation:flicker 5s infinite;}
 .send-btn.roast{background:var(--roast);color:#fff;}
 .send-btn:disabled{opacity:.3;cursor:not-allowed;transform:none;filter:none;}
 
-.footer-bar{flex-shrink:0;padding:.35rem 1.5rem;border-top:1px solid var(--border);
+
+.footer-bar{flex-shrink:0;padding:.5rem 1.5rem;border-top:1px solid var(--border);
   font-family:var(--font-mono);font-size:9px;color:var(--muted2);
-  letter-spacing:.06em;display:flex;justify-content:space-between;background:var(--bg);}
+  letter-spacing:.06em;display:flex;justify-content:space-between;align-items:center;background:var(--bg);}
+
+.donate-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  font-family:var(--font-mono);font-size:10px;font-weight:500;
+  letter-spacing:.06em;text-transform:uppercase;
+  padding:4px 12px;border-radius:100px;
+  border:1px solid #F5A623;color:#F5A623;
+  background:transparent;cursor:pointer;transition:all .2s;white-space:nowrap;
+}
+.donate-btn:hover{background:#F5A623;color:#0A0A0B;}
+
+.donate-overlay{
+  display:none;position:fixed;inset:0;z-index:9999;
+  background:rgba(0,0,0,.8);
+  align-items:center;justify-content:center;
+}
+.donate-overlay.visible{display:flex;}
+.donate-modal{
+  background:var(--surface);border:1px solid var(--border2);
+  border-radius:12px;padding:2rem;max-width:340px;width:90%;
+  display:flex;flex-direction:column;gap:1.25rem;position:relative;
+}
+.donate-close{
+  position:absolute;top:12px;right:14px;
+  font-family:var(--font-mono);font-size:16px;
+  color:var(--muted2);background:none;border:none;cursor:pointer;transition:color .18s;
+}
+.donate-close:hover{color:var(--text);}
+.donate-title{
+  font-family:var(--font-disp);font-size:1.9rem;
+  letter-spacing:.05em;text-transform:uppercase;color:var(--text);line-height:1;
+}
+.donate-title span{color:#F5A623;}
+.donate-desc{
+  font-family:var(--font-mono);font-size:11px;
+  color:var(--muted);line-height:1.8;letter-spacing:.02em;
+}
+.donate-quote{
+  font-family:var(--font-mono);font-size:10px;color:var(--muted2);
+  font-style:italic;padding:.75rem 1rem;
+  border-left:2px solid var(--border2);line-height:1.65;
+}
+.donate-paypal{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  text-decoration:none;background:#F5A623;color:#0A0A0B;
+  font-family:var(--font-mono);font-size:12px;font-weight:500;
+  letter-spacing:.08em;text-transform:uppercase;
+  padding:13px 20px;border-radius:8px;transition:filter .18s,transform .18s;
+}
+.donate-paypal:hover{filter:brightness(1.1);transform:translateY(-1px);}
+.donate-paypal:active{transform:translateY(0);}
+.donate-skip{
+  font-family:var(--font-mono);font-size:9px;color:var(--muted2);
+  text-align:center;letter-spacing:.06em;cursor:pointer;transition:color .18s;
+}
+.donate-skip:hover{color:var(--muted);}
+
 
 @media(max-width:580px){
   header{padding:.65rem 1rem;}
@@ -207,9 +265,32 @@ h1 span{color:var(--normal);animation:flicker 5s infinite;}
   </div>
 </div>
 
+<!-- DONATE MODAL -->
+<div class="donate-overlay" id="donateOverlay" onclick="closeDonate(event)">
+  <div class="donate-modal">
+    <button class="donate-close" onclick="closeDonateBtn()">✕</button>
+    <p class="donate-title">Kevin <span>dankt</span><br>dir nicht.</p>
+    <p class="donate-desc">
+      Jede Kevin-Antwort kostet echtes Geld — API-Tokens, Server, alles.
+      <br><br>
+      Wenn dir Kevins passive Aggression den Tag gerettet hat,
+      freut sich <strong>Sebastian</strong> über eine kleine Spende. Kevin würde es nie zugeben, aber er auch.
+    </p>
+    <p class="donate-quote">
+      „Natürlich muss ich das selbst bezahlen. Natürlich.
+      Wenigstens funktioniert hier mal was — anders als die IT."
+      <br>— Kevin
+    </p>
+    <a class="donate-paypal" href="https://paypal.me/sebastianledwinka" target="_blank" rel="noopener">
+      ☕ Kevin einen Kaffee spendieren
+    </a>
+    <p class="donate-skip" onclick="closeDonateBtn()">nein danke, ich bin wie Kevin — gebe nichts zurück</p>
+  </div>
+</div>
+
 <div class="footer-bar">
   <span>Kollegenhölle v1.0 — alle Ähnlichkeiten mit echten Kollegen sind beabsichtigt</span>
-  <span>powered by Sebastian™</span>
+  <button class="donate-btn" onclick="openDonate()">☕ Spende</button>
 </div>
 
 <script>
@@ -396,6 +477,17 @@ h1 span{color:var(--normal);animation:flicker 5s infinite;}
     sendBtn.disabled = false;
     input.focus();
   }
+
+  function openDonate() {
+    document.getElementById('donateOverlay').classList.add('visible');
+  }
+  function closeDonateBtn() {
+    document.getElementById('donateOverlay').classList.remove('visible');
+  }
+  function closeDonate(e) {
+    if (e.target === document.getElementById('donateOverlay')) closeDonateBtn();
+  }
+
 </script>
 </body>
 </html>
