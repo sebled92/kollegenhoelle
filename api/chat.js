@@ -1,12 +1,19 @@
-export default async function handler(req, res) {
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
-  }
+module.exports = async function handler(req, res) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
-  const { message, history, mode } = req.body;
+  if (req.method === 'OPTIONS') return res.status(200).end();
+  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  if (!message) {
-    return res.status(400).json({ error: 'Message required' });
+  const { message, history, mode } = req.body || {};
+
+  if (!message) return res.status(400).json({ error: 'Message required' });
+
+  const apiKey = process.env.PERPLEXITY_API_KEY;
+  if (!apiKey) {
+    console.error('PERPLEXITY_API_KEY not set');
+    return res.status(500).json({ error: 'API key not configured' });
   }
 
   const systemPrompts = {
@@ -26,17 +33,17 @@ Antworte immer auf Deutsch. 2-3 Sätze maximale Vernichtung.`
   };
 
   const systemPrompt = systemPrompts[mode] || systemPrompts.normal;
-
   const messages = [
-    ...(history || []).slice(-6),
+    ...((history || []).slice(-6)),
     { role: 'user', content: message }
   ];
 
   try {
+    console.log('Calling Perplexity API, mode:', mode);
     const response = await fetch('https://api.perplexity.ai/chat/completions', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${process.env.PERPLEXITY_API_KEY}`,
+        'Authorization': `Bearer ${apiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
@@ -50,18 +57,20 @@ Antworte immer auf Deutsch. 2-3 Sätze maximale Vernichtung.`
       }),
     });
 
+    const responseText = await response.text();
+    console.log('Perplexity status:', response.status);
+
     if (!response.ok) {
-      const err = await response.text();
-      console.error('Perplexity error:', err);
-      return res.status(500).json({ error: 'API error' });
+      console.error('Perplexity error body:', responseText);
+      return res.status(500).json({ error: 'API error', detail: responseText });
     }
 
-    const data = await response.json();
+    const data = JSON.parse(responseText);
     const reply = data.choices?.[0]?.message?.content || '...';
+    return res.status(200).json({ reply });
 
-    res.status(200).json({ reply });
   } catch (error) {
-    console.error('Handler error:', error);
-    res.status(500).json({ error: 'Internal error' });
+    console.error('Handler error:', error.message);
+    return res.status(500).json({ error: error.message });
   }
-}
+};
