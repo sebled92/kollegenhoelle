@@ -104,7 +104,7 @@ Nur reiner Text.
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        model: 'sonar-medium-online',
+        model: 'sonar',
         messages: messages,
         temperature: 0.9,
         top_p: 0.95,
