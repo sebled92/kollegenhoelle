@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kollegenhölle 🔥</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:        #0E0E0F;
+    --surface:   #18181B;
+    --border:    #2A2A2F;
+    --text:      #E8E6E0;
+    --muted:     #6B6B72;
+    --normal:    #E8E350;
+    --roast:     #FF3B30;
+    --roast-dim: #3D1410;
+    --font-disp: 'Bebas Neue', sans-serif;
+    --font-mono: 'IBM Plex Mono', monospace;
+    --font-body: 'IBM Plex Sans', sans-serif;
+  }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+  }
+
+  /* SCANLINES OVERLAY */
+  body::before {
+    content: '';
+    position: fixed; inset: 0; z-index: 999; pointer-events: none;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,.08) 2px,
+      rgba(0,0,0,.08) 4px
+    );
+  }
+
+  /* HEADER */
+  header {
+    padding: 2rem 2rem 1rem;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: flex-end; justify-content: space-between;
+    flex-wrap: wrap; gap: 1rem;
+  }
+  .header-left h1 {
+    font-family: var(--font-disp);
+    font-size: clamp(3rem, 8vw, 6rem);
+    letter-spacing: .02em;
+    line-height: .9;
+    color: var(--text);
+    text-transform: uppercase;
+  }
+  .header-left h1 span {
+    color: var(--normal);
+    display: inline-block;
+    animation: flicker 4s infinite;
+  }
+  .header-sub {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: .1em;
+    margin-top: .5rem;
+    text-transform: uppercase;
+  }
+  .kevin-status {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--muted);
+    display: flex; align-items: center; gap: 8px;
+    padding: .5rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+  }
+  .status-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: #4CAF50;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: .3; }
+  }
+  @keyframes flicker {
+    0%, 95%, 100% { opacity: 1; }
+    96% { opacity: .4; }
+    97% { opacity: 1; }
+    98% { opacity: .2; }
+    99% { opacity: 1; }
+  }
+
+  /* MODE TOGGLE */
+  .mode-bar {
+    display: flex; gap: 0;
+    padding: 1rem 2rem;
+    border-bottom: 1px solid var(--border);
+    align-items: center; gap: 1rem;
+  }
+  .mode-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: .1em;
+    text-transform: uppercase;
+  }
+  .mode-toggle {
+    display: flex;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .mode-btn {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: .08em;
+    padding: 8px 20px;
+    background: transparent;
+    color: var(--muted);
+    border: none;
+    cursor: pointer;
+    transition: all .2s;
+    text-transform: uppercase;
+  }
+  .mode-btn.active-normal {
+    background: var(--normal);
+    color: #0E0E0F;
+  }
+  .mode-btn.active-roast {
+    background: var(--roast);
+    color: #fff;
+  }
+  .mode-btn:not(.active-normal):not(.active-roast):hover {
+    background: var(--surface);
+    color: var(--text);
+  }
+
+  /* CHAT AREA */
+  .chat-container {
+    flex: 1;
+    display: flex; flex-direction: column;
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 2rem;
+    gap: 0;
+  }
+  .messages {
+    flex: 1;
+    display: flex; flex-direction: column;
+    gap: 1.5rem;
+    min-height: 300px;
+    padding-bottom: 1rem;
+  }
+  .message {
+    display: flex; flex-direction: column; gap: .4rem;
+    animation: msgIn .3s ease;
+  }
+  @keyframes msgIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .message.user { align-items: flex-end; }
+  .message.kevin { align-items: flex-start; }
+
+  .msg-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: .1em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+  .msg-bubble {
+    max-width: 72%;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 15px;
+    line-height: 1.65;
+    font-weight: 300;
+  }
+  .message.user .msg-bubble {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text);
+    border-bottom-right-radius: 2px;
+  }
+  .message.kevin .msg-bubble {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text);
+    border-bottom-left-radius: 2px;
+    position: relative;
+  }
+  .message.kevin.roast-msg .msg-bubble {
+    border-color: var(--roast-dim);
+    background: var(--roast-dim);
+  }
+
+  /* KEVIN avatar */
+  .kevin-avatar {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: var(--normal);
+    color: #0E0E0F;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .kevin-avatar.roast {
+    background: var(--roast);
+    color: #fff;
+  }
+  .kevin-header {
+    display: flex; align-items: center; gap: 8px;
+  }
+
+  /* TYPING INDICATOR */
+  .typing-bubble {
+    display: none;
+    align-items: center; gap: 6px;
+    padding: 14px 18px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px; border-bottom-left-radius: 2px;
+    width: fit-content;
+  }
+  .typing-bubble.visible { display: flex; }
+  .typing-dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--muted);
+    animation: typing .9s infinite;
+  }
+  .typing-dot:nth-child(2) { animation-delay: .2s; }
+  .typing-dot:nth-child(3) { animation-delay: .4s; }
+  @keyframes typing {
+    0%, 80%, 100% { transform: scale(.6); opacity: .4; }
+    40% { transform: scale(1); opacity: 1; }
+  }
+
+  /* EMPTY STATE */
+  .empty-state {
+    flex: 1;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    gap: 1rem;
+    padding: 3rem 1rem;
+    color: var(--muted);
+  }
+  .empty-icon {
+    font-size: 3rem;
+    opacity: .4;
+    display: block;
+  }
+  .empty-title {
+    font-family: var(--font-disp);
+    font-size: 1.8rem;
+    letter-spacing: .05em;
+    color: var(--muted);
+  }
+  .empty-sub {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    max-width: 360px;
+    line-height: 1.7;
+    letter-spacing: .03em;
+  }
+
+  /* INPUT AREA */
+  .input-area {
+    display: flex; gap: 10px;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+  .chat-input {
+    flex: 1;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 300;
+    padding: 12px 16px;
+    resize: none;
+    min-height: 50px;
+    max-height: 150px;
+    outline: none;
+    transition: border-color .2s;
+    line-height: 1.5;
+  }
+  .chat-input::placeholder { color: var(--muted); }
+  .chat-input:focus { border-color: var(--normal); }
+  .chat-input.roast-mode:focus { border-color: var(--roast); }
+
+  .send-btn {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 500;
+    padding: 0 22px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background: var(--normal);
+    color: #0E0E0F;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    transition: all .2s;
+    align-self: flex-end;
+    height: 50px;
+    white-space: nowrap;
+  }
+  .send-btn:hover { filter: brightness(1.1); transform: translateY(-1px); }
+  .send-btn:active { transform: translateY(0); }
+  .send-btn.roast { background: var(--roast); color: #fff; }
+  .send-btn:disabled { opacity: .4; cursor: not-allowed; transform: none; }
+
+  /* ROAST MODE HEADER FLASH */
+  .roast-banner {
+    display: none;
+    padding: .6rem 2rem;
+    background: var(--roast);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: #fff;
+    text-align: center;
+    font-weight: 500;
+  }
+  .roast-banner.visible { display: block; }
+
+  /* FOOTER */
+  footer {
+    padding: .75rem 2rem;
+    border-top: 1px solid var(--border);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: .06em;
+    display: flex; justify-content: space-between;
+    opacity: .6;
+  }
+
+  @media (max-width: 600px) {
+    header { padding: 1.25rem; }
+    .chat-container { padding: 1.25rem; }
+    .mode-bar { padding: .75rem 1.25rem; }
+    .msg-bubble { max-width: 88%; }
+  }
+</style>
+</head>
+<body>
+
+<div class="roast-banner" id="roastBanner">
+  ⚠ ROAST MODUS AKTIV — KEVIN HAT KEINE HEMMUNGEN MEHR ⚠
+</div>
+
+<header>
+  <div class="header-left">
+    <h1>Kollegen<span>hölle</span></h1>
+    <p class="header-sub">Dein passiv-aggressiver KI-Kollege · powered by Kevin™</p>
+  </div>
+  <div class="kevin-status">
+    <span class="status-dot"></span>
+    <span>KEVIN ist leider anwesend</span>
+  </div>
+</header>
+
+<div class="mode-bar">
+  <span class="mode-label">Modus:</span>
+  <div class="mode-toggle">
+    <button class="mode-btn active-normal" id="btnNormal" onclick="setMode('normal')">😒 Normal</button>
+    <button class="mode-btn" id="btnRoast" onclick="setMode('roast')">🔥 Roast</button>
+  </div>
+</div>
+
+<div class="chat-container">
+  <div class="messages" id="messages">
+    <div class="empty-state" id="emptyState">
+      <span class="empty-icon">😑</span>
+      <p class="empty-title">Kevin wartet.</p>
+      <p class="empty-sub">Schreib irgendetwas. Kevin wird es mit der ihm eigenen Begeisterung beantworten.</p>
+    </div>
+  </div>
+
+  <div class="message kevin" id="typingMsg" style="display:none">
+    <div class="kevin-header">
+      <div class="kevin-avatar" id="typingAvatar">K</div>
+      <span class="msg-label">Kevin tippt...</span>
+    </div>
+    <div class="typing-bubble visible">
+      <div class="typing-dot"></div>
+      <div class="typing-dot"></div>
+      <div class="typing-dot"></div>
+    </div>
+  </div>
+
+  <div class="input-area">
+    <textarea
+      class="chat-input"
+      id="chatInput"
+      placeholder="Schreib Kevin etwas... er freut sich bestimmt."
+      rows="1"
+      onkeydown="handleKey(event)"
+      oninput="autoResize(this)"
+    ></textarea>
+    <button class="send-btn" id="sendBtn" onclick="sendMessage()">Senden →</button>
+  </div>
+</div>
+
+<footer>
+  <span>Kollegenhölle v1.0 — alle Ähnlichkeiten mit echten Kollegen sind beabsichtigt</span>
+  <span>Kevin™ GmbH & Co. KG i. Gründung</span>
+</footer>
+
+<script>
+  let currentMode = 'normal';
+  let isLoading = false;
+  let history = [];
+
+  function setMode(mode) {
+    currentMode = mode;
+    const btnNormal = document.getElementById('btnNormal');
+    const btnRoast = document.getElementById('btnRoast');
+    const sendBtn = document.getElementById('sendBtn');
+    const input = document.getElementById('chatInput');
+    const banner = document.getElementById('roastBanner');
+    const typingAvatar = document.getElementById('typingAvatar');
+
+    btnNormal.className = 'mode-btn' + (mode === 'normal' ? ' active-normal' : '');
+    btnRoast.className = 'mode-btn' + (mode === 'roast' ? ' active-roast' : '');
+    sendBtn.className = 'send-btn' + (mode === 'roast' ? ' roast' : '');
+    input.className = 'chat-input' + (mode === 'roast' ? ' roast-mode' : '');
+    banner.className = 'roast-banner' + (mode === 'roast' ? ' visible' : '');
+    typingAvatar.className = 'kevin-avatar' + (mode === 'roast' ? ' roast' : '');
+
+    input.placeholder = mode === 'roast'
+      ? '🔥 Schreib etwas... wenn du dich traust.'
+      : 'Schreib Kevin etwas... er freut sich bestimmt.';
+  }
+
+  function autoResize(el) {
+    el.style.height = 'auto';
+    el.style.height = Math.min(el.scrollHeight, 150) + 'px';
+  }
+
+  function handleKey(e) {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
+    }
+  }
+
+  function hideEmpty() {
+    const empty = document.getElementById('emptyState');
+    if (empty) empty.remove();
+  }
+
+  function appendMessage(role, text, mode) {
+    hideEmpty();
+    const msgs = document.getElementById('messages');
+    const div = document.createElement('div');
+    div.className = 'message ' + role + (role === 'kevin' && mode === 'roast' ? ' roast-msg' : '');
+
+    if (role === 'user') {
+      div.innerHTML = `
+        <span class="msg-label">Du</span>
+        <div class="msg-bubble">${escHtml(text)}</div>
+      `;
+    } else {
+      div.innerHTML = `
+        <div class="kevin-header">
+          <div class="kevin-avatar ${mode === 'roast' ? 'roast' : ''}">K</div>
+          <span class="msg-label">Kevin</span>
+        </div>
+        <div class="msg-bubble">${escHtml(text)}</div>
+      `;
+    }
+    msgs.appendChild(div);
+    div.scrollIntoView({ behavior: 'smooth', block: 'end' });
+  }
+
+  function escHtml(str) {
+    return str
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/\n/g, '<br>');
+  }
+
+  async function sendMessage() {
+    const input = document.getElementById('chatInput');
+    const sendBtn = document.getElementById('sendBtn');
+    const typingMsg = document.getElementById('typingMsg');
+    const msg = input.value.trim();
+
+    if (!msg || isLoading) return;
+
+    isLoading = true;
+    sendBtn.disabled = true;
+    input.value = '';
+    input.style.height = 'auto';
+
+    appendMessage('user', msg, currentMode);
+    history.push({ role: 'user', content: msg });
+
+    typingMsg.style.display = 'flex';
+    typingMsg.scrollIntoView({ behavior: 'smooth', block: 'end' });
+
+    try {
+      const res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: msg, history: history.slice(-6), mode: currentMode })
+      });
+
+      const data = await res.json();
+      typingMsg.style.display = 'none';
+
+      const reply = data.reply || '*Kevin hat die Frage mit einem Augenrollen quittiert und keine Antwort gegeben.*';
+      appendMessage('kevin', reply, currentMode);
+      history.push({ role: 'assistant', content: reply });
+
+      if (history.length > 20) history = history.slice(-20);
+
+    } catch (err) {
+      typingMsg.style.display = 'none';
+      appendMessage('kevin', '*Kevin starrt dich an. Dann sagt er: „Die API ist down. Natürlich. Wie mein Wille zu leben." Technischer Fehler – bitte nochmal versuchen.', currentMode);
+    }
+
+    isLoading = false;
+    sendBtn.disabled = false;
+    input.focus();
+  }
+</script>
+</body>
+</html>
