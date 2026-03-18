@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Kollegenhölle 🔥</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
 :root{
 --bg:#0A0A0B;
@@ -22,57 +22,90 @@
 --muted2:#55555C;
 --normal:#FFE500;
 --roast:#FF3B30;
---font-disp:'Bebas Neue',sans-serif;
---font-mono:'IBM Plex Mono',monospace;
---font-body:'IBM Plex Sans',sans-serif;
 }
 
 body{
+margin:0;
 background:var(--bg);
 color:var(--text);
-font-family:var(--font-body);
-height:100vh;
+font-family:'IBM Plex Sans';
 display:flex;
 flex-direction:column;
+height:100vh;
 }
 
 header{
-padding:.9rem 1.5rem;
-border-bottom:1px solid var(--border);
 display:flex;
 justify-content:space-between;
-align-items:center;
+padding:16px;
+border-bottom:1px solid var(--border);
 }
 
 h1{
-font-family:var(--font-disp);
-font-size:2.2rem;
+font-family:'Bebas Neue';
 letter-spacing:.05em;
+font-size:34px;
 }
 
 h1 span{color:var(--normal)}
 
-.kevin-status{
-font-family:var(--font-mono);
+.status{
+font-family:'IBM Plex Mono';
 font-size:11px;
 color:var(--muted);
 }
 
+.mode-bar{
+padding:10px 16px;
+border-bottom:1px solid var(--border);
+display:flex;
+gap:10px;
+}
+
+.mode-btn{
+font-family:'IBM Plex Mono';
+font-size:11px;
+padding:6px 16px;
+border-radius:6px;
+border:1px solid var(--border2);
+background:none;
+color:var(--muted);
+cursor:pointer;
+}
+
+.mode-btn.active{
+background:var(--normal);
+color:#000;
+}
+
+.mode-btn.roast.active{
+background:var(--roast);
+color:#fff;
+}
+
 #liveCounter{
-font-family:var(--font-mono);
+font-family:'IBM Plex Mono';
 font-size:10px;
 padding:6px 16px;
 border-bottom:1px solid var(--border);
 color:var(--muted2);
 }
 
-.chat-scroll{
+.feed{
+font-family:'IBM Plex Mono';
+font-size:11px;
+padding:6px 16px;
+border-bottom:1px solid var(--border);
+color:var(--muted);
+}
+
+.chat{
 flex:1;
-overflow-y:auto;
+overflow:auto;
 padding:20px;
 }
 
-.chat-inner{
+.messages{
 max-width:760px;
 margin:auto;
 display:flex;
@@ -80,35 +113,20 @@ flex-direction:column;
 gap:16px;
 }
 
-.message{
-display:flex;
-flex-direction:column;
-gap:4px;
-}
-
-.message.user{align-items:flex-end}
-.message.kevin{align-items:flex-start}
-
-.msg-label{
-font-family:var(--font-mono);
-font-size:9px;
-color:var(--muted2);
-}
-
-.msg-bubble{
+.msg{
+max-width:70%;
 padding:12px 14px;
 border-radius:10px;
-max-width:70%;
-font-size:15px;
-line-height:1.6;
+font-size:14px;
 }
 
-.message.user .msg-bubble{
+.user{
+align-self:flex-end;
 background:var(--surface2);
 border:1px solid var(--border2);
 }
 
-.message.kevin .msg-bubble{
+.kevin{
 background:var(--surface);
 border:1px solid var(--border);
 }
@@ -126,34 +144,41 @@ max-width:760px;
 margin:auto;
 }
 
-.chat-input{
+textarea{
 flex:1;
 background:var(--bg);
 border:1px solid var(--border2);
 color:var(--text);
 border-radius:8px;
-padding:12px;
+padding:10px;
 font-size:14px;
 }
 
-.send-btn{
+button.send{
 background:var(--normal);
 border:none;
-padding:0 22px;
+padding:0 20px;
 border-radius:8px;
-font-family:var(--font-mono);
+font-family:'IBM Plex Mono';
 cursor:pointer;
 }
 
-.share-btn{
-margin-top:6px;
-font-size:9px;
+.donate{
+position:fixed;
+right:20px;
+bottom:20px;
+border:1px solid #F5A623;
+color:#F5A623;
 background:none;
-border:1px solid var(--border2);
-color:var(--muted2);
+padding:6px 12px;
 border-radius:20px;
-padding:3px 10px;
 cursor:pointer;
+font-family:'IBM Plex Mono';
+}
+
+.donate:hover{
+background:#F5A623;
+color:#000;
 }
 
 </style>
@@ -162,136 +187,73 @@ cursor:pointer;
 <body>
 
 <header>
-<h1>Kollegen<span>hölle</span></h1>
-<div class="kevin-status">Kevin ist leider anwesend</div>
+<h1>KOLLEGEN<span>HÖLLE</span></h1>
+<div class="status">● Kevin ist leider anwesend</div>
 </header>
 
-<div id="liveCounter">
-23 Kollegen beschweren sich gerade über ihre Arbeit
+<div class="mode-bar">
+<button class="mode-btn active" id="normalBtn">😒 NORMAL</button>
+<button class="mode-btn roast" id="roastBtn">🔥 ROAST</button>
 </div>
 
-<div class="chat-scroll" id="chatScroll">
-<div class="chat-inner" id="chatInner"></div>
+<div id="liveCounter">23 Kollegen beschweren sich gerade über ihre Arbeit</div>
+
+<div class="feed" id="feed">
+Feed lädt...
+</div>
+
+<div class="chat">
+<div class="messages" id="messages"></div>
 </div>
 
 <div class="input-bar">
 <div class="input-inner">
-<textarea id="chatInput" class="chat-input" placeholder="Schreib Kevin etwas..."></textarea>
-<button class="send-btn" onclick="sendMessage()">Senden</button>
+<textarea id="input" placeholder="Schreib Kevin etwas..."></textarea>
+<button class="send" onclick="send()">Senden →</button>
 </div>
 </div>
+
+<button class="donate" onclick="donate()">☕ Spende</button>
 
 <script>
 
-const API_URL="/api/chat"
+const API="/api/chat"
+const FEED="/api/feed"
 
+let mode="normal"
 let history=[]
-let isLoading=false
-let lastUserMsg=""
+let complaints=localStorage.getItem("complaints")||0
 
-let complaintCount=localStorage.getItem("complaints")||0
-
-let colleagues=JSON.parse(localStorage.getItem("colleagueStats")||"{}")
-
-const chatInner=document.getElementById("chatInner")
-
-function escHtml(t){
-return String(t)
-.replace(/&/g,"&amp;")
-.replace(/</g,"&lt;")
-.replace(/>/g,"&gt;")
+document.getElementById("normalBtn").onclick=()=>{
+mode="normal"
+toggle()
 }
 
-function addMessage(role,text){
+document.getElementById("roastBtn").onclick=()=>{
+mode="roast"
+toggle()
+}
+
+function toggle(){
+document.getElementById("normalBtn").classList.toggle("active",mode==="normal")
+document.getElementById("roastBtn").classList.toggle("active",mode==="roast")
+}
+
+function add(role,text){
 
 const div=document.createElement("div")
-div.className="message "+role
+div.className="msg "+role
+div.innerText=text
 
-if(role==="user"){
+document.getElementById("messages").appendChild(div)
 
-lastUserMsg=text
-
-div.innerHTML=`
-<span class="msg-label">Du</span>
-<div class="msg-bubble">${escHtml(text)}</div>
-`
-
-}else{
-
-div.innerHTML=`
-<span class="msg-label">Kevin</span>
-<div class="msg-bubble">${escHtml(text)}</div>
-<button class="share-btn" onclick="shareMessage('${text.replace(/'/g,"")}')">↗ Teilen</button>
-`
-}
-
-chatInner.appendChild(div)
-
-scrollBottom()
-}
-
-function scrollBottom(){
-const s=document.getElementById("chatScroll")
-s.scrollTop=s.scrollHeight
-}
-
-function shareMessage(reply){
-
-const text=`Ich zu Kevin:
-
-"${lastUserMsg}"
-
-Kevin:
-
-"${reply}"
-
-😑 https://kollegenhoelle.vercel.app`
-
-navigator.clipboard.writeText(text)
+window.scrollTo(0,document.body.scrollHeight)
 
 }
 
-function extractColleague(text){
+async function send(){
 
-const names=["rené","rene","chef","thomas","sabine","it","hr"]
-
-for(let n of names){
-
-if(text.toLowerCase().includes(n)){
-colleagues[n]=(colleagues[n]||0)+1
-localStorage.setItem("colleagueStats",JSON.stringify(colleagues))
-}
-
-}
-
-}
-
-function updateCounter(){
-
-let base=18+Math.floor(Math.random()*15)
-
-setInterval(()=>{
-
-base+=Math.floor(Math.random()*5)-2
-
-if(base<12)base=12
-if(base>45)base=45
-
-document.getElementById("liveCounter").innerText=
-base+" Kollegen beschweren sich gerade über ihre Arbeit • "+
-complaintCount+" Beschwerden heute"
-
-},4000)
-
-}
-
-updateCounter()
-
-async function sendMessage(){
-
-if(isLoading)return
-
-const input=document.getElementById("chatInput")
+const input=document.getElementById("input")
 
 const msg=input.value.trim()
 
@@ -299,46 +261,85 @@ if(!msg)return
 
 input.value=""
 
-addMessage("user",msg)
+add("user",msg)
 
-history.push({role:"user",content:msg})
-
-extractColleague(msg)
-
-complaintCount++
-localStorage.setItem("complaints",complaintCount)
-
-isLoading=true
+complaints++
+localStorage.setItem("complaints",complaints)
 
 try{
 
-const res=await fetch(API_URL,{
+const r=await fetch(API,{
 method:"POST",
-headers:{"Content-Type":"application/json"},
+headers:{'Content-Type':'application/json'},
 body:JSON.stringify({
 message:msg,
 history:history.slice(-6),
-mode:"normal"
+mode
 })
 })
 
-const data=await res.json()
+const d=await r.json()
 
-const reply=data.reply||"Kevin schaut dich nur müde an."
+add("kevin",d.reply||"Kevin schaut dich müde an.")
 
-addMessage("kevin",reply)
+history.push({role:"user",content:msg})
+history.push({role:"assistant",content:d.reply})
 
-history.push({role:"assistant",content:reply})
+}catch{
 
-}catch(e){
+add("kevin","Kevin seufzt. Natürlich funktioniert die API nicht.")
 
-addMessage("kevin","Kevin seufzt. Natürlich funktioniert die API wieder nicht.")
+}
 
 }
 
-isLoading=false
+function donate(){
+
+window.open("https://paypal.me/sebastianledwinka","_blank")
 
 }
+
+function fakeVisitors(){
+
+let base=20
+
+setInterval(()=>{
+
+base+=Math.floor(Math.random()*5)-2
+
+if(base<10)base=10
+if(base>50)base=50
+
+document.getElementById("liveCounter").innerText=
+base+" Kollegen beschweren sich gerade über ihre Arbeit • "+complaints+" Beschwerden heute"
+
+},4000)
+
+}
+
+fakeVisitors()
+
+async function loadFeed(){
+
+try{
+
+const r=await fetch(FEED)
+
+const data=await r.json()
+
+document.getElementById("feed").innerText=data.slice(0,3).join(" • ")
+
+}catch{
+
+document.getElementById("feed").innerText=
+"Tom: Chef klaut Ideen • Lisa: IT antwortet nicht • Marc: Meeting hätte eine Mail sein können"
+
+}
+
+}
+
+setInterval(loadFeed,6000)
+loadFeed()
 
 </script>
 
