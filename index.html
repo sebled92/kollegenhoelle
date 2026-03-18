@@ -4,331 +4,404 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Kollegenhölle 🔥</title>
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-
 <style>
-
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
 :root{
---bg:#0A0A0B;
---surface:#141416;
---surface2:#1C1C1F;
---border:#252529;
---border2:#32323A;
---text:#EDEBE4;
---muted:#7A7A84;
---muted2:#55555C;
---normal:#FFE500;
---roast:#FF3B30;
---roast-dim:#2A0E0C;
---font-disp:'Bebas Neue',sans-serif;
---font-mono:'IBM Plex Mono',monospace;
---font-body:'IBM Plex Sans',sans-serif;
+  --bg:#0A0A0B;
+  --surface:#141416;
+  --surface2:#1C1C1F;
+  --border:#252529;
+  --border2:#32323A;
+  --text:#EDEBE4;
+  --muted:#7A7A84;
+  --muted2:#55555C;
+  --normal:#FFE500;
+  --roast:#FF3B30;
+  --roast-dim:#2A0E0C;
+  --font-disp:'Bebas Neue',sans-serif;
+  --font-mono:'IBM Plex Mono',monospace;
+  --font-body:'IBM Plex Sans',sans-serif;
 }
 
 html,body{height:100%;overflow:hidden}
 
 body{
-font-family:var(--font-body);
-background:var(--bg);
-color:var(--text);
-display:flex;
-flex-direction:column;
+  font-family:var(--font-body);
+  background:var(--bg);
+  color:var(--text);
+  display:flex;
+  flex-direction:column;
+}
+
+/* SCANLINES */
+body::before{
+  content:'';
+  position:fixed;inset:0;z-index:997;pointer-events:none;
+  background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,.05) 3px,rgba(0,0,0,.05) 4px);
 }
 
 /* HEADER */
-
 header{
-padding:.9rem 1.5rem;
-border-bottom:1px solid var(--border);
-display:flex;
-align-items:center;
-justify-content:space-between;
-background:var(--bg);
+  flex-shrink:0;
+  padding:.9rem 1.5rem;
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  background:var(--bg);
 }
-
 h1{
-font-family:var(--font-disp);
-font-size:2.6rem;
-letter-spacing:.05em;
-text-transform:uppercase;
+  font-family:var(--font-disp);
+  font-size:clamp(1.8rem,4vw,2.8rem);
+  letter-spacing:.05em;
+  text-transform:uppercase;
 }
-
-h1 span{
-color:var(--normal);
-}
+h1 span{color:var(--normal);animation:flicker 5s infinite;}
+@keyframes flicker{0%,94%,100%{opacity:1}95%{opacity:.3}96.5%{opacity:1}97.5%{opacity:.1}99%{opacity:1}}
 
 .kevin-status{
-font-family:var(--font-mono);
-font-size:11px;
-color:var(--muted);
-display:flex;
-align-items:center;
-gap:6px;
+  font-family:var(--font-mono);font-size:11px;color:var(--muted);
+  display:flex;align-items:center;gap:6px;
 }
-
 .status-dot{
-width:7px;
-height:7px;
-border-radius:50%;
-background:#4CAF50;
+  width:7px;height:7px;border-radius:50%;background:#4CAF50;
+  animation:pulse-dot 2.5s infinite;
 }
+@keyframes pulse-dot{0%,100%{opacity:1}50%{opacity:.2}}
+
+/* ROAST BANNER */
+.roast-banner{
+  display:none;flex-shrink:0;
+  padding:4px 1.5rem;
+  background:var(--roast);
+  font-family:var(--font-mono);font-size:10px;
+  letter-spacing:.14em;text-transform:uppercase;
+  color:#fff;text-align:center;font-weight:500;
+}
+.roast-banner.visible{display:block;}
+
+/* MODE BAR */
+.mode-bar{
+  flex-shrink:0;
+  display:flex;align-items:center;gap:12px;
+  padding:.5rem 1.5rem;
+  border-bottom:1px solid var(--border);
+  background:var(--surface);
+}
+.mode-label{
+  font-family:var(--font-mono);font-size:10px;
+  color:var(--muted2);letter-spacing:.12em;text-transform:uppercase;
+}
+.mode-toggle{
+  display:flex;border:1px solid var(--border2);
+  border-radius:6px;overflow:hidden;
+}
+.mode-btn{
+  font-family:var(--font-mono);font-size:11px;font-weight:500;
+  letter-spacing:.08em;padding:6px 16px;
+  background:transparent;color:var(--muted);
+  border:none;cursor:pointer;transition:all .18s;text-transform:uppercase;
+}
+.mode-btn.active-normal{background:var(--normal);color:#0A0A0B;}
+.mode-btn.active-roast{background:var(--roast);color:#fff;}
+.mode-btn:not(.active-normal):not(.active-roast):hover{background:var(--surface2);color:var(--text);}
 
 /* LIVE COUNTER */
-
 #liveCounter{
-font-family:var(--font-mono);
-font-size:10px;
-padding:6px 12px;
-color:var(--muted2);
-border-bottom:1px solid var(--border);
+  flex-shrink:0;
+  font-family:var(--font-mono);font-size:10px;
+  padding:5px 1.5rem;color:var(--muted2);
+  border-bottom:1px solid var(--border);
 }
 
 /* CHAT */
-
 .chat-scroll{
-flex:1;
-overflow-y:auto;
-padding:1.2rem 1.5rem;
+  flex:1;overflow-y:auto;
+  padding:1.2rem 1.5rem;
 }
+.chat-scroll::-webkit-scrollbar{width:3px;}
+.chat-scroll::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px;}
 
 .chat-inner{
-max-width:760px;
-margin:0 auto;
-display:flex;
-flex-direction:column;
-gap:1rem;
+  max-width:760px;margin:0 auto;
+  display:flex;flex-direction:column;gap:1rem;
+  min-height:100%;
 }
 
-.message{
-display:flex;
-flex-direction:column;
-gap:4px;
+/* EMPTY STATE */
+.empty-state{
+  flex:1;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  text-align:center;gap:.75rem;
+  padding:2rem 1rem;min-height:180px;
 }
+.empty-icon{font-size:2.2rem;opacity:.25;}
+.empty-title{font-family:var(--font-disp);font-size:1.9rem;letter-spacing:.06em;color:var(--muted);}
+.empty-sub{font-family:var(--font-mono);font-size:11px;color:var(--muted2);max-width:320px;line-height:1.8;letter-spacing:.03em;}
 
-.message.user{
-align-items:flex-end;
-}
+/* MESSAGES */
+.message{display:flex;flex-direction:column;gap:4px;animation:msgIn .22s ease;}
+@keyframes msgIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+.message.user{align-items:flex-end;}
+.message.kevin{align-items:flex-start;}
 
-.message.kevin{
-align-items:flex-start;
-}
-
-.msg-label{
-font-family:var(--font-mono);
-font-size:9px;
-color:var(--muted2);
-}
-
+.msg-label{font-family:var(--font-mono);font-size:9px;color:var(--muted2);letter-spacing:.1em;padding:0 4px;}
 .msg-bubble{
-max-width:68%;
-padding:10px 14px;
-border-radius:10px;
-font-size:14px;
-line-height:1.6;
+  max-width:68%;padding:10px 14px;border-radius:10px;
+  font-size:14.5px;line-height:1.65;font-weight:300;
 }
+.message.user .msg-bubble{background:var(--surface2);border:1px solid var(--border2);border-bottom-right-radius:3px;}
+.message.kevin .msg-bubble{background:var(--surface);border:1px solid var(--border);border-bottom-left-radius:3px;}
+.message.kevin.roast-msg .msg-bubble{background:var(--roast-dim);border-color:#4A1512;}
 
-.message.user .msg-bubble{
-background:#2a2a2f;
-border:1px solid var(--border2);
-}
-
-.message.kevin .msg-bubble{
-background:var(--surface);
-border:1px solid var(--border);
-}
-
+.kevin-header{display:flex;align-items:center;gap:7px;}
 .kevin-avatar{
-width:24px;
-height:24px;
-border-radius:50%;
-background:var(--normal);
-color:#000;
-font-family:var(--font-mono);
-font-size:10px;
-display:flex;
-align-items:center;
-justify-content:center;
+  width:24px;height:24px;border-radius:50%;
+  background:var(--normal);color:#0A0A0B;
+  font-family:var(--font-mono);font-size:10px;font-weight:500;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
 }
+.kevin-avatar.roast{background:var(--roast);color:#fff;}
+
+/* TYPING */
+#typingMsg{display:none;}
+.typing-bubble{
+  display:flex;align-items:center;gap:5px;
+  padding:11px 15px;
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:10px;border-bottom-left-radius:3px;width:fit-content;
+}
+.typing-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--muted2);animation:bounce .9s infinite;
+}
+.typing-dot:nth-child(2){animation-delay:.18s}
+.typing-dot:nth-child(3){animation-delay:.36s}
+@keyframes bounce{0%,80%,100%{transform:translateY(0);opacity:.35}40%{transform:translateY(-5px);opacity:1}}
 
 /* INPUT */
-
 .input-bar{
-background:var(--surface);
-border-top:1px solid var(--border);
-padding:.7rem 1.5rem;
+  flex-shrink:0;
+  background:var(--surface);border-top:1px solid var(--border);
+  padding:.7rem 1.5rem;
 }
-
-.input-inner{
-max-width:760px;
-margin:0 auto;
-display:flex;
-gap:8px;
-}
-
+.input-inner{max-width:760px;margin:0 auto;display:flex;gap:8px;align-items:flex-end;}
 .chat-input{
-flex:1;
-background:var(--bg);
-border:1px solid var(--border2);
-border-radius:8px;
-color:var(--text);
-padding:10px 14px;
-resize:none;
-min-height:44px;
+  flex:1;background:var(--bg);
+  border:1px solid var(--border2);border-radius:8px;
+  color:var(--text);font-family:var(--font-body);
+  font-size:14px;font-weight:300;
+  padding:10px 14px;resize:none;
+  min-height:44px;max-height:120px;
+  outline:none;transition:border-color .2s;line-height:1.5;
 }
+.chat-input::placeholder{color:var(--muted2);}
+.chat-input:focus{border-color:var(--normal);}
+.chat-input.roast-mode:focus{border-color:var(--roast);}
 
 .send-btn{
-font-family:var(--font-mono);
-font-size:12px;
-padding:0 20px;
-border:none;
-border-radius:8px;
-cursor:pointer;
-background:var(--normal);
-height:44px;
+  font-family:var(--font-mono);font-size:12px;font-weight:500;
+  padding:0 20px;border:none;border-radius:8px;
+  cursor:pointer;background:var(--normal);color:#0A0A0B;
+  letter-spacing:.06em;text-transform:uppercase;
+  transition:all .18s;height:44px;white-space:nowrap;flex-shrink:0;
+}
+.send-btn:hover{filter:brightness(1.1);transform:translateY(-1px);}
+.send-btn:active{transform:translateY(0);}
+.send-btn.roast{background:var(--roast);color:#fff;}
+.send-btn:disabled{opacity:.3;cursor:not-allowed;transform:none;filter:none;}
+
+/* FOOTER */
+.footer-bar{
+  flex-shrink:0;padding:.35rem 1.5rem;
+  border-top:1px solid var(--border);
+  font-family:var(--font-mono);font-size:9px;color:var(--muted2);
+  letter-spacing:.06em;display:flex;justify-content:space-between;
+  background:var(--bg);
 }
 
+@media(max-width:580px){
+  header{padding:.65rem 1rem;}
+  .chat-scroll{padding:1rem;}
+  .input-bar{padding:.65rem 1rem;}
+  .msg-bubble{max-width:84%;font-size:14px;}
+  .footer-bar{display:none;}
+}
 </style>
 </head>
-
 <body>
 
 <header>
-<h1>Kollegen<span>hölle</span></h1>
-<div class="kevin-status">
-<span class="status-dot"></span>
-<span>Kevin ist leider anwesend</span>
-</div>
+  <h1>Kollegen<span>hölle</span></h1>
+  <div class="kevin-status">
+    <span class="status-dot"></span>
+    <span>Kevin ist leider anwesend</span>
+  </div>
 </header>
 
-<!-- LIVE COUNTER -->
-<div id="liveCounter">
-23 Kollegen beschweren sich gerade über ihre Arbeit
+<div class="roast-banner" id="roastBanner">
+  ⚠ ROAST MODUS AKTIV — KEVIN HAT KEINE HEMMUNGEN MEHR ⚠
 </div>
 
+<div class="mode-bar">
+  <span class="mode-label">Modus:</span>
+  <div class="mode-toggle">
+    <button class="mode-btn active-normal" id="btnNormal" onclick="setMode('normal')">😒 Normal</button>
+    <button class="mode-btn" id="btnRoast" onclick="setMode('roast')">🔥 Roast</button>
+  </div>
+</div>
+
+<div id="liveCounter">23 Kollegen beschweren sich gerade über ihre Arbeit</div>
+
 <div class="chat-scroll" id="chatScroll">
-<div class="chat-inner" id="chatInner"></div>
+  <div class="chat-inner" id="chatInner">
+
+    <div class="empty-state" id="emptyState">
+      <span class="empty-icon">😑</span>
+      <p class="empty-title">Kevin wartet.</p>
+      <p class="empty-sub">Schreib irgendetwas. Kevin wird es mit der ihm eigenen Begeisterung beantworten.</p>
+    </div>
+
+    <div class="message kevin" id="typingMsg">
+      <div class="kevin-header">
+        <div class="kevin-avatar" id="typingAvatar">K</div>
+        <span class="msg-label">Kevin tippt...</span>
+      </div>
+      <div class="typing-bubble">
+        <div class="typing-dot"></div>
+        <div class="typing-dot"></div>
+        <div class="typing-dot"></div>
+      </div>
+    </div>
+
+  </div>
 </div>
 
 <div class="input-bar">
-<div class="input-inner">
-
-<textarea
-class="chat-input"
-id="chatInput"
-placeholder="Schreib Kevin etwas..."
-rows="1"
-onkeydown="handleKey(event)"
-></textarea>
-
-<button class="send-btn" onclick="sendMessage()">Senden →</button>
-
+  <div class="input-inner">
+    <textarea
+      class="chat-input" id="chatInput"
+      placeholder="Schreib Kevin etwas... er freut sich bestimmt."
+      rows="1" onkeydown="handleKey(event)" oninput="autoResize(this)"
+    ></textarea>
+    <button class="send-btn" id="sendBtn" onclick="sendMessage()">Senden →</button>
+  </div>
 </div>
+
+<div class="footer-bar">
+  <span>Kollegenhölle v1.0 — alle Ähnlichkeiten mit echten Kollegen sind beabsichtigt</span>
+  <span>powered by Sebastian™</span>
 </div>
 
 <script>
+  let currentMode = 'normal';
+  let isLoading = false;
+  let history = [];
+  const chatInner = document.getElementById('chatInner');
+  const typingMsg = document.getElementById('typingMsg');
 
-let history=[]
-let isLoading=false
+  function setMode(mode) {
+    currentMode = mode;
+    document.getElementById('btnNormal').className = 'mode-btn' + (mode === 'normal' ? ' active-normal' : '');
+    document.getElementById('btnRoast').className  = 'mode-btn' + (mode === 'roast'  ? ' active-roast'  : '');
+    document.getElementById('sendBtn').className   = 'send-btn' + (mode === 'roast'  ? ' roast' : '');
+    document.getElementById('chatInput').className = 'chat-input' + (mode === 'roast' ? ' roast-mode' : '');
+    document.getElementById('roastBanner').className = 'roast-banner' + (mode === 'roast' ? ' visible' : '');
+    document.getElementById('typingAvatar').className = 'kevin-avatar' + (mode === 'roast' ? ' roast' : '');
+    document.getElementById('chatInput').placeholder = mode === 'roast'
+      ? '🔥 Schreib etwas... wenn du dich traust.'
+      : 'Schreib Kevin etwas... er freut sich bestimmt.';
+  }
 
-function escHtml(s){
-if(!s)return''
-return String(s)
-.replace(/&/g,'&amp;')
-.replace(/</g,'&lt;')
-.replace(/>/g,'&gt;')
-.replace(/\n/g,'<br>')
-}
+  function autoResize(el) {
+    el.style.height = 'auto';
+    el.style.height = Math.min(el.scrollHeight, 120) + 'px';
+  }
 
-function appendMessage(role,text){
+  function handleKey(e) {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+  }
 
-const div=document.createElement('div')
-div.className='message '+role
+  function scrollToBottom() {
+    const s = document.getElementById('chatScroll');
+    s.scrollTop = s.scrollHeight;
+  }
 
-if(role==='user'){
-div.innerHTML=`<span class="msg-label">Du</span>
-<div class="msg-bubble">${escHtml(text)}</div>`
-}else{
-div.innerHTML=`<span class="msg-label">Kevin</span>
-<div class="msg-bubble">${escHtml(text)}</div>`
-}
+  function hideEmpty() {
+    const e = document.getElementById('emptyState');
+    if (e) e.remove();
+  }
 
-document.getElementById('chatInner').appendChild(div)
-scrollToBottom()
+  function escHtml(s) {
+    return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
+  }
 
-}
+  function appendMessage(role, text, mode) {
+    hideEmpty();
+    const div = document.createElement('div');
+    div.className = 'message ' + role + (role === 'kevin' && mode === 'roast' ? ' roast-msg' : '');
+    if (role === 'user') {
+      div.innerHTML = `<span class="msg-label">Du</span><div class="msg-bubble">${escHtml(text)}</div>`;
+    } else {
+      div.innerHTML = `
+        <div class="kevin-header">
+          <div class="kevin-avatar ${mode === 'roast' ? 'roast' : ''}">K</div>
+          <span class="msg-label">Kevin</span>
+        </div>
+        <div class="msg-bubble">${escHtml(text)}</div>`;
+    }
+    chatInner.insertBefore(div, typingMsg);
+    scrollToBottom();
+  }
 
-function scrollToBottom(){
-const s=document.getElementById('chatScroll')
-s.scrollTop=s.scrollHeight
-}
+  async function sendMessage() {
+    const input = document.getElementById('chatInput');
+    const sendBtn = document.getElementById('sendBtn');
+    const msg = input.value.trim();
+    if (!msg || isLoading) return;
 
-function handleKey(e){
-if(e.key==='Enter'&&!e.shiftKey){
-e.preventDefault()
-sendMessage()
-}
-}
+    isLoading = true;
+    sendBtn.disabled = true;
+    input.value = '';
+    input.style.height = 'auto';
 
-async function sendMessage(){
+    appendMessage('user', msg, currentMode);
+    history.push({ role: 'user', content: msg });
 
-const input=document.getElementById('chatInput')
-const msg=input.value.trim()
+    typingMsg.style.display = 'flex';
+    scrollToBottom();
 
-if(!msg||isLoading)return
+    try {
+      const res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: msg, history: history.slice(-6), mode: currentMode })
+      });
+      const data = await res.json();
+      typingMsg.style.display = 'none';
+      const reply = data.reply || '*Kevin hat die Frage mit einem Augenrollen quittiert.*';
+      appendMessage('kevin', reply, currentMode);
+      history.push({ role: 'assistant', content: reply });
+      if (history.length > 20) history = history.slice(-20);
+    } catch (err) {
+      typingMsg.style.display = 'none';
+      appendMessage('kevin', '*Kevin starrt dich an. Die API ist down. Natuerlich. Wie mein Wille zu leben.*', currentMode);
+    }
 
-appendMessage('user',msg)
+    isLoading = false;
+    sendBtn.disabled = false;
+    input.focus();
+  }
 
-input.value=''
-
-try{
-
-const res=await fetch('/api/chat',{
-method:'POST',
-headers:{'Content-Type':'application/json'},
-body:JSON.stringify({message:msg})
-})
-
-const data=await res.json()
-
-appendMessage('kevin',data.reply||'Kevin schaut nur kurz müde.')
-
-}catch{
-
-appendMessage('kevin','Kevin seufzt. Natürlich funktioniert die API wieder nicht.')
-
-}
-
-}
-
-/* FAKE VISITORS */
-
-function startFakeVisitors(){
-
-let base = 18 + Math.floor(Math.random()*15)
-
-setInterval(()=>{
-
-let change = Math.floor(Math.random()*5) - 2
-
-base += change
-
-if(base < 12) base = 12
-if(base > 45) base = 45
-
-document.getElementById("liveCounter").innerText =
-base + " Kollegen beschweren sich gerade über ihre Arbeit"
-
-},4000)
-
-}
-
-startFakeVisitors()
-
+  /* FAKE VISITORS */
+  let base = 18 + Math.floor(Math.random() * 15);
+  setInterval(() => {
+    base += Math.floor(Math.random() * 5) - 2;
+    if (base < 12) base = 12;
+    if (base > 45) base = 45;
+    document.getElementById('liveCounter').innerText = base + ' Kollegen beschweren sich gerade über ihre Arbeit';
+  }, 4000);
 </script>
-
 </body>
 </html>
