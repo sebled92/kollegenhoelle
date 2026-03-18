@@ -102,15 +102,13 @@ const messages = [
         'Authorization': `Bearer ${apiKey}`,
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({
-        model: 'sonar',
-        messages: messages,
-        temperature: 1.1,
-        top_p: 0.9,
-        frequency_penalty: 0.4,
-        presence_penalty: 0.3,
-        max_tokens: 120
-      })
+     body: JSON.stringify({
+  model: "sonar",
+  messages: messages,
+  temperature: 1.1,
+  top_p: 0.9,
+  max_tokens: 120
+})
     });
 
     const text = await response.text();
