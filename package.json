@@ -2,12 +2,7 @@
   "name": "kollegenhoelle",
   "version": "1.0.0",
   "dependencies": {
-    "node-fetch": "^2.6.7"
-  }
-  {
-  "dependencies": {
     "node-fetch": "^2.6.7",
     "@vercel/analytics": "^1.3.1"
   }
-}
 }
