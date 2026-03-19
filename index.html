@@ -10,219 +10,242 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#0A0A0B;--surface:#141416;--surface2:#1C1C1F;
-  --border:#252529;--border2:#32323A;--text:#EDEBE4;
-  --muted:#7A7A84;--muted2:#55555C;
-  --normal:#FFE500;--roast:#FF3B30;--roast-dim:#2A0E0C;
+  --bg:#111113;
+  --surface:#1A1A1E;
+  --surface2:#222228;
+  --border:#333339;
+  --border2:#44444C;
+  --text:#F0EEE8;
+  --muted:#A0A0AA;
+  --muted2:#707078;
+  --normal:#FFE500;
+  --roast:#FF3B30;
+  --roast-dim:#3A1210;
   --font-disp:'Bebas Neue',sans-serif;
   --font-mono:'IBM Plex Mono',monospace;
   --font-body:'IBM Plex Sans',sans-serif;
 }
 html,body{height:100%;overflow:hidden}
 body{font-family:var(--font-body);background:var(--bg);color:var(--text);display:flex;flex-direction:column;}
-body::before{content:'';position:fixed;inset:0;z-index:997;pointer-events:none;
-  background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,.05) 3px,rgba(0,0,0,.05) 4px);}
 
-header{flex-shrink:0;padding:.9rem 1.5rem;border-bottom:1px solid var(--border);
-  display:flex;align-items:center;justify-content:space-between;background:var(--bg);}
-h1{font-family:var(--font-disp);font-size:clamp(1.8rem,4vw,2.8rem);letter-spacing:.05em;text-transform:uppercase;}
+/* HEADER */
+header{flex-shrink:0;padding:1rem 1.75rem;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;background:#0D0D0F;}
+h1{font-family:var(--font-disp);font-size:clamp(2rem,5vw,3.2rem);letter-spacing:.05em;text-transform:uppercase;}
 h1 span{color:var(--normal);animation:flicker 5s infinite;}
 @keyframes flicker{0%,94%,100%{opacity:1}95%{opacity:.3}96.5%{opacity:1}97.5%{opacity:.1}99%{opacity:1}}
-.kevin-status{font-family:var(--font-mono);font-size:11px;color:var(--muted);display:flex;align-items:center;gap:6px;}
-.status-dot{width:7px;height:7px;border-radius:50%;background:#4CAF50;animation:pulse-dot 2.5s infinite;}
-@keyframes pulse-dot{0%,100%{opacity:1}50%{opacity:.2}}
+.kevin-status{font-family:var(--font-mono);font-size:12px;color:var(--muted);display:flex;align-items:center;gap:7px;}
+.status-dot{width:8px;height:8px;border-radius:50%;background:#4CAF50;animation:pulse-dot 2.5s infinite;}
+@keyframes pulse-dot{0%,100%{opacity:1}50%{opacity:.25}}
 
-.roast-banner{display:none;flex-shrink:0;padding:4px 1.5rem;background:var(--roast);
-  font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+/* ROAST BANNER */
+.roast-banner{display:none;flex-shrink:0;padding:6px 1.75rem;background:var(--roast);
+  font-family:var(--font-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
   color:#fff;text-align:center;font-weight:500;}
 .roast-banner.visible{display:block;}
 
-.mode-bar{flex-shrink:0;display:flex;align-items:center;gap:8px;padding:.5rem 1.5rem;
+/* MODE BAR */
+.mode-bar{flex-shrink:0;display:flex;align-items:center;gap:10px;padding:.65rem 1.75rem;
   border-bottom:1px solid var(--border);background:var(--surface);flex-wrap:wrap;}
-.mode-label{font-family:var(--font-mono);font-size:10px;color:var(--muted2);letter-spacing:.12em;text-transform:uppercase;}
-.mode-toggle{display:flex;border:1px solid var(--border2);border-radius:6px;overflow:hidden;}
-.mode-btn{font-family:var(--font-mono);font-size:11px;font-weight:500;letter-spacing:.08em;padding:6px 14px;
+.mode-label{font-family:var(--font-mono);font-size:11px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;}
+.mode-toggle{display:flex;border:1px solid var(--border2);border-radius:7px;overflow:hidden;}
+.mode-btn{font-family:var(--font-mono);font-size:12px;font-weight:500;letter-spacing:.06em;padding:8px 18px;
   background:transparent;color:var(--muted);border:none;cursor:pointer;transition:all .18s;text-transform:uppercase;}
-.mode-btn.active-normal{background:var(--normal);color:#0A0A0B;}
+.mode-btn.active-normal{background:var(--normal);color:#0D0D0F;}
 .mode-btn.active-roast{background:var(--roast);color:#fff;}
 .mode-btn:not(.active-normal):not(.active-roast):hover{background:var(--surface2);color:var(--text);}
 .mode-spacer{flex:1;}
-.extra-btns{display:flex;gap:8px;}
-.extra-btn{font-family:var(--font-mono);font-size:10px;font-weight:500;letter-spacing:.06em;
-  padding:5px 12px;border-radius:6px;border:1px solid var(--border2);
-  background:transparent;color:var(--muted);cursor:pointer;transition:all .18s;text-transform:uppercase;white-space:nowrap;}
-.extra-btn:hover{border-color:var(--normal);color:var(--normal);}
 
-.qod-bar{flex-shrink:0;padding:.45rem 1.5rem;border-bottom:1px solid var(--border);
+/* EXTRA BUTTONS — prominent */
+.extra-btns{display:flex;gap:8px;flex-wrap:wrap;}
+.extra-btn{font-family:var(--font-mono);font-size:11px;font-weight:500;letter-spacing:.05em;
+  padding:8px 16px;border-radius:7px;border:1.5px solid var(--border2);
+  background:var(--surface2);color:var(--text);cursor:pointer;transition:all .18s;
+  text-transform:uppercase;white-space:nowrap;display:flex;align-items:center;gap:6px;}
+.extra-btn:hover{border-color:var(--normal);color:var(--normal);background:rgba(255,229,0,.07);}
+.extra-btn.chef:hover{border-color:var(--roast);color:var(--roast);background:rgba(255,59,48,.07);}
+
+/* KEVIN QUOTE */
+.qod-bar{flex-shrink:0;padding:.6rem 1.75rem;border-bottom:1px solid var(--border);
   background:var(--surface);display:flex;align-items:center;gap:10px;}
-.qod-label{font-family:var(--font-mono);font-size:9px;color:var(--normal);
-  letter-spacing:.1em;text-transform:uppercase;white-space:nowrap;flex-shrink:0;}
-.qod-text{font-family:var(--font-mono);font-size:10px;color:var(--muted);letter-spacing:.03em;font-style:italic;}
+.qod-label{font-family:var(--font-mono);font-size:10px;color:var(--normal);
+  letter-spacing:.1em;text-transform:uppercase;white-space:nowrap;flex-shrink:0;font-weight:500;}
+.qod-text{font-family:var(--font-mono);font-size:11px;color:var(--muted);letter-spacing:.02em;font-style:italic;}
 
-#liveCounter{flex-shrink:0;font-family:var(--font-mono);font-size:10px;
-  padding:5px 1.5rem;color:var(--muted2);border-bottom:1px solid var(--border);}
+/* LIVE COUNTER */
+#liveCounter{flex-shrink:0;font-family:var(--font-mono);font-size:11px;
+  padding:6px 1.75rem;color:var(--muted);border-bottom:1px solid var(--border);
+  background:var(--bg);}
 
-.starters{flex-shrink:0;padding:.55rem 1.5rem;border-bottom:1px solid var(--border);
+/* STARTERS */
+.starters{flex-shrink:0;padding:.65rem 1.75rem;border-bottom:1px solid var(--border);
   display:flex;gap:8px;flex-wrap:wrap;align-items:center;background:var(--bg);}
-.starters-label{font-family:var(--font-mono);font-size:10px;color:var(--muted2);
-  letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;}
-.starter-btn{font-family:var(--font-mono);font-size:10px;letter-spacing:.04em;
-  padding:5px 12px;border:1px solid var(--border2);border-radius:100px;
-  background:transparent;color:var(--muted);cursor:pointer;transition:all .18s;white-space:nowrap;}
-.starter-btn:hover{border-color:var(--normal);color:var(--normal);}
-.starter-loading{font-family:var(--font-mono);font-size:10px;color:var(--muted2);font-style:italic;}
+.starters-label{font-family:var(--font-mono);font-size:10px;color:var(--muted);
+  letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;font-weight:500;}
+.starter-btn{font-family:var(--font-mono);font-size:11px;letter-spacing:.03em;
+  padding:6px 14px;border:1px solid var(--border2);border-radius:100px;
+  background:var(--surface);color:var(--muted);cursor:pointer;transition:all .18s;white-space:nowrap;}
+.starter-btn:hover{border-color:var(--normal);color:var(--normal);background:rgba(255,229,0,.06);}
+.starter-loading{font-family:var(--font-mono);font-size:11px;color:var(--muted2);font-style:italic;}
 
-.chat-scroll{flex:1;overflow-y:auto;padding:1.2rem 1.5rem;}
-.chat-scroll::-webkit-scrollbar{width:3px;}
+/* CHAT */
+.chat-scroll{flex:1;overflow-y:auto;padding:1.5rem 1.75rem;}
+.chat-scroll::-webkit-scrollbar{width:4px;}
 .chat-scroll::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px;}
-.chat-inner{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:1rem;min-height:100%;}
+.chat-inner{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:1.25rem;min-height:100%;}
 
+/* EMPTY STATE */
 .empty-state{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
-  text-align:center;gap:.75rem;padding:2rem 1rem;min-height:180px;}
-.empty-icon{font-size:2.2rem;opacity:.25;}
-.empty-title{font-family:var(--font-disp);font-size:1.9rem;letter-spacing:.06em;color:var(--muted);}
-.empty-sub{font-family:var(--font-mono);font-size:11px;color:var(--muted2);max-width:320px;line-height:1.8;}
+  text-align:center;gap:.75rem;padding:2rem 1rem;min-height:200px;}
+.empty-icon{font-size:2.5rem;opacity:.35;}
+.empty-title{font-family:var(--font-disp);font-size:2.2rem;letter-spacing:.06em;color:var(--muted);}
+.empty-sub{font-family:var(--font-mono);font-size:12px;color:var(--muted2);max-width:340px;line-height:1.8;}
 
-.message{display:flex;flex-direction:column;gap:4px;animation:msgIn .22s ease;}
-@keyframes msgIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+/* MESSAGES */
+.message{display:flex;flex-direction:column;gap:5px;animation:msgIn .22s ease;}
+@keyframes msgIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 .message.user{align-items:flex-end;}
 .message.kevin{align-items:flex-start;}
-.msg-label{font-family:var(--font-mono);font-size:9px;color:var(--muted2);letter-spacing:.1em;padding:0 4px;}
-.msg-bubble{max-width:68%;padding:10px 14px;border-radius:10px;font-size:14.5px;line-height:1.65;font-weight:300;}
-.message.user .msg-bubble{background:var(--surface2);border:1px solid var(--border2);border-bottom-right-radius:3px;}
-.message.kevin .msg-bubble{background:var(--surface);border:1px solid var(--border);border-bottom-left-radius:3px;}
-.message.kevin.roast-msg .msg-bubble{background:var(--roast-dim);border-color:#4A1512;}
-.kevin-header{display:flex;align-items:center;gap:7px;}
-.kevin-avatar{width:24px;height:24px;border-radius:50%;background:var(--normal);color:#0A0A0B;
-  font-family:var(--font-mono);font-size:10px;font-weight:500;
+.msg-label{font-family:var(--font-mono);font-size:10px;color:var(--muted2);letter-spacing:.1em;padding:0 4px;}
+.msg-bubble{max-width:70%;padding:12px 16px;border-radius:10px;font-size:15px;line-height:1.65;font-weight:300;}
+.message.user .msg-bubble{background:var(--surface2);border:1px solid var(--border2);border-bottom-right-radius:3px;color:var(--text);}
+.message.kevin .msg-bubble{background:var(--surface);border:1px solid var(--border);border-bottom-left-radius:3px;color:var(--text);}
+.message.kevin.roast-msg .msg-bubble{background:var(--roast-dim);border-color:#5A2020;}
+.kevin-header{display:flex;align-items:center;gap:8px;}
+.kevin-avatar{width:26px;height:26px;border-radius:50%;background:var(--normal);color:#0D0D0F;
+  font-family:var(--font-mono);font-size:11px;font-weight:500;
   display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 .kevin-avatar.roast{background:var(--roast);color:#fff;}
 
-.msg-actions{display:flex;gap:6px;margin-top:4px;}
-.share-btn,.screenshot-btn{font-family:var(--font-mono);font-size:9px;letter-spacing:.08em;
-  padding:3px 10px;border:1px solid var(--border2);border-radius:100px;
-  background:transparent;color:var(--muted2);cursor:pointer;transition:all .18s;text-transform:uppercase;}
+/* MSG ACTIONS */
+.msg-actions{display:flex;gap:7px;margin-top:3px;}
+.share-btn,.screenshot-btn{font-family:var(--font-mono);font-size:10px;letter-spacing:.06em;
+  padding:4px 12px;border:1px solid var(--border2);border-radius:100px;
+  background:transparent;color:var(--muted);cursor:pointer;transition:all .18s;text-transform:uppercase;}
 .share-btn:hover{border-color:var(--normal);color:var(--normal);}
 .share-btn.copied{border-color:#4CAF50;color:#4CAF50;}
-.screenshot-btn:hover{border-color:#888;color:#888;}
+.screenshot-btn:hover{border-color:var(--muted);color:var(--text);}
 
+/* TYPING */
 #typingMsg{display:none;}
-.typing-bubble{display:flex;align-items:center;gap:5px;padding:11px 15px;
+.typing-bubble{display:flex;align-items:center;gap:6px;padding:12px 16px;
   background:var(--surface);border:1px solid var(--border);
   border-radius:10px;border-bottom-left-radius:3px;width:fit-content;}
-.typing-dot{width:6px;height:6px;border-radius:50%;background:var(--muted2);animation:bounce .9s infinite;}
+.typing-dot{width:7px;height:7px;border-radius:50%;background:var(--muted2);animation:bounce .9s infinite;}
 .typing-dot:nth-child(2){animation-delay:.18s}
 .typing-dot:nth-child(3){animation-delay:.36s}
-@keyframes bounce{0%,80%,100%{transform:translateY(0);opacity:.35}40%{transform:translateY(-5px);opacity:1}}
+@keyframes bounce{0%,80%,100%{transform:translateY(0);opacity:.35}40%{transform:translateY(-6px);opacity:1}}
 
-.input-bar{flex-shrink:0;background:var(--surface);border-top:1px solid var(--border);padding:.7rem 1.5rem;}
-.input-inner{max-width:760px;margin:0 auto;display:flex;gap:8px;align-items:flex-end;}
-.chat-input{flex:1;background:var(--bg);border:1px solid var(--border2);border-radius:8px;
-  color:var(--text);font-family:var(--font-body);font-size:14px;font-weight:300;
-  padding:10px 14px;resize:none;min-height:44px;max-height:120px;
+/* INPUT */
+.input-bar{flex-shrink:0;background:var(--surface);border-top:1px solid var(--border);padding:.85rem 1.75rem;}
+.input-inner{max-width:760px;margin:0 auto;display:flex;gap:10px;align-items:flex-end;}
+.chat-input{flex:1;background:var(--bg);border:1.5px solid var(--border2);border-radius:8px;
+  color:var(--text);font-family:var(--font-body);font-size:15px;font-weight:300;
+  padding:11px 15px;resize:none;min-height:46px;max-height:130px;
   outline:none;transition:border-color .2s;line-height:1.5;}
 .chat-input::placeholder{color:var(--muted2);}
 .chat-input:focus{border-color:var(--normal);}
 .chat-input.roast-mode:focus{border-color:var(--roast);}
-.send-btn{font-family:var(--font-mono);font-size:12px;font-weight:500;
-  padding:0 20px;border:none;border-radius:8px;cursor:pointer;
-  background:var(--normal);color:#0A0A0B;letter-spacing:.06em;text-transform:uppercase;
-  transition:all .18s;height:44px;white-space:nowrap;flex-shrink:0;}
+.send-btn{font-family:var(--font-mono);font-size:13px;font-weight:500;
+  padding:0 24px;border:none;border-radius:8px;cursor:pointer;
+  background:var(--normal);color:#0D0D0F;letter-spacing:.06em;text-transform:uppercase;
+  transition:all .18s;height:46px;white-space:nowrap;flex-shrink:0;}
 .send-btn:hover{filter:brightness(1.1);transform:translateY(-1px);}
 .send-btn:active{transform:translateY(0);}
 .send-btn.roast{background:var(--roast);color:#fff;}
-.send-btn:disabled{opacity:.3;cursor:not-allowed;transform:none;filter:none;}
+.send-btn:disabled{opacity:.35;cursor:not-allowed;transform:none;filter:none;}
 
-.footer-bar{flex-shrink:0;padding:.5rem 1.5rem;border-top:1px solid var(--border);
-  font-family:var(--font-mono);font-size:9px;color:var(--muted2);
-  letter-spacing:.06em;display:flex;justify-content:space-between;align-items:center;background:var(--bg);}
-.donate-btn{display:inline-flex;align-items:center;gap:6px;
-  font-family:var(--font-mono);font-size:10px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;
-  padding:4px 12px;border-radius:100px;border:1px solid #F5A623;color:#F5A623;
+/* FOOTER */
+.footer-bar{flex-shrink:0;padding:.6rem 1.75rem;border-top:1px solid var(--border);
+  font-family:var(--font-mono);font-size:10px;color:var(--muted);
+  letter-spacing:.05em;display:flex;justify-content:space-between;align-items:center;background:#0D0D0F;}
+.donate-btn{display:inline-flex;align-items:center;gap:7px;
+  font-family:var(--font-mono);font-size:12px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;
+  padding:7px 18px;border-radius:7px;border:1.5px solid #F5A623;color:#F5A623;
   background:transparent;cursor:pointer;transition:all .2s;white-space:nowrap;}
-.donate-btn:hover{background:#F5A623;color:#0A0A0B;}
+.donate-btn:hover{background:#F5A623;color:#0D0D0F;}
 
 /* ─── MODALS ─── */
 .modal-overlay{display:none;position:fixed;inset:0;z-index:9999;
-  background:rgba(0,0,0,.82);align-items:center;justify-content:center;padding:1rem;}
+  background:rgba(0,0,0,.85);align-items:center;justify-content:center;padding:1rem;}
 .modal-overlay.visible{display:flex;}
 .modal{background:var(--surface);border:1px solid var(--border2);
-  border-radius:12px;padding:2rem;width:100%;max-width:400px;
-  display:flex;flex-direction:column;gap:1.25rem;position:relative;max-height:90vh;overflow-y:auto;}
-.modal-close{position:absolute;top:12px;right:14px;
-  font-family:var(--font-mono);font-size:16px;
-  color:var(--muted2);background:none;border:none;cursor:pointer;transition:color .18s;}
+  border-radius:14px;padding:2rem;width:100%;max-width:420px;
+  display:flex;flex-direction:column;gap:1.35rem;position:relative;
+  max-height:90vh;overflow-y:auto;}
+.modal-close{position:absolute;top:14px;right:16px;
+  font-family:var(--font-mono);font-size:18px;
+  color:var(--muted);background:none;border:none;cursor:pointer;transition:color .18s;line-height:1;}
 .modal-close:hover{color:var(--text);}
-.modal-title{font-family:var(--font-disp);font-size:2rem;
+.modal-title{font-family:var(--font-disp);font-size:2.2rem;
   letter-spacing:.05em;text-transform:uppercase;color:var(--text);line-height:1.05;}
-.modal-title span{color:var(--normal);}
-.modal-title.danger span{color:var(--roast);}
+.modal-title .y{color:var(--normal);}
+.modal-title .r{color:var(--roast);}
+.modal-title .o{color:#F5A623;}
 .modal-desc{font-family:var(--font-mono);font-size:11px;color:var(--muted);line-height:1.8;}
 .modal-desc strong{color:var(--text);font-weight:500;}
-.modal-input{background:var(--bg);border:1px solid var(--border2);border-radius:8px;
+.modal-input{background:var(--bg);border:1.5px solid var(--border2);border-radius:8px;
   color:var(--text);font-family:var(--font-mono);font-size:13px;
-  padding:10px 14px;outline:none;transition:border-color .2s;width:100%;}
+  padding:11px 15px;outline:none;transition:border-color .2s;width:100%;}
 .modal-input:focus{border-color:var(--normal);}
 .modal-action-btn{display:flex;align-items:center;justify-content:center;gap:8px;
-  font-family:var(--font-mono);font-size:12px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;
-  padding:13px 20px;border-radius:8px;border:none;cursor:pointer;transition:filter .18s,transform .18s;}
+  font-family:var(--font-mono);font-size:13px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;
+  padding:14px 20px;border-radius:9px;border:none;cursor:pointer;transition:filter .18s,transform .18s;text-decoration:none;}
 .modal-action-btn:hover{filter:brightness(1.08);transform:translateY(-1px);}
-.modal-action-btn.yellow{background:var(--normal);color:#0A0A0B;}
+.modal-action-btn.yellow{background:var(--normal);color:#0D0D0F;}
 .modal-action-btn.red{background:var(--roast);color:#fff;}
-.modal-action-btn.orange{background:#F5A623;color:#0A0A0B;}
-.modal-skip{font-family:var(--font-mono);font-size:9px;color:var(--muted2);
-  text-align:center;letter-spacing:.06em;cursor:pointer;transition:color .18s;}
+.modal-action-btn.orange{background:#F5A623;color:#0D0D0F;}
+.modal-action-btn.ghost{background:var(--surface2);color:var(--muted);border:1px solid var(--border2);}
+.modal-skip{font-family:var(--font-mono);font-size:10px;color:var(--muted2);
+  text-align:center;letter-spacing:.05em;cursor:pointer;transition:color .18s;}
 .modal-skip:hover{color:var(--muted);}
-.modal-quote{font-family:var(--font-mono);font-size:10px;color:var(--muted2);
-  font-style:italic;padding:.75rem 1rem;border-left:2px solid var(--border2);line-height:1.65;}
+.modal-quote{font-family:var(--font-mono);font-size:11px;color:var(--muted);
+  font-style:italic;padding:.85rem 1.1rem;border-left:2px solid var(--border2);line-height:1.7;}
 
-/* CHEF RATING RESULT */
+/* RATING */
 .rating-result{display:none;flex-direction:column;gap:1rem;}
 .rating-result.visible{display:flex;}
-.rating-score{font-family:var(--font-disp);font-size:4rem;color:var(--roast);
-  letter-spacing:.05em;line-height:1;text-align:center;}
-.rating-score span{font-size:1.5rem;color:var(--muted);}
+.rating-score{font-family:var(--font-disp);font-size:5rem;color:var(--roast);
+  letter-spacing:.02em;line-height:1;text-align:center;}
+.rating-score span{font-size:2rem;color:var(--muted);}
 .rating-text{font-family:var(--font-mono);font-size:12px;color:var(--muted);line-height:1.8;
-  background:var(--bg);padding:1rem;border-radius:8px;border:1px solid var(--border);}
+  background:var(--bg);padding:1rem 1.1rem;border-radius:8px;border:1px solid var(--border);}
 
-/* PERSÖNLICHKEITSTEST */
+/* TEST */
 .test-step{display:none;flex-direction:column;gap:1rem;}
 .test-step.visible{display:flex;}
 .test-question{font-family:var(--font-mono);font-size:12px;color:var(--text);line-height:1.7;}
 .test-options{display:flex;flex-direction:column;gap:8px;}
-.test-opt{font-family:var(--font-mono);font-size:11px;padding:10px 14px;
+.test-opt{font-family:var(--font-mono);font-size:11px;padding:11px 15px;
   border:1px solid var(--border2);border-radius:8px;background:transparent;
-  color:var(--muted);cursor:pointer;transition:all .18s;text-align:left;}
-.test-opt:hover{border-color:var(--normal);color:var(--normal);}
-.test-opt.selected{border-color:var(--normal);color:var(--normal);background:rgba(255,229,0,.07);}
-.test-progress{font-family:var(--font-mono);font-size:9px;color:var(--muted2);letter-spacing:.1em;}
+  color:var(--muted);cursor:pointer;transition:all .18s;text-align:left;line-height:1.5;}
+.test-opt:hover{border-color:var(--normal);color:var(--normal);background:rgba(255,229,0,.06);}
+.test-progress{font-family:var(--font-mono);font-size:10px;color:var(--muted2);letter-spacing:.1em;text-transform:uppercase;}
 
-/* SCREENSHOT PREVIEW */
-.screenshot-card{
-  background:#0A0A0B;padding:1.5rem;border-radius:8px;
-  display:flex;flex-direction:column;gap:12px;
-  border:1px solid #252529;
-}
-.ss-header{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.05em;color:#EDEBE4;}
+/* SCREENSHOT */
+.screenshot-card{background:#0D0D0F;padding:1.5rem;border-radius:10px;
+  display:flex;flex-direction:column;gap:14px;border:1px solid #1A1A1E;}
+.ss-header{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:.05em;color:#F0EEE8;}
 .ss-header span{color:#FFE500;}
-.ss-user-bubble{align-self:flex-end;background:#1C1C1F;border:1px solid #32323A;
+.ss-user-bubble{align-self:flex-end;background:#222228;border:1px solid #44444C;
   padding:10px 14px;border-radius:10px;border-bottom-right-radius:3px;
-  font-family:'IBM Plex Sans',sans-serif;font-size:13px;color:#EDEBE4;max-width:80%;}
-.ss-kevin-bubble{align-self:flex-start;background:#141416;border:1px solid #252529;
+  font-family:'IBM Plex Sans',sans-serif;font-size:13px;color:#F0EEE8;max-width:82%;line-height:1.5;}
+.ss-kevin-bubble{align-self:flex-start;background:#1A1A1E;border:1px solid #333339;
   padding:10px 14px;border-radius:10px;border-bottom-left-radius:3px;
-  font-family:'IBM Plex Sans',sans-serif;font-size:13px;color:#EDEBE4;max-width:80%;line-height:1.6;}
-.ss-footer{font-family:'IBM Plex Mono',monospace;font-size:9px;color:#55555C;
+  font-family:'IBM Plex Sans',sans-serif;font-size:13px;color:#F0EEE8;max-width:82%;line-height:1.6;}
+.ss-footer{font-family:'IBM Plex Mono',monospace;font-size:9px;color:#707078;
   letter-spacing:.08em;text-align:center;margin-top:4px;}
 
-@media(max-width:580px){
-  header{padding:.65rem 1rem;}
+@media(max-width:600px){
+  header{padding:.75rem 1rem;}
+  h1{font-size:1.9rem;}
+  .mode-bar{padding:.5rem 1rem;}
   .chat-scroll{padding:1rem;}
-  .input-bar{padding:.65rem 1rem;}
-  .msg-bubble{max-width:84%;font-size:14px;}
+  .input-bar{padding:.7rem 1rem;}
+  .footer-bar{padding:.5rem 1rem;}
+  .msg-bubble{max-width:86%;font-size:14px;}
   .footer-bar span:first-child{display:none;}
-  .starters{padding:.5rem 1rem;}
-  .extra-btns{gap:4px;}
-  .extra-btn{font-size:9px;padding:4px 8px;}
+  .starters,.qod-bar,#liveCounter{padding-left:1rem;padding-right:1rem;}
 }
 </style>
 </head>
@@ -248,8 +271,9 @@ h1 span{color:var(--normal);animation:flicker 5s infinite;}
   </div>
   <div class="mode-spacer"></div>
   <div class="extra-btns">
-    <button class="extra-btn" onclick="openModal('chefModal')">👔 Chef bewerten</button>
+    <button class="extra-btn chef" onclick="openModal('chefModal')">👔 Chef bewerten</button>
     <button class="extra-btn" onclick="startTest()">🧠 Persönlichkeitstest</button>
+    <button class="donate-btn" onclick="openModal('donateModal')">☕ Spende</button>
   </div>
 </div>
 
@@ -258,7 +282,7 @@ h1 span{color:var(--normal);animation:flicker 5s infinite;}
   <span class="qod-text" id="qodText"></span>
 </div>
 
-<div id="liveCounter">23 Kollegen beschweren sich gerade über ihre Arbeit</div>
+<div id="liveCounter">23 Kollegen beschweren sich gerade • 0 Beschwerden heute</div>
 
 <div class="starters">
   <span class="starters-label">Schnellstart:</span>
@@ -295,15 +319,15 @@ h1 span{color:var(--normal);animation:flicker 5s infinite;}
 
 <div class="footer-bar">
   <span>Kollegenhölle v1.0 — alle Ähnlichkeiten mit echten Kollegen sind beabsichtigt</span>
-  <button class="donate-btn" onclick="openModal('donateModal')">☕ Spende</button>
+  <span>powered by Sebastian™</span>
 </div>
 
-<!-- ═══ CHEF MODAL ═══ -->
+<!-- CHEF MODAL -->
 <div class="modal-overlay" id="chefModal" onclick="closeModalOverlay(event,'chefModal')">
   <div class="modal">
     <button class="modal-close" onclick="closeModal('chefModal')">✕</button>
-    <p class="modal-title danger">Kevin <span>bewertet</span><br>deinen Chef.</p>
-    <p class="modal-desc">Gib den Namen deines Chefs ein. Kevin gibt eine vernichtende aber akkurate Bewertung ab. <strong>Kein Erbarmen.</strong></p>
+    <p class="modal-title">Kevin <span class="r">bewertet</span><br>deinen Chef.</p>
+    <p class="modal-desc">Gib den Namen ein. Kevin gibt eine vernichtende aber akkurate Bewertung ab. <strong>Kein Erbarmen.</strong></p>
     <input class="modal-input" id="chefName" placeholder="z.B. Thorsten, Sabine, Der da oben..." maxlength="40"
       onkeydown="if(event.key==='Enter')rateChef()">
     <button class="modal-action-btn red" onclick="rateChef()" id="rateBtn">🔥 Chef vernichten</button>
@@ -311,35 +335,35 @@ h1 span{color:var(--normal);animation:flicker 5s infinite;}
       <div class="rating-score" id="ratingScore">2<span>/10</span></div>
       <div class="rating-text" id="ratingText"></div>
       <button class="modal-action-btn yellow" onclick="shareRating()">↗ Bewertung teilen</button>
-      <button class="modal-action-btn red" style="opacity:.7" onclick="resetRating()">↩ Anderen Chef bewerten</button>
+      <button class="modal-action-btn ghost" onclick="resetRating()">↩ Anderen Chef bewerten</button>
     </div>
     <p class="modal-skip" onclick="closeModal('chefModal')">nein danke, ich schütze meinen Chef</p>
   </div>
 </div>
 
-<!-- ═══ PERSÖNLICHKEITSTEST MODAL ═══ -->
+<!-- PERSÖNLICHKEITSTEST MODAL -->
 <div class="modal-overlay" id="testModal" onclick="closeModalOverlay(event,'testModal')">
   <div class="modal">
     <button class="modal-close" onclick="closeModal('testModal')">✕</button>
-    <p class="modal-title">Wie <span>hoffnungslos</span><br>bist du?</p>
+    <p class="modal-title">Wie <span class="y">hoffnungslos</span><br>bist du?</p>
     <p class="modal-desc" id="testIntro">Kevin analysiert deine Bürosituation in 5 Fragen. Das Ergebnis ist <strong>nicht aufbauend</strong>.</p>
     <div id="testSteps"></div>
     <div id="testResultBox" style="display:none;flex-direction:column;gap:1rem;">
       <div class="rating-score" id="testScore" style="color:var(--normal)">7<span>/10</span></div>
-      <p style="font-family:var(--font-mono);font-size:10px;color:var(--muted2);text-align:center;letter-spacing:.06em;">HOFFNUNGSLOSIGKEIT</p>
+      <p style="font-family:var(--font-mono);font-size:10px;color:var(--muted2);text-align:center;letter-spacing:.08em;text-transform:uppercase;">Hoffnungslosigkeit</p>
       <div class="rating-text" id="testResultText"></div>
       <button class="modal-action-btn yellow" onclick="shareTest()">↗ Ergebnis teilen</button>
-      <button class="modal-action-btn yellow" style="opacity:.6" onclick="startTest()">↩ Nochmal</button>
+      <button class="modal-action-btn ghost" onclick="startTest()">↩ Nochmal</button>
     </div>
     <p class="modal-skip" onclick="closeModal('testModal')">ich will die Wahrheit nicht wissen</p>
   </div>
 </div>
 
-<!-- ═══ SCREENSHOT MODAL ═══ -->
+<!-- SCREENSHOT MODAL -->
 <div class="modal-overlay" id="screenshotModal" onclick="closeModalOverlay(event,'screenshotModal')">
-  <div class="modal" style="max-width:440px;">
+  <div class="modal" style="max-width:460px;">
     <button class="modal-close" onclick="closeModal('screenshotModal')">✕</button>
-    <p class="modal-title"><span>Screenshot</span><br>für die Nachwelt.</p>
+    <p class="modal-title"><span class="y">Screenshot</span><br>für die Nachwelt.</p>
     <div class="screenshot-card" id="screenshotCard">
       <div class="ss-header">Kollegen<span>hölle</span></div>
       <div class="ss-user-bubble" id="ssUserText"></div>
@@ -351,354 +375,248 @@ h1 span{color:var(--normal);animation:flicker 5s infinite;}
   </div>
 </div>
 
-<!-- ═══ DONATE MODAL ═══ -->
+<!-- DONATE MODAL -->
 <div class="modal-overlay" id="donateModal" onclick="closeModalOverlay(event,'donateModal')">
   <div class="modal">
     <button class="modal-close" onclick="closeModal('donateModal')">✕</button>
-    <p class="modal-title">Kevin <span>dankt</span><br>dir nicht.</p>
+    <p class="modal-title">Kevin <span class="o">dankt</span><br>dir nicht.</p>
     <p class="modal-desc">
       Jede Kevin-Antwort kostet echtes Geld — API-Tokens, Server, Infrastruktur, alles.<br><br>
-      Kevin beschwert sich zwar über alles, aber über <strong>fehlende Serverkosten</strong>
-      beschwert er sich am meisten. Wenn dir seine passive Aggression den Tag gerettet hat,
-      freut sich <strong>Sebastian</strong> über einen Kaffee.
+      Kevin beschwert sich über alles, aber über <strong>fehlende Serverkosten</strong> am meisten.
+      Wenn dir seine passive Aggression den Tag gerettet hat, freut sich <strong>Sebastian</strong> über einen Kaffee.
     </p>
     <p class="modal-quote">
-      „Natürlich muss ich das selbst finanzieren. Natürlich.
-      Wenigstens funktioniert hier mal etwas — anders als die IT,
-      die seit Dienstag auf meine Ticket-Anfrage wartet. Aber gut. Was soll's."
+      „Natürlich muss ich das selbst finanzieren. Natürlich. Wenigstens funktioniert hier mal etwas —
+      anders als die IT, die seit Dienstag auf meine Ticket-Anfrage wartet. Aber gut. Was soll's."
       <br><br>— Kevin, resigniert
     </p>
-    <a class="modal-action-btn orange" href="https://paypal.me/sebastianledwinka" target="_blank" rel="noopener"
-      style="text-decoration:none;">☕ Kevin einen Kaffee spendieren</a>
+    <a class="modal-action-btn orange" href="https://paypal.me/sebastianledwinka" target="_blank" rel="noopener">☕ Kevin einen Kaffee spendieren</a>
     <p class="modal-skip" onclick="closeModal('donateModal')">nein danke — ich bin wie Kevin und gebe nichts zurück</p>
   </div>
 </div>
 
 <script defer src="/_vercel/insights/script.js"></script>
 <script>
-  let currentMode = 'normal';
-  let isLoading = false;
-  let history = [];
-  let lastUserMsg = '';
-  let lastKevinMsg = '';
-  let complaints = parseInt(localStorage.getItem('complaints') || '0');
-  const chatInner = document.getElementById('chatInner');
-  const typingMsg = document.getElementById('typingMsg');
+  let currentMode='normal', isLoading=false, history=[], lastUserMsg='', lastKevinMsg='';
+  let complaints=parseInt(localStorage.getItem('complaints')||'0');
+  const chatInner=document.getElementById('chatInner');
+  const typingMsg=document.getElementById('typingMsg');
 
   // QUOTE OF DAY
-  const quotes = [
-    "Ich gebe nicht auf. Ich warte nur darauf, dass andere aufgeben.",
-    "Natürlich war ich nicht eingeladen. Natürlich.",
-    "Meine Idee. Sein Erfolg. Mein Schweigen. Das System.",
-    "Die IT hat geantwortet. In 6 Wochen. Typisch.",
-    "Ich mache Überstunden damit andere pünktlich gehen können. Schön.",
-    "Das Jahresgespräch war konstruktiv. Konstruktiv wie ein Erdbeben.",
-    "Homeoffice ist schön. Niemand sieht wie ich leide.",
-    "Das war mein Vorschlag. Vor drei Jahren. Aber gut.",
-    "Wir sind ein Team. Ich arbeite, das Team feiert.",
-    "Die Kaffeemaschine ist kaputt. Wie mein Wille zu leben.",
-    "Feedback-Kultur heißt: alle sagen mir was falsch ist. Toll.",
-    "Manche Menschen hier bekommen Beförderungen. Interessant.",
-  ];
-  document.getElementById('qodText').textContent = '"' + quotes[new Date().getDate() % quotes.length] + '"';
+  const quotes=["Ich gebe nicht auf. Ich warte nur darauf, dass andere aufgeben.","Natürlich war ich nicht eingeladen. Natürlich.","Meine Idee. Sein Erfolg. Mein Schweigen. Das System.","Die IT hat geantwortet. In 6 Wochen. Typisch.","Ich mache Überstunden damit andere pünktlich gehen können. Schön.","Das Jahresgespräch war konstruktiv. Konstruktiv wie ein Erdbeben.","Homeoffice ist schön. Niemand sieht wie ich leide.","Das war mein Vorschlag. Vor drei Jahren. Aber gut.","Wir sind ein Team. Ich arbeite, das Team feiert.","Die Kaffeemaschine ist kaputt. Wie mein Wille zu leben.","Feedback-Kultur heißt: alle sagen mir was falsch ist. Toll.","Manche Menschen hier bekommen Beförderungen. Interessant."];
+  document.getElementById('qodText').textContent='"'+quotes[new Date().getDate()%quotes.length]+'"';
 
   // FAKE VISITORS
-  let base = 18 + Math.floor(Math.random() * 15);
-  setInterval(() => {
-    base += Math.floor(Math.random() * 5) - 2;
-    if (base < 12) base = 12; if (base > 45) base = 45;
-    document.getElementById('liveCounter').innerText =
-      base + ' Kollegen beschweren sich gerade • ' + complaints + ' Beschwerden heute';
-  }, 4000);
+  let base=18+Math.floor(Math.random()*15);
+  document.getElementById('liveCounter').innerText=base+' Kollegen beschweren sich gerade • '+complaints+' Beschwerden heute';
+  setInterval(()=>{
+    base+=Math.floor(Math.random()*5)-2;
+    if(base<12)base=12; if(base>45)base=45;
+    document.getElementById('liveCounter').innerText=base+' Kollegen beschweren sich gerade • '+complaints+' Beschwerden heute';
+  },4000);
 
   // STARTERS
-  const starterEmojis = ['😤','💻','😩','📧','🙄','😴','🤡','📋','😶','🫠','☕','🏖️'];
-  async function renderStarters() {
-    try {
-      const res = await fetch('/api/chat', {
-        method:'POST', headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({
-          message: 'Generiere genau 5 kurze kreative deutsche Beschwerden ueber den Bueroalltag als JSON-Array. Nur das Array, kein anderer Text. Beispiel: ["Mein Chef nervt","Die IT schlaeft wieder"]. Maximal 6 Woerter pro Satz.',
-          history:[], mode:'starters'
-        })
-      });
-      const data = await res.json();
-      const match = (data.reply||'').match(/\[.*?\]/s);
-      const items = match ? JSON.parse(match[0]) : [];
-      if (items.length > 0) {
-        document.getElementById('starterBtns').innerHTML = items.slice(0,5)
-          .map((msg,i) => `<button class="starter-btn" onclick="quickSend('${escAttr(msg)}')">${starterEmojis[i%starterEmojis.length]} ${escHtml(msg)}</button>`)
-          .join('');
-      } else { fallbackStarters(); }
-    } catch { fallbackStarters(); }
+  const emojis=['😤','💻','😩','📧','🙄','😴','🤡','📋','😶','🫠','☕','🏖️'];
+  async function renderStarters(){
+    try{
+      const res=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({message:'Generiere genau 5 kurze kreative deutsche Beschwerden ueber den Bueroalltag als JSON-Array. Nur das Array. Beispiel: ["Mein Chef nervt","IT schlaeft wieder"]. Max 6 Woerter.',history:[],mode:'starters'})});
+      const data=await res.json();
+      const match=(data.reply||'').match(/\[.*?\]/s);
+      const items=match?JSON.parse(match[0]):[];
+      if(items.length>0){
+        document.getElementById('starterBtns').innerHTML=items.slice(0,5)
+          .map((m,i)=>`<button class="starter-btn" onclick="quickSend('${escAttr(m)}')">${emojis[i%emojis.length]} ${escHtml(m)}</button>`).join('');
+      } else fallbackStarters();
+    } catch{fallbackStarters();}
   }
-  function fallbackStarters() {
-    ['Chef klaut Ideen','IT antwortet nicht','Sinnloses Meeting','Unbezahlte Überstunden','Kollege befördert']
-      .forEach((msg,i) => {
-        const b = document.createElement('button');
-        b.className = 'starter-btn';
-        b.textContent = starterEmojis[i]+' '+msg;
-        b.onclick = () => quickSend(msg);
-        document.getElementById('starterBtns').appendChild(b);
-      });
-    document.querySelector('.starter-loading')?.remove();
+  function fallbackStarters(){
+    document.getElementById('starterBtns').innerHTML=['Chef klaut Ideen','IT antwortet nicht','Sinnloses Meeting','Überstunden wieder','Kollege befördert']
+      .map((m,i)=>`<button class="starter-btn" onclick="quickSend('${escAttr(m)}')">${emojis[i]} ${m}</button>`).join('');
   }
   renderStarters();
 
-  // MODE
-  function setMode(mode) {
-    currentMode = mode;
-    document.getElementById('btnNormal').className = 'mode-btn'+(mode==='normal'?' active-normal':'');
-    document.getElementById('btnRoast').className  = 'mode-btn'+(mode==='roast'?' active-roast':'');
-    document.getElementById('sendBtn').className   = 'send-btn'+(mode==='roast'?' roast':'');
-    document.getElementById('chatInput').className = 'chat-input'+(mode==='roast'?' roast-mode':'');
-    document.getElementById('roastBanner').className = 'roast-banner'+(mode==='roast'?' visible':'');
-    document.getElementById('typingAvatar').className = 'kevin-avatar'+(mode==='roast'?' roast':'');
-    document.getElementById('chatInput').placeholder = mode==='roast'
-      ? '🔥 Schreib etwas... wenn du dich traust.'
-      : 'Schreib Kevin etwas... er freut sich bestimmt.';
+  function setMode(mode){
+    currentMode=mode;
+    document.getElementById('btnNormal').className='mode-btn'+(mode==='normal'?' active-normal':'');
+    document.getElementById('btnRoast').className='mode-btn'+(mode==='roast'?' active-roast':'');
+    document.getElementById('sendBtn').className='send-btn'+(mode==='roast'?' roast':'');
+    document.getElementById('chatInput').className='chat-input'+(mode==='roast'?' roast-mode':'');
+    document.getElementById('roastBanner').className='roast-banner'+(mode==='roast'?' visible':'');
+    document.getElementById('typingAvatar').className='kevin-avatar'+(mode==='roast'?' roast':'');
+    document.getElementById('chatInput').placeholder=mode==='roast'?'🔥 Schreib etwas... wenn du dich traust.':'Schreib Kevin etwas... er freut sich bestimmt.';
   }
 
-  // MODAL HELPERS
-  function openModal(id) { document.getElementById(id).classList.add('visible'); }
-  function closeModal(id) { document.getElementById(id).classList.remove('visible'); }
-  function closeModalOverlay(e, id) { if(e.target===document.getElementById(id)) closeModal(id); }
+  function openModal(id){document.getElementById(id).classList.add('visible');}
+  function closeModal(id){document.getElementById(id).classList.remove('visible');}
+  function closeModalOverlay(e,id){if(e.target===document.getElementById(id))closeModal(id);}
 
-  // HELPERS
-  function quickSend(text) { document.getElementById('chatInput').value=text; sendMessage(); }
-  function autoResize(el) { el.style.height='auto'; el.style.height=Math.min(el.scrollHeight,120)+'px'; }
-  function handleKey(e) { if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMessage();} }
-  function scrollToBottom() { const s=document.getElementById('chatScroll'); s.scrollTop=s.scrollHeight; }
-  function hideEmpty() { document.getElementById('emptyState')?.remove(); }
-  function escHtml(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>'); }
-  function escAttr(s) { return String(s||'').replace(/'/g,'&#39;').replace(/"/g,'&quot;'); }
+  function quickSend(t){document.getElementById('chatInput').value=t;sendMessage();}
+  function autoResize(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,130)+'px';}
+  function handleKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMessage();}}
+  function scrollToBottom(){const s=document.getElementById('chatScroll');s.scrollTop=s.scrollHeight;}
+  function hideEmpty(){document.getElementById('emptyState')?.remove();}
+  function escHtml(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');}
+  function escAttr(s){return String(s||'').replace(/'/g,'&#39;').replace(/"/g,'&quot;');}
 
-  // SHARE
-  function shareMessage(userMsg, kevinMsg) {
-    const text = `Ich zu Kevin: "${userMsg}"\n\nKevin: "${kevinMsg}"\n\n😑 kollegenhoelle.vercel.app`;
-    navigator.clipboard.writeText(text).then(() => {
-      document.querySelectorAll('.share-btn').forEach(b => {
-        if(b.dataset.kevin===kevinMsg){
-          b.textContent='✓ Kopiert!'; b.classList.add('copied');
-          setTimeout(()=>{b.textContent='↗ Teilen';b.classList.remove('copied');},2000);
-        }
+  function shareMessage(u,k){
+    navigator.clipboard.writeText(`Ich zu Kevin: "${u}"\n\nKevin: "${k}"\n\n😑 kollegenhoelle.vercel.app`).then(()=>{
+      document.querySelectorAll('.share-btn').forEach(b=>{
+        if(b.dataset.kevin===k){b.textContent='✓ Kopiert!';b.classList.add('copied');setTimeout(()=>{b.textContent='↗ Teilen';b.classList.remove('copied');},2000);}
       });
     });
   }
-
-  // SCREENSHOT
-  function openScreenshot(userMsg, kevinMsg) {
-    document.getElementById('ssUserText').textContent = userMsg;
-    document.getElementById('ssKevinText').textContent = kevinMsg;
+  function openScreenshot(u,k){
+    document.getElementById('ssUserText').textContent=u;
+    document.getElementById('ssKevinText').textContent=k;
     openModal('screenshotModal');
   }
-  async function downloadScreenshot() {
-    const card = document.getElementById('screenshotCard');
-    try {
-      const canvas = await html2canvas(card, {
-        backgroundColor:'#0A0A0B', scale:2,
-        useCORS:true, logging:false
-      });
-      const a = document.createElement('a');
-      a.download = 'kollegenhoelle.png';
-      a.href = canvas.toDataURL('image/png');
-      a.click();
-    } catch(e) {
-      alert('Screenshot fehlgeschlagen. Kevin ist auch nicht überrascht.');
-    }
+  async function downloadScreenshot(){
+    try{
+      const canvas=await html2canvas(document.getElementById('screenshotCard'),{backgroundColor:'#0D0D0F',scale:2,useCORS:true,logging:false});
+      const a=document.createElement('a');a.download='kollegenhoelle.png';a.href=canvas.toDataURL('image/png');a.click();
+    }catch{alert('Screenshot fehlgeschlagen. Kevin ist auch nicht überrascht.');}
   }
 
-  function appendMessage(role, text, mode) {
+  function appendMessage(role,text,mode){
     hideEmpty();
-    const div = document.createElement('div');
-    div.className = 'message '+role+(role==='kevin'&&mode==='roast'?' roast-msg':'');
+    const div=document.createElement('div');
+    div.className='message '+role+(role==='kevin'&&mode==='roast'?' roast-msg':'');
     if(role==='user'){
-      lastUserMsg = text;
-      div.innerHTML = `<span class="msg-label">Du</span><div class="msg-bubble">${escHtml(text)}</div>`;
+      lastUserMsg=text;
+      div.innerHTML=`<span class="msg-label">Du</span><div class="msg-bubble">${escHtml(text)}</div>`;
     } else {
-      lastKevinMsg = text;
-      const u = escAttr(lastUserMsg), k = escAttr(text);
-      div.innerHTML = `
-        <div class="kevin-header">
-          <div class="kevin-avatar ${mode==='roast'?'roast':''}">K</div>
-          <span class="msg-label">Kevin</span>
-        </div>
+      lastKevinMsg=text;
+      const u=escAttr(lastUserMsg),k=escAttr(text);
+      div.innerHTML=`<div class="kevin-header"><div class="kevin-avatar ${mode==='roast'?'roast':''}">K</div><span class="msg-label">Kevin</span></div>
         <div class="msg-bubble">${escHtml(text)}</div>
         <div class="msg-actions">
           <button class="share-btn" data-kevin="${k}" onclick="shareMessage('${u}',this.dataset.kevin)">↗ Teilen</button>
           <button class="screenshot-btn" onclick="openScreenshot('${u}','${k}')">📸 Screenshot</button>
         </div>`;
     }
-    chatInner.insertBefore(div, typingMsg);
+    chatInner.insertBefore(div,typingMsg);
     scrollToBottom();
   }
 
-  async function sendMessage() {
-    const input = document.getElementById('chatInput');
-    const sendBtn = document.getElementById('sendBtn');
-    const msg = input.value.trim();
-    if(!msg||isLoading) return;
-    isLoading=true; sendBtn.disabled=true;
-    input.value=''; input.style.height='auto';
-    appendMessage('user', msg, currentMode);
+  async function sendMessage(){
+    const input=document.getElementById('chatInput'),sendBtn=document.getElementById('sendBtn');
+    const msg=input.value.trim();
+    if(!msg||isLoading)return;
+    isLoading=true;sendBtn.disabled=true;input.value='';input.style.height='auto';
+    appendMessage('user',msg,currentMode);
     history.push({role:'user',content:msg});
-    complaints++; localStorage.setItem('complaints',complaints);
-    typingMsg.style.display='flex'; scrollToBottom();
-    try {
-      const res = await fetch('/api/chat',{
-        method:'POST', headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({message:msg, history:history.slice(-6), mode:currentMode})
-      });
-      const data = await res.json();
+    complaints++;localStorage.setItem('complaints',complaints);
+    typingMsg.style.display='flex';scrollToBottom();
+    try{
+      const res=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({message:msg,history:history.slice(-6),mode:currentMode})});
+      const data=await res.json();
       typingMsg.style.display='none';
-      const reply = data.reply||'*Kevin hat die Frage mit einem Augenrollen quittiert.*';
-      appendMessage('kevin', reply, currentMode);
+      const reply=data.reply||'*Kevin hat die Frage mit einem Augenrollen quittiert.*';
+      appendMessage('kevin',reply,currentMode);
       history.push({role:'assistant',content:reply});
-      if(history.length>20) history=history.slice(-20);
-    } catch {
+      if(history.length>20)history=history.slice(-20);
+    }catch{
       typingMsg.style.display='none';
-      appendMessage('kevin','Kevin seufzt. Die API ist down. Natuerlich. Wie mein Wille zu leben.',currentMode);
+      appendMessage('kevin','Kevin seufzt. Die API ist down. Natuerlich.',currentMode);
     }
-    isLoading=false; sendBtn.disabled=false; input.focus();
+    isLoading=false;sendBtn.disabled=false;input.focus();
   }
 
-  // ═══ CHEF BEWERTEN ═══
-  async function rateChef() {
-    const name = document.getElementById('chefName').value.trim();
-    if(!name) return;
-    const btn = document.getElementById('rateBtn');
-    btn.textContent = 'Kevin denkt nach...'; btn.disabled=true;
-    try {
-      const res = await fetch('/api/chat',{
-        method:'POST', headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({
-          message: `Bewerte den Chef namens "${name}" auf einer Skala von 1-10 (wobei 10 am schlimmsten ist). Antworte NUR in diesem Format: SCORE: [Zahl]\nBEWERTUNG: [2-3 vernichtende aber witzige Saetze ueber diesen Chef. Keine Quellenangaben. Nur Text.]`,
-          history:[], mode:'normal'
-        })
-      });
-      const data = await res.json();
-      const reply = data.reply||'';
-      const scoreMatch = reply.match(/SCORE:\s*(\d+)/i);
-      const textMatch = reply.match(/BEWERTUNG:\s*([\s\S]+)/i);
-      const score = scoreMatch ? Math.min(10,Math.max(1,parseInt(scoreMatch[1]))) : Math.floor(Math.random()*4)+6;
-      const text = textMatch ? textMatch[1].trim() : reply;
-      document.getElementById('ratingScore').innerHTML = score+'<span>/10</span>';
-      document.getElementById('ratingText').textContent = text;
-      document.getElementById('ratingResult').style.display='flex';
-      document.getElementById('ratingResult').style.flexDirection='column';
+  // CHEF BEWERTEN
+  async function rateChef(){
+    const name=document.getElementById('chefName').value.trim();
+    if(!name)return;
+    const btn=document.getElementById('rateBtn');
+    btn.textContent='Kevin denkt nach...';btn.disabled=true;
+    try{
+      const res=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({message:`Bewerte den Chef namens "${name}" auf einer Skala von 1-10 (10=schlimmst). NUR dieses Format: SCORE: [Zahl]\nBEWERTUNG: [2-3 vernichtend-witzige Saetze. Kein Markdown, keine Quellenangaben.]`,history:[],mode:'normal'})});
+      const data=await res.json();
+      const reply=data.reply||'';
+      const sM=reply.match(/SCORE:\s*(\d+)/i),tM=reply.match(/BEWERTUNG:\s*([\s\S]+)/i);
+      const score=sM?Math.min(10,Math.max(1,parseInt(sM[1]))):Math.floor(Math.random()*4)+6;
+      const text=tM?tM[1].trim():reply;
+      document.getElementById('ratingScore').innerHTML=score+'<span>/10</span>';
+      document.getElementById('ratingText').textContent=text;
+      document.getElementById('ratingResult').style.cssText='display:flex;flex-direction:column;';
       btn.style.display='none';
       document.getElementById('chefName').style.display='none';
       document.querySelector('#chefModal .modal-desc').style.display='none';
-    } catch {
-      document.getElementById('ratingText').textContent='Kevin konnte den Chef nicht bewerten. Wahrscheinlich ist er gerade selbst im Meeting.';
-      document.getElementById('ratingResult').style.display='flex';
+    }catch{
+      document.getElementById('ratingText').textContent='Kevin konnte den Chef nicht bewerten. Wahrscheinlich ist er selbst im Meeting.';
+      document.getElementById('ratingResult').style.cssText='display:flex;flex-direction:column;';
     }
-    btn.textContent='🔥 Chef vernichten'; btn.disabled=false;
+    btn.textContent='🔥 Chef vernichten';btn.disabled=false;
   }
-  function resetRating() {
+  function resetRating(){
     document.getElementById('ratingResult').style.display='none';
     document.getElementById('rateBtn').style.display='flex';
-    document.getElementById('chefName').style.display='block';
+    document.getElementById('chefName').style.cssText='display:block;';
     document.getElementById('chefName').value='';
     document.querySelector('#chefModal .modal-desc').style.display='block';
   }
-  function shareRating() {
-    const name = document.getElementById('chefName').value||'mein Chef';
-    const score = document.getElementById('ratingScore').textContent;
-    const text = document.getElementById('ratingText').textContent;
+  function shareRating(){
+    const name=document.getElementById('chefName').value||'mein Chef';
+    const score=document.getElementById('ratingScore').textContent;
+    const text=document.getElementById('ratingText').textContent;
     navigator.clipboard.writeText(`Kevin bewertet "${name}": ${score} Hoffnungslosigkeit\n\n"${text}"\n\n😑 kollegenhoelle.vercel.app`);
-    alert('In die Zwischenablage kopiert!');
+    alert('Kopiert! Kevin würde es nicht teilen. Aber du kannst.');
   }
 
-  // ═══ PERSÖNLICHKEITSTEST ═══
-  const testQuestions = [
-    {
-      q: 'Dein Chef schickt um 17:58 Uhr eine E-Mail mit „kurze Frage". Was machst du?',
-      opts: ['Sofort antworten, ich bin ein Teamplayer 😇','Ich lese sie, antworte aber erst morgen','Ich sehe sie. Ich lasse sie ungelesen.','Ich kündige innerlich zum 47. Mal']
-    },
-    {
-      q: 'Wie viele Meetings hättest du diese Woche auch als E-Mail verschicken können?',
-      opts: ['Keines, ich liebe Meetings 🤡','1-2 vielleicht','Alle außer einem','Was ist ein Meeting das keine E-Mail hätte sein können?']
-    },
-    {
-      q: 'Dein Kollege bekommt die Beförderung für die du gearbeitet hast. Deine Reaktion?',
-      opts: ['Ich freue mich für ihn ehrlich','Ich schlucke es runter und lächle','Ich rede mit HR — haha, nur ein Witz','Ich aktualisiere still meinen LinkedIn']
-    },
-    {
-      q: 'Wie beschreibst du deine Work-Life-Balance?',
-      opts: ['Ausgewogen und gesund 🌈','Könnte besser sein','Work hat gewonnen, Leben kapituliert','Welches Leben?']
-    },
-    {
-      q: 'Es ist Freitagabend. Du denkst an...',
-      opts: ['Das Wochenende, endlich!','Die E-Mails die ich noch nicht beantwortet habe','Den Montag. Schon.','Nichts. Ich fühle nichts mehr.']
-    }
+  // PERSÖNLICHKEITSTEST
+  const testQs=[
+    {q:'Dein Chef schickt um 17:58 Uhr eine E-Mail mit „kurze Frage". Was machst du?',opts:['Sofort antworten, ich bin Teamplayer 😇','Ich lese sie, antworte aber erst morgen','Ich sehe sie. Ich lasse sie ungelesen.','Ich kündige innerlich zum 47. Mal']},
+    {q:'Wie viele Meetings hättest du diese Woche auch als E-Mail verschicken können?',opts:['Keines, ich liebe Meetings 🤡','1-2 vielleicht','Alle außer einem','Was ist ein Meeting das keine E-Mail wäre?']},
+    {q:'Dein Kollege bekommt die Beförderung für die du gearbeitet hast.',opts:['Ich freue mich für ihn ehrlich','Ich schlucke es runter und lächle','Ich rede mit HR — haha, nur ein Witz','Ich aktualisiere still meinen LinkedIn']},
+    {q:'Wie beschreibst du deine Work-Life-Balance?',opts:['Ausgewogen und gesund 🌈','Könnte besser sein','Work hat gewonnen, Leben kapituliert','Welches Leben?']},
+    {q:'Es ist Freitagabend. Du denkst an...',opts:['Das Wochenende, endlich!','Die E-Mails die ich noch nicht beantwortet habe','Den Montag. Schon.','Nichts. Ich fühle nichts mehr.']}
   ];
-  let testAnswers = [];
-  let currentTestStep = 0;
+  let testAnswers=[],testStep=0;
 
-  function startTest() {
-    testAnswers = []; currentTestStep = 0;
+  function startTest(){
+    testAnswers=[];testStep=0;
     document.getElementById('testIntro').style.display='block';
     document.getElementById('testResultBox').style.display='none';
     renderTestStep();
     openModal('testModal');
   }
-
-  function renderTestStep() {
-    const container = document.getElementById('testSteps');
-    if(currentTestStep >= testQuestions.length) {
-      container.innerHTML='';
-      analyzeTest();
-      return;
-    }
-    const q = testQuestions[currentTestStep];
-    container.innerHTML = `
-      <div class="test-step visible">
-        <p class="test-progress">Frage ${currentTestStep+1} von ${testQuestions.length}</p>
-        <p class="test-question">${q.q}</p>
-        <div class="test-options">
-          ${q.opts.map((opt,i)=>`<button class="test-opt" onclick="answerTest(${i})">${opt}</button>`).join('')}
-        </div>
-      </div>`;
+  function renderTestStep(){
+    const c=document.getElementById('testSteps');
+    if(testStep>=testQs.length){c.innerHTML='';analyzeTest();return;}
+    const q=testQs[testStep];
+    c.innerHTML=`<div class="test-step visible">
+      <p class="test-progress">Frage ${testStep+1} von ${testQs.length}</p>
+      <p class="test-question">${q.q}</p>
+      <div class="test-options">${q.opts.map((o,i)=>`<button class="test-opt" onclick="answerTest(${i})">${o}</button>`).join('')}</div>
+    </div>`;
   }
-
-  function answerTest(idx) {
-    testAnswers.push(idx);
-    currentTestStep++;
-    renderTestStep();
-  }
-
-  async function analyzeTest() {
-    document.getElementById('testSteps').innerHTML = '<p class="starter-loading">Kevin analysiert dein Leid...</p>';
-    const score = Math.round((testAnswers.reduce((s,a)=>s+a,0) / (testQuestions.length*3)) * 10);
-    try {
-      const answerSummary = testAnswers.map((a,i)=>testQuestions[i].opts[a]).join(', ');
-      const res = await fetch('/api/chat',{
-        method:'POST', headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({
-          message: `Jemand hat einen Buerostress-Test gemacht. Seine Antworten: ${answerSummary}. Hoffnungslosigkeits-Score: ${score}/10. Schreib eine kurze (2-3 Saetze) vernichtend-witzige aber ehrliche Kevin-Analyse dieser Person und ihrer Buerosituation. Kein Markdown, nur Text.`,
-          history:[], mode:'normal'
-        })
-      });
-      const data = await res.json();
+  function answerTest(i){testAnswers.push(i);testStep++;renderTestStep();}
+  async function analyzeTest(){
+    document.getElementById('testSteps').innerHTML='<p class="starter-loading" style="padding:.5rem 0">Kevin analysiert dein Leid...</p>';
+    const score=Math.round((testAnswers.reduce((s,a)=>s+a,0)/(testQs.length*3))*10);
+    try{
+      const summary=testAnswers.map((a,i)=>testQs[i].opts[a]).join(', ');
+      const res=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({message:`Jemand hat einen Buerostress-Test gemacht. Antworten: ${summary}. Hoffnungslosigkeits-Score: ${score}/10. Schreib eine kurze (2-3 Saetze) vernichtend-witzige Kevin-Analyse. Kein Markdown.`,history:[],mode:'normal'})});
+      const data=await res.json();
       document.getElementById('testSteps').innerHTML='';
-      document.getElementById('testScore').innerHTML = score+'<span>/10</span>';
-      document.getElementById('testResultText').textContent = data.reply||'Kevin ist sprachlos. Fast.';
-      document.getElementById('testResultBox').style.display='flex';
-      document.getElementById('testResultBox').style.flexDirection='column';
+      document.getElementById('testScore').innerHTML=score+'<span>/10</span>';
+      document.getElementById('testResultText').textContent=data.reply||'Kevin ist sprachlos. Fast.';
+      document.getElementById('testResultBox').style.cssText='display:flex;flex-direction:column;';
       document.getElementById('testIntro').style.display='none';
-    } catch {
-      document.getElementById('testResultText').textContent='Kevin konnte dich nicht analysieren. Wahrscheinlich weil er selbst gerade in einer Sinnkrise steckt.';
-      document.getElementById('testResultBox').style.display='flex';
+    }catch{
+      document.getElementById('testResultText').textContent='Kevin konnte dich nicht analysieren. Er steckt selbst in einer Sinnkrise.';
+      document.getElementById('testResultBox').style.cssText='display:flex;flex-direction:column;';
       document.getElementById('testSteps').innerHTML='';
     }
   }
-
-  function shareTest() {
-    const score = document.getElementById('testScore').textContent;
-    const text = document.getElementById('testResultText').textContent;
+  function shareTest(){
+    const score=document.getElementById('testScore').textContent;
+    const text=document.getElementById('testResultText').textContent;
     navigator.clipboard.writeText(`Mein Büro-Hoffnungslosigkeits-Score: ${score}\n\nKevin sagt: "${text}"\n\n😑 kollegenhoelle.vercel.app`);
-    alert('In die Zwischenablage kopiert!');
+    alert('Kopiert! Teile es mit deinen leidenden Kollegen.');
   }
 </script>
 </body>
