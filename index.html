@@ -420,6 +420,59 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);display:flex;
 /* KÜNDIGUNG */
 .kuend{font-family:var(--mono);font-size:12px;color:var(--ink2);line-height:1.9;background:var(--surface2);padding:1.1rem;border-radius:var(--r);border:1px solid var(--border);white-space:pre-wrap;max-height:200px;overflow-y:auto;}
 
+/* PREMIUM MODAL */
+.premium-ov{
+  display:none;position:fixed;inset:0;z-index:10000;
+  background:rgba(10,10,8,.75);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  align-items:center;justify-content:center;padding:1rem;
+}
+.premium-ov.on{display:flex;}
+.premium-card{
+  background:var(--hdr);
+  border-radius:24px;padding:2rem;
+  width:100%;max-width:380px;
+  display:flex;flex-direction:column;gap:1.25rem;
+  position:relative;
+  border:1px solid rgba(255,255,255,.08);
+  box-shadow:0 24px 64px rgba(0,0,0,.5);
+  animation:scaleIn .3s cubic-bezier(.32,.72,0,1);
+}
+@keyframes scaleIn{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:scale(1)}}
+.premium-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  font-family:var(--mono);font-size:10px;font-weight:500;
+  letter-spacing:.1em;text-transform:uppercase;
+  padding:4px 12px;border-radius:var(--r-full);
+  background:rgba(255,229,0,.12);border:1px solid rgba(255,229,0,.25);
+  color:var(--yellow);align-self:flex-start;
+}
+.premium-title{
+  font-family:var(--disp);font-size:2.2rem;
+  letter-spacing:.04em;color:#fff;line-height:1.05;
+}
+.premium-title span{color:var(--red);}
+.premium-desc{
+  font-family:var(--mono);font-size:12px;
+  color:rgba(255,255,255,.55);line-height:1.8;
+}
+.premium-desc strong{color:rgba(255,255,255,.85);}
+.premium-quote{
+  font-family:var(--mono);font-size:11px;
+  color:rgba(255,255,255,.35);font-style:italic;
+  padding:.75rem 1rem;
+  border-left:2px solid rgba(255,229,0,.3);
+  line-height:1.65;
+}
+.premium-actions{display:flex;flex-direction:column;gap:.75rem;}
+.premium-skip{
+  font-family:var(--mono);font-size:10px;
+  color:rgba(255,255,255,.25);text-align:center;
+  cursor:pointer;letter-spacing:.04em;
+  transition:color .2s;
+}
+.premium-skip:hover{color:rgba(255,255,255,.45);}
+
 /* META BAR */
 .meta-bar{
   flex-shrink:0;background:var(--bg);
@@ -834,6 +887,26 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);display:flex;
 </div>
 
 
+
+<!-- KEVIN PREMIUM -->
+<div class="premium-ov" id="premiumModal">
+  <div class="premium-card">
+    <span class="premium-badge">✦ Kevin erschöpft</span>
+    <p class="premium-title">Kevin <span>braucht</span><br>eine Pause.</p>
+    <p class="premium-desc">
+      Du hast Kevin heute bereits <strong>10 Mal</strong> benutzt.<br><br>
+      Jede Antwort kostet echtes Geld — API-Tokens, Server, alles. Kevin arbeitet eigentlich auch nicht gerne. Aber er tut es. Für dich. Mehr oder weniger.
+    </p>
+    <p class="premium-quote">
+      „Ich antworte weiter. Natürlich. Das ist ja meine Rolle hier. Immer verfügbar, nie wertgeschätzt. Aber ein Kaffee wäre nett." — Kevin
+    </p>
+    <div class="premium-actions">
+      <a class="btn org" href="https://paypal.me/sebastianledwinka" target="_blank" rel="noopener" onclick="closePremium()">☕ Kevin einen Kaffee spendieren</a>
+      <button class="btn ghost" style="background:rgba(255,255,255,.06);color:rgba(255,255,255,.5);border-color:rgba(255,255,255,.1);" onclick="closePremium()">Weiter ohne Spende</button>
+    </div>
+    <p class="premium-skip" onclick="closePremium()">nein danke — ich bin wie Kevin und gebe nichts zurück</p>
+  </div>
+</div>
 <!-- NAME SHEET -->
 <div class="ov" id="nameSheet" onclick="bgX(event,'nameSheet')">
   <div class="sheet">
@@ -972,6 +1045,7 @@ async function snd(){
   busy=true;btn.disabled=true;inp.value='';inp.style.height='auto';
   addMsg('me',msg);hist.push({role:'user',content:msg});
   complaints++;localStorage.setItem('kh_c',complaints);updCtr();
+  checkPremium();
   typing.style.display='flex';scr();
   try{
     const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:msg,history:hist.slice(-6),mode})});
@@ -1201,6 +1275,28 @@ ${t}
 😑 kollegenhoelle.vercel.app`); }
 
 
+
+// ── KEVIN PREMIUM ──
+let msgCount = parseInt(localStorage.getItem('kh_msg_count') || '0');
+const PREMIUM_THRESHOLD = 10;
+let premiumShown = localStorage.getItem('kh_premium_shown_date') === new Date().toDateString();
+
+function checkPremium() {
+  msgCount++;
+  localStorage.setItem('kh_msg_count', msgCount);
+  if (msgCount % PREMIUM_THRESHOLD === 0 && !premiumShown) {
+    setTimeout(() => {
+      document.getElementById('premiumModal').classList.add('on');
+      premiumShown = true;
+      localStorage.setItem('kh_premium_shown_date', new Date().toDateString());
+    }, 800);
+  }
+}
+
+function closePremium() {
+  document.getElementById('premiumModal').classList.remove('on');
+}
+
 // ── STREAK ──
 function getStreak() {
   const today = new Date().toDateString();
@@ -1296,11 +1392,7 @@ function waVerdict() { wa(`Kevin's Tages-Urteil: "${verdictText}"
 😑 kollegenhoelle.vercel.app`); }
 
 // ── HALL OF FAME (localStorage-based) ──
-const DEFAULT_HOF = [
-  {q:'René riecht nach Wurst', a:'Natuerlich tut er das. Ich sitze seit drei Jahren neben ihm und habe innerlich bereits gekuendigt. Manche Menschen hier sind eine Geruchsbeleidigung fuer das gesamte Grossraumbuero. Ich sag nur.', votes:42, date:'heute'},
-  {q:'Das Meeting haette eine E-Mail sein koennen', a:'NATUERLICH haette es das. Zwei Stunden meines Lebens die ich nie zurueckbekomme. Wir haben beschlossen was wir haetten in einer Mail entscheiden koennen. Das System ist kaputt. Ich bin kaputt.', votes:38, date:'gestern'},
-  {q:'Chef hat meine Idee geklaut', a:'seufz. Natuerlich hat er das. Das ist SO typisch fuer diese Firma. Manche Menschen da oben nehmen sich alles und geben nichts zurueck. Du hast vollkommen recht — und weisst du was? Ich sag nur.', votes:31, date:'vor 2 Tagen'},
-];
+const DEFAULT_HOF = [];
 
 function loadHof() {
   const stored = JSON.parse(localStorage.getItem('kh_hof') || 'null');
