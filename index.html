@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>Kollegenhölle 🔥</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
@@ -10,224 +10,256 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#111113;--surface:#1A1A1E;--surface2:#222228;
-  --border:#333339;--border2:#44444C;--text:#F0EEE8;
-  --muted:#A0A0AA;--muted2:#707078;
-  --normal:#FFE500;--roast:#FF3B30;--roast-dim:#3A1210;
+  --bg:#111113;--surface:#1E1E22;--surface2:#28282E;
+  --border:#3A3A42;--border2:#4A4A54;--text:#F4F2EC;
+  --muted:#B0B0BA;--muted2:#787882;
+  --normal:#FFE500;--roast:#FF3B30;--roast-dim:#3D1412;
   --font-disp:'Bebas Neue',sans-serif;
   --font-mono:'IBM Plex Mono',monospace;
   --font-body:'IBM Plex Sans',sans-serif;
 }
 html,body{height:100%;overflow:hidden}
-body{font-family:var(--font-body);background:var(--bg);color:var(--text);display:flex;flex-direction:column;}
+body{font-family:var(--font-body);background:var(--bg);color:var(--text);display:flex;flex-direction:column;font-size:16px;}
 
+/* HEADER */
 header{flex-shrink:0;padding:1rem 1.75rem;border-bottom:1px solid var(--border);
   display:flex;align-items:center;justify-content:space-between;background:#0D0D0F;}
-h1{font-family:var(--font-disp);font-size:clamp(2rem,5vw,3.2rem);letter-spacing:.05em;text-transform:uppercase;}
+h1{font-family:var(--font-disp);font-size:clamp(2.2rem,5vw,3.5rem);letter-spacing:.05em;text-transform:uppercase;}
 h1 span{color:var(--normal);animation:flicker 5s infinite;}
-@keyframes flicker{0%,94%,100%{opacity:1}95%{opacity:.3}96.5%{opacity:1}97.5%{opacity:.1}99%{opacity:1}}
-.kevin-status{font-family:var(--font-mono);font-size:12px;color:var(--muted);display:flex;align-items:center;gap:7px;}
-.status-dot{width:8px;height:8px;border-radius:50%;background:#4CAF50;animation:pulse-dot 2.5s infinite;}
+@keyframes flicker{0%,94%,100%{opacity:1}95%{opacity:.3}97%{opacity:1}98%{opacity:.1}99%{opacity:1}}
+.kevin-status{font-family:var(--font-mono);font-size:13px;color:var(--muted);display:flex;align-items:center;gap:7px;}
+.status-dot{width:9px;height:9px;border-radius:50%;background:#4CAF50;animation:pulse-dot 2.5s infinite;}
 @keyframes pulse-dot{0%,100%{opacity:1}50%{opacity:.25}}
 
-.roast-banner{display:none;flex-shrink:0;padding:6px 1.75rem;background:var(--roast);
-  font-family:var(--font-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+/* ROAST BANNER */
+.roast-banner{display:none;flex-shrink:0;padding:7px 1.75rem;background:var(--roast);
+  font-family:var(--font-mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;
   color:#fff;text-align:center;font-weight:500;}
 .roast-banner.visible{display:block;}
 
-.mode-bar{flex-shrink:0;display:flex;align-items:center;gap:8px;padding:.65rem 1.75rem;
-  border-bottom:1px solid var(--border);background:var(--surface);flex-wrap:wrap;}
-.mode-label{font-family:var(--font-mono);font-size:11px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;}
-.mode-toggle{display:flex;border:1px solid var(--border2);border-radius:7px;overflow:hidden;}
-.mode-btn{font-family:var(--font-mono);font-size:12px;font-weight:500;letter-spacing:.06em;padding:8px 18px;
+/* MODE BAR */
+.mode-bar{flex-shrink:0;display:flex;align-items:center;gap:10px;padding:.75rem 1.75rem;
+  border-bottom:1px solid var(--border);background:var(--surface);flex-wrap:wrap;row-gap:8px;}
+.mode-label{font-family:var(--font-mono);font-size:12px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;}
+.mode-toggle{display:flex;border:1.5px solid var(--border2);border-radius:8px;overflow:hidden;}
+.mode-btn{font-family:var(--font-mono);font-size:13px;font-weight:500;letter-spacing:.06em;padding:9px 20px;
   background:transparent;color:var(--muted);border:none;cursor:pointer;transition:all .18s;text-transform:uppercase;}
 .mode-btn.active-normal{background:var(--normal);color:#0D0D0F;}
 .mode-btn.active-roast{background:var(--roast);color:#fff;}
 .mode-btn:not(.active-normal):not(.active-roast):hover{background:var(--surface2);color:var(--text);}
 .mode-spacer{flex:1;}
-.extra-btns{display:flex;gap:7px;flex-wrap:wrap;}
-.extra-btn{font-family:var(--font-mono);font-size:11px;font-weight:500;letter-spacing:.05em;
-  padding:7px 14px;border-radius:7px;border:1.5px solid var(--border2);
+
+/* FEATURE BUTTONS */
+.extra-btns{display:flex;gap:8px;flex-wrap:wrap;}
+.extra-btn{font-family:var(--font-mono);font-size:12px;font-weight:500;letter-spacing:.05em;
+  padding:8px 16px;border-radius:8px;border:1.5px solid var(--border2);
   background:var(--surface2);color:var(--text);cursor:pointer;transition:all .18s;
-  text-transform:uppercase;white-space:nowrap;display:flex;align-items:center;gap:5px;}
+  text-transform:uppercase;white-space:nowrap;}
 .extra-btn:hover{border-color:var(--normal);color:var(--normal);background:rgba(255,229,0,.07);}
 .extra-btn.red:hover{border-color:var(--roast);color:var(--roast);background:rgba(255,59,48,.07);}
 .extra-btn.orange{border-color:#F5A623;color:#F5A623;}
 .extra-btn.orange:hover{background:rgba(245,166,35,.1);}
 
-.qod-bar{flex-shrink:0;padding:.6rem 1.75rem;border-bottom:1px solid var(--border);
-  background:var(--surface);display:flex;align-items:center;gap:10px;}
-.qod-label{font-family:var(--font-mono);font-size:10px;color:var(--normal);
+/* KEVIN QUOTE */
+.qod-bar{flex-shrink:0;padding:.65rem 1.75rem;border-bottom:1px solid var(--border);
+  background:var(--surface);display:flex;align-items:center;gap:12px;}
+.qod-label{font-family:var(--font-mono);font-size:11px;color:var(--normal);
   letter-spacing:.1em;text-transform:uppercase;white-space:nowrap;flex-shrink:0;font-weight:500;}
-.qod-text{font-family:var(--font-mono);font-size:11px;color:var(--muted);letter-spacing:.02em;font-style:italic;}
+.qod-text{font-family:var(--font-mono);font-size:12px;color:var(--muted);letter-spacing:.02em;font-style:italic;}
 
-#liveCounter{flex-shrink:0;font-family:var(--font-mono);font-size:11px;
-  padding:6px 1.75rem;color:var(--muted);border-bottom:1px solid var(--border);background:var(--bg);}
+/* LIVE COUNTER */
+#liveCounter{flex-shrink:0;font-family:var(--font-mono);font-size:12px;
+  padding:7px 1.75rem;color:var(--muted);border-bottom:1px solid var(--border);}
 
-.starters{flex-shrink:0;padding:.65rem 1.75rem;border-bottom:1px solid var(--border);
-  display:flex;gap:8px;flex-wrap:wrap;align-items:center;background:var(--bg);}
-.starters-label{font-family:var(--font-mono);font-size:10px;color:var(--muted);
+/* STARTERS */
+.starters{flex-shrink:0;padding:.7rem 1.75rem;border-bottom:1px solid var(--border);
+  display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+.starters-label{font-family:var(--font-mono);font-size:11px;color:var(--muted);
   letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;font-weight:500;}
-.starter-btn{font-family:var(--font-mono);font-size:11px;letter-spacing:.03em;
-  padding:6px 14px;border:1px solid var(--border2);border-radius:100px;
+.starter-btn{font-family:var(--font-mono);font-size:12px;
+  padding:7px 15px;border:1.5px solid var(--border2);border-radius:100px;
   background:var(--surface);color:var(--muted);cursor:pointer;transition:all .18s;white-space:nowrap;}
 .starter-btn:hover{border-color:var(--normal);color:var(--normal);background:rgba(255,229,0,.06);}
-.starter-loading{font-family:var(--font-mono);font-size:11px;color:var(--muted2);font-style:italic;}
 
+/* CHAT */
 .chat-scroll{flex:1;overflow-y:auto;padding:1.5rem 1.75rem;}
 .chat-scroll::-webkit-scrollbar{width:4px;}
 .chat-scroll::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px;}
-.chat-inner{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:1.25rem;min-height:100%;}
+.chat-inner{max-width:780px;margin:0 auto;display:flex;flex-direction:column;gap:1.25rem;min-height:100%;}
 
+/* EMPTY STATE */
 .empty-state{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
-  text-align:center;gap:.75rem;padding:2rem 1rem;min-height:200px;}
-.empty-icon{font-size:2.5rem;opacity:.35;}
-.empty-title{font-family:var(--font-disp);font-size:2.2rem;letter-spacing:.06em;color:var(--muted);}
-.empty-sub{font-family:var(--font-mono);font-size:12px;color:var(--muted2);max-width:340px;line-height:1.8;}
+  text-align:center;gap:1rem;padding:2rem 1rem;min-height:200px;}
+.empty-icon{font-size:3rem;opacity:.3;}
+.empty-title{font-family:var(--font-disp);font-size:2.5rem;letter-spacing:.06em;color:var(--muted);}
+.empty-sub{font-family:var(--font-mono);font-size:13px;color:var(--muted2);max-width:360px;line-height:1.8;}
 
-.message{display:flex;flex-direction:column;gap:5px;animation:msgIn .22s ease;}
+/* MESSAGES */
+.message{display:flex;flex-direction:column;gap:6px;animation:msgIn .22s ease;}
 @keyframes msgIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 .message.user{align-items:flex-end;}.message.kevin{align-items:flex-start;}
-.msg-label{font-family:var(--font-mono);font-size:10px;color:var(--muted2);letter-spacing:.1em;padding:0 4px;}
-.msg-bubble{max-width:70%;padding:12px 16px;border-radius:10px;font-size:15px;line-height:1.65;font-weight:300;}
-.message.user .msg-bubble{background:var(--surface2);border:1px solid var(--border2);border-bottom-right-radius:3px;}
-.message.kevin .msg-bubble{background:var(--surface);border:1px solid var(--border);border-bottom-left-radius:3px;}
+.msg-label{font-family:var(--font-mono);font-size:11px;color:var(--muted2);letter-spacing:.1em;padding:0 4px;}
+.msg-bubble{max-width:72%;padding:14px 18px;border-radius:12px;font-size:16px;line-height:1.7;font-weight:300;}
+.message.user .msg-bubble{background:var(--surface2);border:1.5px solid var(--border2);border-bottom-right-radius:3px;}
+.message.kevin .msg-bubble{background:var(--surface);border:1.5px solid var(--border);border-bottom-left-radius:3px;}
 .message.kevin.roast-msg .msg-bubble{background:var(--roast-dim);border-color:#5A2020;}
-.kevin-header{display:flex;align-items:center;gap:8px;}
-.kevin-avatar{width:26px;height:26px;border-radius:50%;background:var(--normal);color:#0D0D0F;
-  font-family:var(--font-mono);font-size:11px;font-weight:500;
+.kevin-header{display:flex;align-items:center;gap:9px;}
+.kevin-avatar{width:30px;height:30px;border-radius:50%;background:var(--normal);color:#0D0D0F;
+  font-family:var(--font-mono);font-size:12px;font-weight:500;
   display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 .kevin-avatar.roast{background:var(--roast);color:#fff;}
 
-.msg-actions{display:flex;gap:7px;margin-top:3px;flex-wrap:wrap;}
-.action-btn{font-family:var(--font-mono);font-size:10px;letter-spacing:.06em;
-  padding:4px 12px;border:1px solid var(--border2);border-radius:100px;
+/* ACTION BUTTONS */
+.msg-actions{display:flex;gap:8px;flex-wrap:wrap;}
+.action-btn{font-family:var(--font-mono);font-size:11px;letter-spacing:.06em;
+  padding:5px 14px;border:1.5px solid var(--border2);border-radius:100px;
   background:transparent;color:var(--muted);cursor:pointer;transition:all .18s;text-transform:uppercase;}
 .action-btn:hover{border-color:var(--normal);color:var(--normal);}
 .action-btn.wa:hover{border-color:#25D366;color:#25D366;}
 .action-btn.copied{border-color:#4CAF50;color:#4CAF50;}
 
+/* TYPING */
 #typingMsg{display:none;}
-.typing-bubble{display:flex;align-items:center;gap:6px;padding:12px 16px;
-  background:var(--surface);border:1px solid var(--border);
-  border-radius:10px;border-bottom-left-radius:3px;width:fit-content;}
-.typing-dot{width:7px;height:7px;border-radius:50%;background:var(--muted2);animation:bounce .9s infinite;}
+.typing-bubble{display:flex;align-items:center;gap:6px;padding:14px 18px;
+  background:var(--surface);border:1.5px solid var(--border);
+  border-radius:12px;border-bottom-left-radius:3px;width:fit-content;}
+.typing-dot{width:8px;height:8px;border-radius:50%;background:var(--muted2);animation:bounce .9s infinite;}
 .typing-dot:nth-child(2){animation-delay:.18s}.typing-dot:nth-child(3){animation-delay:.36s}
-@keyframes bounce{0%,80%,100%{transform:translateY(0);opacity:.35}40%{transform:translateY(-6px);opacity:1}}
+@keyframes bounce{0%,80%,100%{transform:translateY(0);opacity:.35}40%{transform:translateY(-7px);opacity:1}}
 
-.input-bar{flex-shrink:0;background:var(--surface);border-top:1px solid var(--border);padding:.85rem 1.75rem;}
-.input-inner{max-width:760px;margin:0 auto;display:flex;gap:10px;align-items:flex-end;}
-.chat-input{flex:1;background:var(--bg);border:1.5px solid var(--border2);border-radius:8px;
-  color:var(--text);font-family:var(--font-body);font-size:15px;font-weight:300;
-  padding:11px 15px;resize:none;min-height:46px;max-height:130px;
+/* INPUT */
+.input-bar{flex-shrink:0;background:var(--surface);border-top:1.5px solid var(--border);padding:.9rem 1.75rem;}
+.input-inner{max-width:780px;margin:0 auto;display:flex;gap:10px;align-items:flex-end;}
+.chat-input{flex:1;background:var(--bg);border:1.5px solid var(--border2);border-radius:10px;
+  color:var(--text);font-family:var(--font-body);font-size:16px;font-weight:300;
+  padding:12px 16px;resize:none;min-height:50px;max-height:130px;
   outline:none;transition:border-color .2s;line-height:1.5;}
 .chat-input::placeholder{color:var(--muted2);}
 .chat-input:focus{border-color:var(--normal);}
 .chat-input.roast-mode:focus{border-color:var(--roast);}
-.send-btn{font-family:var(--font-mono);font-size:13px;font-weight:500;
-  padding:0 24px;border:none;border-radius:8px;cursor:pointer;
+.send-btn{font-family:var(--font-mono);font-size:14px;font-weight:500;
+  padding:0 26px;border:none;border-radius:10px;cursor:pointer;
   background:var(--normal);color:#0D0D0F;letter-spacing:.06em;text-transform:uppercase;
-  transition:all .18s;height:46px;white-space:nowrap;flex-shrink:0;}
+  transition:all .18s;height:50px;white-space:nowrap;flex-shrink:0;}
 .send-btn:hover{filter:brightness(1.1);transform:translateY(-1px);}
 .send-btn:active{transform:translateY(0);}
 .send-btn.roast{background:var(--roast);color:#fff;}
 .send-btn:disabled{opacity:.35;cursor:not-allowed;transform:none;filter:none;}
 
-.footer-bar{flex-shrink:0;padding:.6rem 1.75rem;border-top:1px solid var(--border);
-  font-family:var(--font-mono);font-size:10px;color:var(--muted);
-  letter-spacing:.05em;display:flex;justify-content:space-between;align-items:center;background:#0D0D0F;}
+/* FOOTER */
+.footer-bar{flex-shrink:0;padding:.65rem 1.75rem;border-top:1px solid var(--border);
+  font-family:var(--font-mono);font-size:11px;color:var(--muted);
+  display:flex;justify-content:space-between;align-items:center;background:#0D0D0F;}
 
 /* MODALS */
 .modal-overlay{display:none;position:fixed;inset:0;z-index:9999;
-  background:rgba(0,0,0,.85);align-items:center;justify-content:center;padding:1rem;}
+  background:rgba(0,0,0,.87);align-items:center;justify-content:center;padding:1rem;}
 .modal-overlay.visible{display:flex;}
-.modal{background:var(--surface);border:1px solid var(--border2);
-  border-radius:14px;padding:2rem;width:100%;max-width:420px;
-  display:flex;flex-direction:column;gap:1.35rem;position:relative;max-height:90vh;overflow-y:auto;}
-.modal-close{position:absolute;top:14px;right:16px;font-family:var(--font-mono);font-size:18px;
-  color:var(--muted);background:none;border:none;cursor:pointer;transition:color .18s;line-height:1;}
+.modal{background:var(--surface);border:1.5px solid var(--border2);
+  border-radius:16px;padding:2rem;width:100%;max-width:440px;
+  display:flex;flex-direction:column;gap:1.4rem;position:relative;max-height:90vh;overflow-y:auto;}
+.modal-close{position:absolute;top:14px;right:16px;font-family:var(--font-mono);font-size:20px;
+  color:var(--muted);background:none;border:none;cursor:pointer;line-height:1;}
 .modal-close:hover{color:var(--text);}
-.modal-title{font-family:var(--font-disp);font-size:2.2rem;letter-spacing:.05em;text-transform:uppercase;color:var(--text);line-height:1.05;}
-.modal-title .y{color:var(--normal);}.modal-title .r{color:var(--roast);}.modal-title .o{color:#F5A623;}.modal-title .g{color:#25D366;}
-.modal-desc{font-family:var(--font-mono);font-size:11px;color:var(--muted);line-height:1.8;}
-.modal-desc strong{color:var(--text);font-weight:500;}
-.modal-input{background:var(--bg);border:1.5px solid var(--border2);border-radius:8px;
-  color:var(--text);font-family:var(--font-mono);font-size:13px;
-  padding:11px 15px;outline:none;transition:border-color .2s;width:100%;}
+.modal-title{font-family:var(--font-disp);font-size:2.4rem;letter-spacing:.05em;text-transform:uppercase;color:var(--text);line-height:1.05;}
+.modal-title .y{color:var(--normal);}.modal-title .r{color:var(--roast);}.modal-title .o{color:#F5A623;}
+.modal-desc{font-family:var(--font-mono);font-size:12px;color:var(--muted);line-height:1.8;}
+.modal-desc strong{color:var(--text);}
+.modal-input{background:var(--bg);border:1.5px solid var(--border2);border-radius:10px;
+  color:var(--text);font-family:var(--font-mono);font-size:14px;
+  padding:12px 16px;outline:none;transition:border-color .2s;width:100%;}
 .modal-input:focus{border-color:var(--normal);}
 .modal-action-btn{display:flex;align-items:center;justify-content:center;gap:8px;
-  font-family:var(--font-mono);font-size:13px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;
-  padding:14px 20px;border-radius:9px;border:none;cursor:pointer;transition:filter .18s,transform .18s;text-decoration:none;}
+  font-family:var(--font-mono);font-size:14px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;
+  padding:15px 20px;border-radius:10px;border:none;cursor:pointer;transition:filter .18s,transform .18s;text-decoration:none;}
 .modal-action-btn:hover{filter:brightness(1.08);transform:translateY(-1px);}
 .modal-action-btn.yellow{background:var(--normal);color:#0D0D0F;}
 .modal-action-btn.red{background:var(--roast);color:#fff;}
 .modal-action-btn.orange{background:#F5A623;color:#0D0D0F;}
 .modal-action-btn.green{background:#25D366;color:#fff;}
-.modal-action-btn.ghost{background:var(--surface2);color:var(--muted);border:1px solid var(--border2);}
-.modal-skip{font-family:var(--font-mono);font-size:10px;color:var(--muted2);
-  text-align:center;letter-spacing:.05em;cursor:pointer;transition:color .18s;}
+.modal-action-btn.ghost{background:var(--surface2);color:var(--muted);border:1.5px solid var(--border2);}
+.modal-skip{font-family:var(--font-mono);font-size:11px;color:var(--muted2);
+  text-align:center;letter-spacing:.05em;cursor:pointer;}
 .modal-skip:hover{color:var(--muted);}
-.modal-quote{font-family:var(--font-mono);font-size:11px;color:var(--muted);
-  font-style:italic;padding:.85rem 1.1rem;border-left:2px solid var(--border2);line-height:1.7;}
-.result-box{font-family:var(--font-mono);font-size:12px;color:var(--muted);line-height:1.8;
-  background:var(--bg);padding:1rem 1.1rem;border-radius:8px;border:1px solid var(--border);}
-.big-score{font-family:var(--font-disp);font-size:5rem;letter-spacing:.02em;line-height:1;text-align:center;}
-.big-score span{font-size:2rem;color:var(--muted);}
-.score-label{font-family:var(--font-mono);font-size:10px;color:var(--muted2);text-align:center;letter-spacing:.08em;text-transform:uppercase;}
+.modal-quote{font-family:var(--font-mono);font-size:12px;color:var(--muted);
+  font-style:italic;padding:.9rem 1.1rem;border-left:2px solid var(--border2);line-height:1.7;}
+.result-box{font-family:var(--font-mono);font-size:13px;color:var(--muted);line-height:1.8;
+  background:var(--bg);padding:1.1rem;border-radius:10px;border:1.5px solid var(--border);}
+.big-score{font-family:var(--font-disp);font-size:5.5rem;letter-spacing:.02em;line-height:1;text-align:center;}
+.big-score span{font-size:2.2rem;color:var(--muted);}
+.score-label{font-family:var(--font-mono);font-size:11px;color:var(--muted2);text-align:center;letter-spacing:.08em;text-transform:uppercase;}
 
-/* TINDER CARD */
-.tinder-card{background:var(--bg);border:1px solid var(--border2);border-radius:16px;
-  padding:1.5rem;display:flex;flex-direction:column;gap:1rem;}
-.tinder-avatar{width:70px;height:70px;border-radius:50%;background:var(--roast);
-  display:flex;align-items:center;justify-content:center;
-  font-family:var(--font-disp);font-size:2rem;color:#fff;align-self:center;}
-.tinder-name{font-family:var(--font-disp);font-size:2rem;letter-spacing:.04em;color:var(--text);text-align:center;line-height:1;}
-.tinder-age{font-family:var(--font-mono);font-size:11px;color:var(--muted);text-align:center;}
-.tinder-bio{font-family:var(--font-mono);font-size:11px;color:var(--muted);line-height:1.75;
-  padding:.85rem 1rem;background:var(--surface2);border-radius:8px;border:1px solid var(--border);}
+/* TINDER */
+.tinder-card{background:var(--bg);border:1.5px solid var(--border2);border-radius:16px;padding:1.5rem;display:flex;flex-direction:column;gap:1rem;}
+.tinder-avatar{width:76px;height:76px;border-radius:50%;background:var(--roast);display:flex;align-items:center;justify-content:center;font-family:var(--font-disp);font-size:2.2rem;color:#fff;align-self:center;}
+.tinder-name{font-family:var(--font-disp);font-size:2.2rem;letter-spacing:.04em;color:var(--text);text-align:center;line-height:1;}
+.tinder-age{font-family:var(--font-mono);font-size:12px;color:var(--muted);text-align:center;}
+.tinder-bio{font-family:var(--font-mono);font-size:12px;color:var(--muted);line-height:1.75;padding:.9rem 1rem;background:var(--surface2);border-radius:10px;}
 .tinder-tags{display:flex;gap:6px;flex-wrap:wrap;}
-.tinder-tag{font-family:var(--font-mono);font-size:10px;padding:4px 10px;border-radius:100px;
-  border:1px solid var(--border2);color:var(--muted2);}
+.tinder-tag{font-family:var(--font-mono);font-size:11px;padding:5px 12px;border-radius:100px;border:1px solid var(--border2);color:var(--muted2);}
 .swipe-btns{display:flex;gap:10px;}
-.swipe-btn{flex:1;padding:12px;border-radius:10px;border:none;cursor:pointer;
-  font-family:var(--font-mono);font-size:18px;font-weight:500;transition:all .2s;}
+.swipe-btn{flex:1;padding:13px;border-radius:10px;border:none;cursor:pointer;font-family:var(--font-mono);font-size:20px;transition:all .2s;}
 .swipe-btn.nope{background:var(--roast);color:#fff;}
-.swipe-btn.nope:hover{filter:brightness(1.1);}
 .swipe-btn.like{background:var(--normal);color:#0D0D0F;}
-.swipe-btn.like:hover{filter:brightness(1.1);}
 
 /* KÜNDIGUNG */
-.kuendigung-text{font-family:var(--font-mono);font-size:11px;color:var(--muted);line-height:1.9;
-  background:var(--bg);padding:1.25rem;border-radius:8px;border:1px solid var(--border);
+.kuendigung-text{font-family:var(--font-mono);font-size:12px;color:var(--muted);line-height:1.9;
+  background:var(--bg);padding:1.25rem;border-radius:10px;border:1.5px solid var(--border);
   white-space:pre-wrap;max-height:220px;overflow-y:auto;}
 
 /* TEST */
-.test-question{font-family:var(--font-mono);font-size:12px;color:var(--text);line-height:1.7;}
-.test-options{display:flex;flex-direction:column;gap:8px;}
-.test-opt{font-family:var(--font-mono);font-size:11px;padding:11px 15px;
-  border:1px solid var(--border2);border-radius:8px;background:transparent;
+.test-question{font-family:var(--font-mono);font-size:13px;color:var(--text);line-height:1.7;}
+.test-options{display:flex;flex-direction:column;gap:9px;}
+.test-opt{font-family:var(--font-mono);font-size:12px;padding:12px 16px;
+  border:1.5px solid var(--border2);border-radius:10px;background:transparent;
   color:var(--muted);cursor:pointer;transition:all .18s;text-align:left;line-height:1.5;}
 .test-opt:hover{border-color:var(--normal);color:var(--normal);background:rgba(255,229,0,.06);}
-.test-progress{font-family:var(--font-mono);font-size:10px;color:var(--muted2);letter-spacing:.1em;text-transform:uppercase;}
+.test-progress{font-family:var(--font-mono);font-size:11px;color:var(--muted2);letter-spacing:.1em;text-transform:uppercase;}
 
 /* SCREENSHOT */
-.screenshot-card{background:#0D0D0F;padding:1.5rem;border-radius:10px;
-  display:flex;flex-direction:column;gap:14px;border:1px solid #1A1A1E;}
-.ss-header{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:.05em;color:#F0EEE8;}
+.screenshot-card{background:#0D0D0F;padding:1.5rem;border-radius:10px;display:flex;flex-direction:column;gap:14px;border:1px solid #1E1E22;}
+.ss-header{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:.05em;color:#F4F2EC;}
 .ss-header span{color:#FFE500;}
-.ss-user{align-self:flex-end;background:#222228;border:1px solid #44444C;
-  padding:10px 14px;border-radius:10px;border-bottom-right-radius:3px;
-  font-family:'IBM Plex Sans',sans-serif;font-size:13px;color:#F0EEE8;max-width:82%;line-height:1.5;}
-.ss-kevin{align-self:flex-start;background:#1A1A1E;border:1px solid #333339;
-  padding:10px 14px;border-radius:10px;border-bottom-left-radius:3px;
-  font-family:'IBM Plex Sans',sans-serif;font-size:13px;color:#F0EEE8;max-width:82%;line-height:1.6;}
-.ss-footer{font-family:'IBM Plex Mono',monospace;font-size:9px;color:#707078;letter-spacing:.08em;text-align:center;}
+.ss-user{align-self:flex-end;background:#28282E;border:1px solid #4A4A54;padding:10px 14px;border-radius:10px;border-bottom-right-radius:3px;font-family:'IBM Plex Sans',sans-serif;font-size:14px;color:#F4F2EC;max-width:82%;line-height:1.5;}
+.ss-kevin{align-self:flex-start;background:#1E1E22;border:1px solid #3A3A42;padding:10px 14px;border-radius:10px;border-bottom-left-radius:3px;font-family:'IBM Plex Sans',sans-serif;font-size:14px;color:#F4F2EC;max-width:82%;line-height:1.6;}
+.ss-footer{font-family:'IBM Plex Mono',monospace;font-size:10px;color:#787882;letter-spacing:.08em;text-align:center;}
 
-@media(max-width:600px){
-  header{padding:.75rem 1rem;}h1{font-size:1.9rem;}
-  .mode-bar,.starters,.qod-bar,#liveCounter{padding-left:1rem;padding-right:1rem;}
-  .chat-scroll{padding:1rem;}.input-bar{padding:.7rem 1rem;}.footer-bar{padding:.5rem 1rem;}
-  .msg-bubble{max-width:86%;font-size:14px;}.footer-bar span:first-child{display:none;}
+/* ═══ MOBILE ═══ */
+@media(max-width:700px){
+  header{padding:.75rem 1rem;}
+  h1{font-size:2rem;}
+  .kevin-status span:last-child{display:none;}
+
+  /* Feature buttons → horizontal scroll statt umbrechen */
+  .mode-bar{padding:.6rem 1rem;gap:8px;}
+  .mode-spacer{display:none;}
+  .extra-btns{width:100%;overflow-x:auto;flex-wrap:nowrap;padding-bottom:4px;gap:7px;}
+  .extra-btns::-webkit-scrollbar{height:0;}
+  .extra-btn{font-size:11px;padding:7px 13px;flex-shrink:0;}
+
+  .qod-bar{padding:.55rem 1rem;}
+  .qod-text{font-size:10px;}
+  #liveCounter{padding:5px 1rem;font-size:11px;}
+  .starters{padding:.6rem 1rem;overflow-x:auto;flex-wrap:nowrap;}
+  .starters::-webkit-scrollbar{height:0;}
+  .starter-btn{flex-shrink:0;font-size:11px;padding:6px 12px;}
+
+  .chat-scroll{padding:1rem;}
+  .msg-bubble{max-width:88%;font-size:15px;padding:11px 14px;}
+  .input-bar{padding:.7rem 1rem;}
+  .chat-input{font-size:15px;}
+  .send-btn{font-size:13px;padding:0 18px;}
+  .footer-bar{padding:.5rem 1rem;font-size:10px;}
+  .footer-bar span:first-child{display:none;}
+
+  .modal{padding:1.5rem;max-height:88vh;}
+  .modal-title{font-size:2rem;}
+  .modal-action-btn{font-size:13px;padding:13px 16px;}
+}
+
+@media(max-width:400px){
+  h1{font-size:1.75rem;}
+  .msg-bubble{font-size:14px;}
 }
 </style>
 </head>
@@ -261,12 +293,10 @@ h1 span{color:var(--normal);animation:flicker 5s infinite;}
   <span class="qod-label">Kevin heute:</span>
   <span class="qod-text" id="qodText"></span>
 </div>
-
 <div id="liveCounter">23 Kollegen beschweren sich gerade • 0 Beschwerden heute</div>
-
 <div class="starters">
   <span class="starters-label">Schnellstart:</span>
-  <div id="starterBtns"><span class="starter-loading">Kevin denkt nach...</span></div>
+  <div id="starterBtns" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;"><span style="font-family:var(--font-mono);font-size:12px;color:var(--muted2);font-style:italic;">Kevin denkt nach...</span></div>
 </div>
 
 <div class="chat-scroll" id="chatScroll">
@@ -290,9 +320,7 @@ h1 span{color:var(--normal);animation:flicker 5s infinite;}
 
 <div class="input-bar">
   <div class="input-inner">
-    <textarea class="chat-input" id="chatInput"
-      placeholder="Schreib Kevin etwas... er freut sich bestimmt."
-      rows="1" onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
+    <textarea class="chat-input" id="chatInput" placeholder="Schreib Kevin etwas... er freut sich bestimmt." rows="1" onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
     <button class="send-btn" id="sendBtn" onclick="sendMessage()">Senden →</button>
   </div>
 </div>
@@ -311,7 +339,7 @@ h1 span{color:var(--normal);animation:flicker 5s infinite;}
     <input class="modal-input" id="chefName" placeholder="z.B. Thorsten, Sabine, Der da oben..." maxlength="40" onkeydown="if(event.key==='Enter')rateChef()">
     <button class="modal-action-btn red" id="rateBtn" onclick="rateChef()">🔥 Chef vernichten</button>
     <div id="chefResult" style="display:none;flex-direction:column;gap:1rem;">
-      <div class="big-score r" id="chefScore" style="color:var(--roast)">2<span>/10</span></div>
+      <div class="big-score" id="chefScore" style="color:var(--roast)">2<span>/10</span></div>
       <div class="result-box" id="chefText"></div>
       <button class="modal-action-btn yellow" onclick="shareChef()">↗ Teilen</button>
       <button class="modal-action-btn green" onclick="shareChefWA()">💬 WhatsApp</button>
@@ -327,16 +355,13 @@ h1 span{color:var(--normal);animation:flicker 5s infinite;}
     <button class="modal-close" onclick="closeModal('tinderModal')">✕</button>
     <p class="modal-title">Kollegen<span class="r">-Tinder</span></p>
     <p class="modal-desc" id="tinderDesc">Name + Job deines Kollegen eingeben. Kevin erstellt ein vernichtendes Tinder-Profil.</p>
-    <input class="modal-input" id="tinderName" placeholder="Name des Kollegen..." maxlength="30" style="margin-bottom:0">
+    <input class="modal-input" id="tinderName" placeholder="Name des Kollegen..." maxlength="30">
     <input class="modal-input" id="tinderJob" placeholder="Job/Eigenschaft z.B. 'Sales Manager, redet viel'" maxlength="60" onkeydown="if(event.key==='Enter')generateTinder()">
     <button class="modal-action-btn red" id="tinderBtn" onclick="generateTinder()">💘 Profil erstellen</button>
     <div id="tinderCard" style="display:none;flex-direction:column;gap:1rem;">
       <div class="tinder-card">
         <div class="tinder-avatar" id="tinderAvatar">?</div>
-        <div>
-          <p class="tinder-name" id="tinderCardName"></p>
-          <p class="tinder-age" id="tinderCardAge"></p>
-        </div>
+        <div><p class="tinder-name" id="tinderCardName"></p><p class="tinder-age" id="tinderCardAge"></p></div>
         <div class="tinder-bio" id="tinderBio"></div>
         <div class="tinder-tags" id="tinderTags"></div>
         <div class="swipe-btns">
@@ -358,7 +383,7 @@ h1 span{color:var(--normal);animation:flicker 5s infinite;}
     <button class="modal-close" onclick="closeModal('kuendigungModal')">✕</button>
     <p class="modal-title">Kevin <span class="y">schreibt</span><br>deine Kündigung.</p>
     <p class="modal-desc" id="kuendigDesc">Firma + Grund eingeben. Kevin schreibt eine dramatisch-passive Kündigung.</p>
-    <input class="modal-input" id="kuendigFirma" placeholder="Firmenname..." maxlength="50" style="margin-bottom:0">
+    <input class="modal-input" id="kuendigFirma" placeholder="Firmenname..." maxlength="50">
     <input class="modal-input" id="kuendigGrund" placeholder="Warum kündigst du? (optional)" maxlength="100" onkeydown="if(event.key==='Enter')generateKuendigung()">
     <button class="modal-action-btn yellow" id="kuendigBtn" onclick="generateKuendigung()">📝 Kündigung schreiben</button>
     <div id="kuendigResult" style="display:none;flex-direction:column;gap:1rem;">
@@ -376,8 +401,8 @@ h1 span{color:var(--normal);animation:flicker 5s infinite;}
   <div class="modal">
     <button class="modal-close" onclick="closeModal('gehaltModal')">✕</button>
     <p class="modal-title">Kevin <span class="r">bewertet</span><br>dein Gehalt.</p>
-    <p class="modal-desc" id="gehaltDesc">Gehalt + Job eingeben. Kevin erklärt dir wie schlecht du bezahlt wirst.</p>
-    <input class="modal-input" id="gehaltBetrag" placeholder="Gehalt z.B. 2800 Euro brutto..." maxlength="30" style="margin-bottom:0">
+    <p class="modal-desc" id="gehaltDesc">Gehalt + Job eingeben. Kevin erklärt wie schlecht du bezahlt wirst.</p>
+    <input class="modal-input" id="gehaltBetrag" placeholder="Gehalt z.B. 2800 Euro brutto..." maxlength="30">
     <input class="modal-input" id="gehaltJob" placeholder="Dein Job z.B. Projektleiter" maxlength="50" onkeydown="if(event.key==='Enter')rateGehalt()">
     <button class="modal-action-btn red" id="gehaltBtn" onclick="rateGehalt()">💸 Gehalt bewerten</button>
     <div id="gehaltResult" style="display:none;flex-direction:column;gap:1rem;">
@@ -459,7 +484,7 @@ const emojis=['😤','💻','😩','📧','🙄','😴','🤡','📋','😶','�
 async function renderStarters(){
   try{
     const res=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({message:'Generiere genau 5 kurze deutsche Bürobeschwerden als JSON-Array. Nur das Array. Beispiel: ["Chef nervt","IT schlaeft"]. Max 6 Woerter.',history:[],mode:'starters'})});
+      body:JSON.stringify({message:'starters',history:[],mode:'starters'})});
     const data=await res.json();
     const match=(data.reply||'').match(/\[.*?\]/s);
     const items=match?JSON.parse(match[0]):[];
@@ -470,14 +495,16 @@ async function renderStarters(){
 function fallbackStarters(){document.getElementById('starterBtns').innerHTML=['Chef klaut Ideen','IT antwortet nicht','Sinnloses Meeting','Überstunden wieder','Kollege befördert'].map((m,i)=>`<button class="starter-btn" onclick="quickSend('${escAttr(m)}')">${emojis[i]} ${m}</button>`).join('');}
 renderStarters();
 
-function setMode(m){currentMode=m;
+function setMode(m){
+  currentMode=m;
   document.getElementById('btnNormal').className='mode-btn'+(m==='normal'?' active-normal':'');
   document.getElementById('btnRoast').className='mode-btn'+(m==='roast'?' active-roast':'');
   document.getElementById('sendBtn').className='send-btn'+(m==='roast'?' roast':'');
   document.getElementById('chatInput').className='chat-input'+(m==='roast'?' roast-mode':'');
   document.getElementById('roastBanner').className='roast-banner'+(m==='roast'?' visible':'');
   document.getElementById('typingAvatar').className='kevin-avatar'+(m==='roast'?' roast':'');
-  document.getElementById('chatInput').placeholder=m==='roast'?'🔥 Schreib etwas... wenn du dich traust.':'Schreib Kevin etwas... er freut sich bestimmt.';}
+  document.getElementById('chatInput').placeholder=m==='roast'?'🔥 Schreib etwas... wenn du dich traust.':'Schreib Kevin etwas... er freut sich bestimmt.';
+}
 
 function openModal(id){document.getElementById(id).classList.add('visible');}
 function closeModal(id){document.getElementById(id).classList.remove('visible');}
@@ -489,10 +516,7 @@ function scrollToBottom(){const s=document.getElementById('chatScroll');s.scroll
 function hideEmpty(){document.getElementById('emptyState')?.remove();}
 function escHtml(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');}
 function escAttr(s){return String(s||'').replace(/'/g,'&#39;').replace(/"/g,'&quot;');}
-
-function waShare(text){window.open('https://wa.me/?text='+encodeURIComponent(text),'_blank');}
-
-function shareMsg(text,btn){navigator.clipboard.writeText(text).then(()=>{const t=btn.textContent;btn.textContent='✓ Kopiert!';btn.classList.add('copied');setTimeout(()=>{btn.textContent=t;btn.classList.remove('copied');},2000);});}
+function waShare(t){window.open('https://wa.me/?text='+encodeURIComponent(t),'_blank');}
 
 function appendMessage(role,text,mode){
   hideEmpty();
@@ -504,13 +528,12 @@ function appendMessage(role,text,mode){
   }else{
     lastKevinMsg=text;
     const u=escAttr(lastUserMsg),k=escAttr(text);
-    const shareText=encodeURIComponent(`Ich zu Kevin: "${lastUserMsg}"\n\nKevin: "${text}"\n\n😑 kollegenhoelle.vercel.app`);
     div.innerHTML=`<div class="kevin-header"><div class="kevin-avatar ${mode==='roast'?'roast':''}">K</div><span class="msg-label">Kevin</span></div>
       <div class="msg-bubble">${escHtml(text)}</div>
       <div class="msg-actions">
         <button class="action-btn" onclick="navigator.clipboard.writeText('Ich zu Kevin: &quot;${u}&quot;\\n\\nKevin: &quot;${k}&quot;\\n\\n😑 kollegenhoelle.vercel.app');this.textContent='✓ Kopiert!';this.classList.add('copied');setTimeout(()=>{this.textContent='↗ Teilen';this.classList.remove('copied');},2000)">↗ Teilen</button>
-        <button class="action-btn wa" onclick="window.open('https://wa.me/?text='+encodeURIComponent('Ich zu Kevin: &quot;${lastUserMsg}&quot;\\n\\nKevin: &quot;${text}&quot;\\n\\n😑 kollegenhoelle.vercel.app'),'_blank')">💬 WhatsApp</button>
-        <button class="action-btn" onclick="openScreenshot('${u}','${k}')">📸 Screenshot</button>
+        <button class="action-btn wa" onclick="window.open('https://wa.me/?text='+encodeURIComponent('Ich zu Kevin: &quot;${lastUserMsg}&quot;\\n\\nKevin: &quot;${text}&quot;\\n\\n😑 kollegenhoelle.vercel.app'),'_blank')">💬 WA</button>
+        <button class="action-btn" onclick="openScreenshot('${u}','${k}')">📸</button>
       </div>`;
   }
   chatInner.insertBefore(div,typingMsg);scrollToBottom();
@@ -536,46 +559,39 @@ async function sendMessage(){
   isLoading=false;sendBtn.disabled=false;input.focus();
 }
 
-// SCREENSHOT
 function openScreenshot(u,k){document.getElementById('ssUserText').textContent=u;document.getElementById('ssKevinText').textContent=k;openModal('screenshotModal');}
 async function downloadScreenshot(){
   try{const c=await html2canvas(document.getElementById('screenshotCard'),{backgroundColor:'#0D0D0F',scale:2,useCORS:true,logging:false});
     const a=document.createElement('a');a.download='kollegenhoelle.png';a.href=c.toDataURL('image/png');a.click();}
-  catch{alert('Screenshot fehlgeschlagen. Kevin ist nicht überrascht.');}
+  catch{alert('Screenshot fehlgeschlagen.');}
 }
 
-// CHEF BEWERTEN
 async function rateChef(){
   const name=document.getElementById('chefName').value.trim();if(!name)return;
   const btn=document.getElementById('rateBtn');btn.textContent='Kevin denkt nach...';btn.disabled=true;
   try{
     const res=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({message:`Bewerte Chef "${name}" von 1-10 (10=schlimmst). NUR: SCORE: [Zahl]\nBEWERTUNG: [2-3 witzige Saetze. Kein Markdown.]`,history:[],mode:'normal'})});
+      body:JSON.stringify({message:`Bewerte Chef "${name}" von 1-10 (10=schlimmst). NUR: SCORE: [Zahl]\nBEWERTUNG: [2-3 witzige Saetze. Kein Markdown, keine Quellenangaben.]`,history:[],mode:'normal'})});
     const data=await res.json(),reply=data.reply||'';
     const sM=reply.match(/SCORE:\s*(\d+)/i),tM=reply.match(/BEWERTUNG:\s*([\s\S]+)/i);
-    const score=sM?Math.min(10,Math.max(1,parseInt(sM[1]))):7;
-    document.getElementById('chefScore').innerHTML=score+'<span>/10</span>';
+    document.getElementById('chefScore').innerHTML=(sM?Math.min(10,Math.max(1,parseInt(sM[1]))):7)+'<span>/10</span>';
     document.getElementById('chefText').textContent=tM?tM[1].trim():reply;
     document.getElementById('chefResult').style.cssText='display:flex;flex-direction:column;';
-    document.getElementById('chefDesc').style.display='none';
-    document.getElementById('chefName').style.display='none';
-    btn.style.display='none';
-  }catch{document.getElementById('chefText').textContent='Kevin konnte nicht bewerten. Er ist selbst im Meeting.';document.getElementById('chefResult').style.cssText='display:flex;flex-direction:column;';}
+    ['chefDesc','chefName',btn.id].forEach(id=>{const el=document.getElementById(id)||btn;if(el)el.style.display='none';});
+    btn.style.display='none';document.getElementById('chefDesc').style.display='none';document.getElementById('chefName').style.display='none';
+  }catch{document.getElementById('chefText').textContent='Kevin war im Meeting. Bitte nochmal versuchen.';document.getElementById('chefResult').style.cssText='display:flex;flex-direction:column;';}
   btn.textContent='🔥 Chef vernichten';btn.disabled=false;
 }
 function resetChef(){document.getElementById('chefResult').style.display='none';document.getElementById('rateBtn').style.cssText='display:flex;';document.getElementById('chefName').style.cssText='display:block;';document.getElementById('chefName').value='';document.getElementById('chefDesc').style.display='block';}
 function shareChef(){const n=document.getElementById('chefName').value||'mein Chef',s=document.getElementById('chefScore').textContent,t=document.getElementById('chefText').textContent;navigator.clipboard.writeText(`Kevin bewertet "${n}": ${s}\n\n"${t}"\n\n😑 kollegenhoelle.vercel.app`);alert('Kopiert!');}
 function shareChefWA(){const n=document.getElementById('chefName').value||'mein Chef',s=document.getElementById('chefScore').textContent,t=document.getElementById('chefText').textContent;waShare(`Kevin bewertet "${n}": ${s}\n\n"${t}"\n\n😑 kollegenhoelle.vercel.app`);}
 
-// KOLLEGEN-TINDER
 async function generateTinder(){
-  const name=document.getElementById('tinderName').value.trim();
-  const job=document.getElementById('tinderJob').value.trim();
-  if(!name)return;
+  const name=document.getElementById('tinderName').value.trim(),job=document.getElementById('tinderJob').value.trim();if(!name)return;
   const btn=document.getElementById('tinderBtn');btn.textContent='Kevin erstellt Profil...';btn.disabled=true;
   try{
     const res=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({message:`Erstelle ein vernichtendes Tinder-Profil fuer Kollege "${name}"${job?' ('+job+')':''}. NUR dieses Format:\nALTER: [Zahl zwischen 28-55]\nBIO: [2-3 passive-aggressive, witzige Saetze als Tinder-Bio]\nINTERESSEN: [4 komma-getrennte absurde Interessen]`,history:[],mode:'normal'})});
+      body:JSON.stringify({message:`Erstelle Tinder-Profil fuer Kollege "${name}"${job?' ('+job+')':''}. NUR:\nALTER: [28-55]\nBIO: [2-3 passive-aggressive Tinder-Bio Saetze]\nINTERESSEN: [4 absurde komma-getrennte Interessen]`,history:[],mode:'normal'})});
     const data=await res.json(),reply=data.reply||'';
     const ageM=reply.match(/ALTER:\s*(\d+)/i),bioM=reply.match(/BIO:\s*([\s\S]+?)(?=INTERESSEN:|$)/i),intM=reply.match(/INTERESSEN:\s*([\s\S]+)/i);
     document.getElementById('tinderAvatar').textContent=name.charAt(0).toUpperCase();
@@ -585,69 +601,52 @@ async function generateTinder(){
     const tags=(intM?intM[1].trim():'Excel, Meetings, Kaffee, Beschwerden').split(',').map(t=>t.trim()).filter(Boolean);
     document.getElementById('tinderTags').innerHTML=tags.map(t=>`<span class="tinder-tag">${t}</span>`).join('');
     document.getElementById('tinderCard').style.cssText='display:flex;flex-direction:column;';
-    document.getElementById('tinderDesc').style.display='none';
-    document.getElementById('tinderName').style.display='none';
-    document.getElementById('tinderJob').style.display='none';
-    btn.style.display='none';
-  }catch{alert('Tinder-Profil fehlgeschlagen. Kevin streikt.');}
+    document.getElementById('tinderDesc').style.display='none';document.getElementById('tinderName').style.display='none';document.getElementById('tinderJob').style.display='none';btn.style.display='none';
+  }catch{alert('Profil fehlgeschlagen.');}
   btn.textContent='💘 Profil erstellen';btn.disabled=false;
 }
-function swipeNope(){document.getElementById('tinderAvatar').style.background='var(--roast)';setTimeout(()=>resetTinder(),800);}
-function swipeLike(){document.getElementById('tinderAvatar').style.background='#25D366';setTimeout(()=>resetTinder(),800);}
-function resetTinder(){document.getElementById('tinderCard').style.display='none';document.getElementById('tinderBtn').style.cssText='display:flex;';document.getElementById('tinderName').style.cssText='display:block;';document.getElementById('tinderJob').style.cssText='display:block;';document.getElementById('tinderName').value='';document.getElementById('tinderJob').value='';document.getElementById('tinderDesc').style.display='block';document.getElementById('tinderAvatar').style.background='var(--roast)';}
+function swipeNope(){document.getElementById('tinderAvatar').style.background='var(--roast)';setTimeout(()=>resetTinder(),600);}
+function swipeLike(){document.getElementById('tinderAvatar').style.background='#25D366';setTimeout(()=>resetTinder(),600);}
+function resetTinder(){document.getElementById('tinderCard').style.display='none';document.getElementById('tinderBtn').style.cssText='display:flex;';['tinderName','tinderJob'].forEach(id=>{document.getElementById(id).style.cssText='display:block;';document.getElementById(id).value='';});document.getElementById('tinderDesc').style.display='block';document.getElementById('tinderAvatar').style.background='var(--roast)';}
 function shareTinder(){const n=document.getElementById('tinderCardName').textContent,b=document.getElementById('tinderBio').textContent;navigator.clipboard.writeText(`Kollegen-Tinder: ${n}\n\n"${b}"\n\n😑 kollegenhoelle.vercel.app`);alert('Kopiert!');}
 function shareTinderWA(){const n=document.getElementById('tinderCardName').textContent,b=document.getElementById('tinderBio').textContent;waShare(`Kollegen-Tinder: ${n}\n\n"${b}"\n\n😑 kollegenhoelle.vercel.app`);}
 
-// KÜNDIGUNG
 async function generateKuendigung(){
-  const firma=document.getElementById('kuendigFirma').value.trim();
-  const grund=document.getElementById('kuendigGrund').value.trim();
-  if(!firma)return;
+  const firma=document.getElementById('kuendigFirma').value.trim(),grund=document.getElementById('kuendigGrund').value.trim();if(!firma)return;
   const btn=document.getElementById('kuendigBtn');btn.textContent='Kevin schreibt...';btn.disabled=true;
   try{
     const res=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({message:`Schreib eine kurze dramatisch-passive Kuendigung fuer die Firma "${firma}"${grund?' wegen: '+grund:''}. Kevin-Stil: passiv-aggressiv, resigniert, mit unterschwelligem Sarkasmus. Formeller Brief, aber mit Kevin-Energie. Kein Markdown. Ca. 5-7 Saetze.`,history:[],mode:'normal'})});
+      body:JSON.stringify({message:`Schreib kurze dramatisch-passive Kuendigung fuer Firma "${firma}"${grund?' wegen: '+grund:''}. Kevin-Stil: passiv-aggressiv, resigniert. Formeller Brief mit Kevin-Energie. Kein Markdown. 5-7 Saetze.`,history:[],mode:'normal'})});
     const data=await res.json();
-    document.getElementById('kuendigText').textContent=data.reply||'Kevin verweigerte die Kündigung. Er bleibt aus Trotz.';
+    document.getElementById('kuendigText').textContent=data.reply||'Kevin verweigerte die Kündigung.';
     document.getElementById('kuendigResult').style.cssText='display:flex;flex-direction:column;';
-    document.getElementById('kuendigDesc').style.display='none';
-    document.getElementById('kuendigFirma').style.display='none';
-    document.getElementById('kuendigGrund').style.display='none';
-    btn.style.display='none';
-  }catch{alert('Kündigung fehlgeschlagen. Kevin hat aufgehört zu tippen.');}
+    document.getElementById('kuendigDesc').style.display='none';document.getElementById('kuendigFirma').style.display='none';document.getElementById('kuendigGrund').style.display='none';btn.style.display='none';
+  }catch{alert('Kündigung fehlgeschlagen.');}
   btn.textContent='📝 Kündigung schreiben';btn.disabled=false;
 }
 function resetKuendigung(){document.getElementById('kuendigResult').style.display='none';document.getElementById('kuendigBtn').style.cssText='display:flex;';['kuendigFirma','kuendigGrund'].forEach(id=>{document.getElementById(id).style.cssText='display:block;';document.getElementById(id).value='';});document.getElementById('kuendigDesc').style.display='block';}
-function shareKuendigung(){navigator.clipboard.writeText(document.getElementById('kuendigText').textContent+'\n\n😑 kollegenhoelle.vercel.app');alert('Kopiert! Jetzt noch abschicken.');}
+function shareKuendigung(){navigator.clipboard.writeText(document.getElementById('kuendigText').textContent+'\n\n😑 kollegenhoelle.vercel.app');alert('Kopiert!');}
 function shareKuendigungWA(){waShare(document.getElementById('kuendigText').textContent+'\n\n😑 kollegenhoelle.vercel.app');}
 
-// GEHALT
 async function rateGehalt(){
-  const betrag=document.getElementById('gehaltBetrag').value.trim();
-  const job=document.getElementById('gehaltJob').value.trim();
-  if(!betrag)return;
+  const betrag=document.getElementById('gehaltBetrag').value.trim(),job=document.getElementById('gehaltJob').value.trim();if(!betrag)return;
   const btn=document.getElementById('gehaltBtn');btn.textContent='Kevin rechnet...';btn.disabled=true;
   try{
     const res=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({message:`Bewerte Gehalt "${betrag}"${job?' fuer Job: '+job:''} von 1-10 (10=top bezahlt). NUR: SCORE: [Zahl]\nBEWERTUNG: [2-3 passive-aggressive Saetze wie schlecht bezahlt die Person ist. Kein Markdown.]`,history:[],mode:'normal'})});
+      body:JSON.stringify({message:`Bewerte Gehalt "${betrag}"${job?' fuer Job: '+job:''} von 1-10 (10=top). NUR: SCORE: [Zahl]\nBEWERTUNG: [2-3 passive-aggressive Saetze. Kein Markdown.]`,history:[],mode:'normal'})});
     const data=await res.json(),reply=data.reply||'';
     const sM=reply.match(/SCORE:\s*(\d+)/i),tM=reply.match(/BEWERTUNG:\s*([\s\S]+)/i);
-    const score=sM?Math.min(10,Math.max(1,parseInt(sM[1]))):3;
-    document.getElementById('gehaltScore').innerHTML=score+'<span>/10</span>';
+    document.getElementById('gehaltScore').innerHTML=(sM?Math.min(10,Math.max(1,parseInt(sM[1]))):3)+'<span>/10</span>';
     document.getElementById('gehaltText').textContent=tM?tM[1].trim():reply;
     document.getElementById('gehaltResult').style.cssText='display:flex;flex-direction:column;';
-    document.getElementById('gehaltDesc').style.display='none';
-    document.getElementById('gehaltBetrag').style.display='none';
-    document.getElementById('gehaltJob').style.display='none';
-    btn.style.display='none';
+    document.getElementById('gehaltDesc').style.display='none';document.getElementById('gehaltBetrag').style.display='none';document.getElementById('gehaltJob').style.display='none';btn.style.display='none';
   }catch{alert('Gehaltsbewertung fehlgeschlagen.');}
   btn.textContent='💸 Gehalt bewerten';btn.disabled=false;
 }
 function resetGehalt(){document.getElementById('gehaltResult').style.display='none';document.getElementById('gehaltBtn').style.cssText='display:flex;';['gehaltBetrag','gehaltJob'].forEach(id=>{document.getElementById(id).style.cssText='display:block;';document.getElementById(id).value='';});document.getElementById('gehaltDesc').style.display='block';}
-function shareGehalt(){const s=document.getElementById('gehaltScore').textContent,t=document.getElementById('gehaltText').textContent;navigator.clipboard.writeText(`Kevin bewertet mein Gehalt: ${s} Angemessenheit\n\n"${t}"\n\n😑 kollegenhoelle.vercel.app`);alert('Kopiert!');}
-function shareGehaltWA(){const s=document.getElementById('gehaltScore').textContent,t=document.getElementById('gehaltText').textContent;waShare(`Kevin bewertet mein Gehalt: ${s} Angemessenheit\n\n"${t}"\n\n😑 kollegenhoelle.vercel.app`);}
+function shareGehalt(){const s=document.getElementById('gehaltScore').textContent,t=document.getElementById('gehaltText').textContent;navigator.clipboard.writeText(`Kevin bewertet mein Gehalt: ${s}\n\n"${t}"\n\n😑 kollegenhoelle.vercel.app`);alert('Kopiert!');}
+function shareGehaltWA(){const s=document.getElementById('gehaltScore').textContent,t=document.getElementById('gehaltText').textContent;waShare(`Kevin bewertet mein Gehalt: ${s}\n\n"${t}"\n\n😑 kollegenhoelle.vercel.app`);}
 
-// PERSÖNLICHKEITSTEST
 const testQs=[
   {q:'Dein Chef schickt um 17:58 Uhr eine E-Mail mit „kurze Frage". Was machst du?',opts:['Sofort antworten, ich bin Teamplayer 😇','Lesen, aber erst morgen antworten','Ich sehe sie. Ich lasse sie ungelesen.','Ich kündige innerlich zum 47. Mal']},
   {q:'Wie viele Meetings hättest du diese Woche auch als E-Mail verschicken können?',opts:['Keines, ich liebe Meetings 🤡','1-2 vielleicht','Alle außer einem','Was ist ein Meeting das keine E-Mail wäre?']},
@@ -669,16 +668,16 @@ function renderTestStep(){
 }
 function answerTest(i){testAnswers.push(i);testStep++;renderTestStep();}
 async function analyzeTest(){
-  document.getElementById('testSteps').innerHTML='<p class="starter-loading" style="padding:.5rem 0">Kevin analysiert dein Leid...</p>';
+  document.getElementById('testSteps').innerHTML='<p style="font-family:var(--font-mono);font-size:12px;color:var(--muted2);font-style:italic;padding:.5rem 0">Kevin analysiert dein Leid...</p>';
   const score=Math.round((testAnswers.reduce((s,a)=>s+a,0)/(testQs.length*3))*10);
   try{
     const summary=testAnswers.map((a,i)=>testQs[i].opts[a]).join(', ');
     const res=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({message:`Buerostress-Test. Antworten: ${summary}. Score: ${score}/10. Schreib 2-3 Saetze vernichtend-witzige Kevin-Analyse. Kein Markdown.`,history:[],mode:'normal'})});
+      body:JSON.stringify({message:`Buerostress-Test Antworten: ${summary}. Score: ${score}/10. Schreib 2-3 Saetze vernichtend-witzige Kevin-Analyse. Kein Markdown.`,history:[],mode:'normal'})});
     const data=await res.json();
     document.getElementById('testSteps').innerHTML='';
     document.getElementById('testScore').innerHTML=score+'<span>/10</span>';
-    document.getElementById('testResultText').textContent=data.reply||'Kevin ist sprachlos. Fast.';
+    document.getElementById('testResultText').textContent=data.reply||'Kevin ist sprachlos.';
     document.getElementById('testResultBox').style.cssText='display:flex;flex-direction:column;';
     document.getElementById('testIntro').style.display='none';
   }catch{document.getElementById('testResultText').textContent='Kevin steckt selbst in einer Sinnkrise.';document.getElementById('testResultBox').style.cssText='display:flex;flex-direction:column;';document.getElementById('testSteps').innerHTML='';}
