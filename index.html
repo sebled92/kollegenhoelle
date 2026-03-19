@@ -188,6 +188,13 @@ h1 span{color:var(--normal);animation:flicker 5s infinite;}
 .big-score{font-family:var(--font-disp);font-size:5.5rem;letter-spacing:.02em;line-height:1;text-align:center;}
 .big-score span{font-size:2.2rem;color:var(--muted);}
 .score-label{font-family:var(--font-mono);font-size:11px;color:var(--muted2);text-align:center;letter-spacing:.08em;text-transform:uppercase;}
+.desktop-only{display:flex;}
+.mobile-only{display:none;}
+@media(max-width:700px){
+  .desktop-only{display:none!important;}
+  .mobile-only{display:flex!important;width:100%;overflow-x:auto;flex-wrap:nowrap;gap:7px;padding:.5rem 1rem;border-bottom:1px solid var(--border);background:var(--surface);-webkit-overflow-scrolling:touch;}
+  .mobile-only::-webkit-scrollbar{height:0;}
+}
 
 /* TINDER */
 .tinder-card{background:var(--bg);border:1.5px solid var(--border2);border-radius:16px;padding:1.5rem;display:flex;flex-direction:column;gap:1rem;}
@@ -226,39 +233,77 @@ h1 span{color:var(--normal);animation:flicker 5s infinite;}
 
 /* ═══ MOBILE ═══ */
 @media(max-width:700px){
-  header{padding:.75rem 1rem;}
-  h1{font-size:2rem;}
-  .kevin-status span:last-child{display:none;}
+  header{padding:.65rem 1rem;}
+  h1{font-size:1.85rem;}
+  .kevin-status{font-size:11px;}
 
-  /* Feature buttons → horizontal scroll statt umbrechen */
-  .mode-bar{padding:.6rem 1rem;gap:8px;}
+  /* MODE BAR: kompakter, alles in einer Zeile */
+  .mode-bar{padding:.55rem 1rem;gap:8px;flex-wrap:nowrap;overflow-x:auto;}
+  .mode-bar::-webkit-scrollbar{height:0;}
   .mode-spacer{display:none;}
-  .extra-btns{width:100%;overflow-x:auto;flex-wrap:nowrap;padding-bottom:4px;gap:7px;}
+  .mode-label{display:none;}
+  .mode-btn{font-size:11px;padding:7px 14px;}
+
+  /* FEATURE BUTTONS: eigene Zeile, horizontal scrollbar */
+  .extra-btns{
+    width:100%;
+    overflow-x:auto;
+    flex-wrap:nowrap;
+    display:flex;
+    gap:7px;
+    padding:.5rem 1rem;
+    border-bottom:1px solid var(--border);
+    background:var(--surface);
+    -webkit-overflow-scrolling:touch;
+  }
   .extra-btns::-webkit-scrollbar{height:0;}
-  .extra-btn{font-size:11px;padding:7px 13px;flex-shrink:0;}
+  .extra-btn{font-size:11px;padding:7px 13px;flex-shrink:0;border-radius:7px;}
 
-  .qod-bar{padding:.55rem 1rem;}
+  /* KEVIN HEUTE */
+  .qod-bar{padding:.5rem 1rem;}
+  .qod-label{font-size:9px;}
   .qod-text{font-size:10px;}
-  #liveCounter{padding:5px 1rem;font-size:11px;}
-  .starters{padding:.6rem 1rem;overflow-x:auto;flex-wrap:nowrap;}
-  .starters::-webkit-scrollbar{height:0;}
-  .starter-btn{flex-shrink:0;font-size:11px;padding:6px 12px;}
 
-  .chat-scroll{padding:1rem;}
-  .msg-bubble{max-width:88%;font-size:15px;padding:11px 14px;}
-  .input-bar{padding:.7rem 1rem;}
-  .chat-input{font-size:15px;}
-  .send-btn{font-size:13px;padding:0 18px;}
-  .footer-bar{padding:.5rem 1rem;font-size:10px;}
+  /* LIVE COUNTER */
+  #liveCounter{padding:5px 1rem;font-size:10px;}
+
+  /* STARTERS: horizontal scroll */
+  .starters{
+    padding:.5rem 1rem;
+    overflow-x:auto;
+    flex-wrap:nowrap;
+    -webkit-overflow-scrolling:touch;
+  }
+  .starters::-webkit-scrollbar{height:0;}
+  .starters-label{display:none;}
+  .starter-btn{flex-shrink:0;font-size:11px;padding:6px 13px;}
+
+  /* CHAT */
+  .chat-scroll{padding:.85rem 1rem;}
+  .msg-bubble{max-width:90%;font-size:15px;padding:11px 13px;}
+  .empty-sub{font-size:11px;}
+
+  /* INPUT */
+  .input-bar{padding:.65rem 1rem;}
+  .chat-input{font-size:15px;padding:10px 12px;}
+  .send-btn{font-size:13px;padding:0 16px;height:46px;}
+
+  /* FOOTER */
+  .footer-bar{padding:.4rem 1rem;font-size:10px;}
   .footer-bar span:first-child{display:none;}
 
-  .modal{padding:1.5rem;max-height:88vh;}
-  .modal-title{font-size:2rem;}
+  /* MODALS */
+  .modal{padding:1.4rem;max-height:90vh;border-radius:12px;}
+  .modal-title{font-size:1.9rem;}
   .modal-action-btn{font-size:13px;padding:13px 16px;}
+  .modal-input{font-size:13px;padding:10px 13px;}
 }
 
 @media(max-width:400px){
-  h1{font-size:1.75rem;}
+  h1{font-size:1.6rem;}
+  .msg-bubble{font-size:14px;}
+  .extra-btn{font-size:10px;padding:6px 11px;}
+}
   .msg-bubble{font-size:14px;}
 }
 </style>
@@ -279,7 +324,7 @@ h1 span{color:var(--normal);animation:flicker 5s infinite;}
     <button class="mode-btn" id="btnRoast" onclick="setMode('roast')">🔥 Roast</button>
   </div>
   <div class="mode-spacer"></div>
-  <div class="extra-btns">
+  <div class="extra-btns desktop-only">
     <button class="extra-btn red" onclick="openModal('chefModal')">👔 Chef bewerten</button>
     <button class="extra-btn red" onclick="openModal('tinderModal')">💘 Kollegen-Tinder</button>
     <button class="extra-btn" onclick="openModal('kuendigungModal')">📝 Kündigung</button>
@@ -287,6 +332,14 @@ h1 span{color:var(--normal);animation:flicker 5s infinite;}
     <button class="extra-btn" onclick="startTest()">🧠 Test</button>
     <button class="extra-btn orange" onclick="openModal('donateModal')">☕ Spende</button>
   </div>
+</div>
+<div class="extra-btns mobile-only">
+  <button class="extra-btn red" onclick="openModal('chefModal')">👔 Chef bewerten</button>
+  <button class="extra-btn red" onclick="openModal('tinderModal')">💘 Kollegen-Tinder</button>
+  <button class="extra-btn" onclick="openModal('kuendigungModal')">📝 Kündigung</button>
+  <button class="extra-btn" onclick="openModal('gehaltModal')">💸 Gehalt</button>
+  <button class="extra-btn" onclick="startTest()">🧠 Test</button>
+  <button class="extra-btn orange" onclick="openModal('donateModal')">☕ Spende</button>
 </div>
 
 <div class="qod-bar">
@@ -571,7 +624,7 @@ async function rateChef(){
   const btn=document.getElementById('rateBtn');btn.textContent='Kevin denkt nach...';btn.disabled=true;
   try{
     const res=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({message:`Bewerte Chef "${name}" von 1-10 (10=schlimmst). NUR: SCORE: [Zahl]\nBEWERTUNG: [2-3 witzige Saetze. Kein Markdown, keine Quellenangaben.]`,history:[],mode:'normal'})});
+      body:JSON.stringify({message:`Bewerte Chef "${name}" von 1-10 wobei 1=voellig harmlos und 10=absolutes Monster. Sei ehrlich und variiere den Score je nach Name - nicht jeder Chef ist automatisch eine 10. Manche sind eine 4, manche eine 7, manche eine 9. NUR: SCORE: [Zahl]\nBEWERTUNG: [2-3 witzige Saetze passend zum Score. Kein Markdown.]`,history:[],mode:'normal'})});
     const data=await res.json(),reply=data.reply||'';
     const sM=reply.match(/SCORE:\s*(\d+)/i),tM=reply.match(/BEWERTUNG:\s*([\s\S]+)/i);
     document.getElementById('chefScore').innerHTML=(sM?Math.min(10,Math.max(1,parseInt(sM[1]))):7)+'<span>/10</span>';
