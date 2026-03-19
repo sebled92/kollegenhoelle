@@ -65,8 +65,8 @@ Antworte IMMER mit einem witzigen Roast. 2-3 Saetze. Nur reiner Text. Auf Deutsc
     });
     const data = await response.json();
     if (!response.ok) return res.status(500).json({ error: 'API error', detail: data });
+
     let reply = data?.choices?.[0]?.message?.content || 'Kevin schaut dich nur muede an.';
-    // Strip markdown und Quellenangaben
     reply = reply.replace(/\*\*(.*?)\*\*/g, '$1');
     reply = reply.replace(/\*(.*?)\*/g, '$1');
     reply = reply.replace(/\[\d+\]/g, '');
