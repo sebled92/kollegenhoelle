@@ -68,11 +68,15 @@ KEINE Tipps. KEINE Erklaerungen. KEIN Markdown. KEINE Quellenangaben. Nur reiner
   ];
 
   try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 12000);
     const response = await fetch('https://api.perplexity.ai/chat/completions', {
       method: 'POST',
       headers: { 'Authorization': `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ model: 'sonar', messages, temperature: mode === 'roast' ? 1.3 : 1.15, max_tokens: 180 })
+      body: JSON.stringify({ model: 'sonar', messages, temperature: mode === 'roast' ? 1.3 : 1.15, max_tokens: 180 }),
+      signal: controller.signal
     });
+    clearTimeout(timeout);
     const data = await response.json();
     if (!response.ok) return res.status(500).json({ error: 'API error', detail: data });
 
@@ -84,6 +88,9 @@ KEINE Tipps. KEINE Erklaerungen. KEIN Markdown. KEINE Quellenangaben. Nur reiner
     reply = reply.trim();
     return res.status(200).json({ reply });
   } catch (error) {
+    if (error.name === 'AbortError') {
+      return res.status(504).json({ error: 'Kevin braucht zu lange. Bitte nochmal versuchen.' });
+    }
     return res.status(500).json({ error: error.message });
   }
 };
