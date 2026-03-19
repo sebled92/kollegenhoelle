@@ -56,6 +56,7 @@ KEINE Tipps. KEINE Erklaerungen. KEIN Markdown. KEINE Quellenangaben. Nur reiner
   const rawHistory = (history || []).slice(-6);
   const cleanHistory = [];
   for (const msg of rawHistory) {
+    if (!msg.content || !msg.content.trim()) continue;
     const last = cleanHistory[cleanHistory.length - 1];
     if (last && last.role === msg.role) continue;
     cleanHistory.push(msg);
