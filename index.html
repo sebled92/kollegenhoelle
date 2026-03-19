@@ -10,17 +10,10 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#111113;
-  --surface:#1A1A1E;
-  --surface2:#222228;
-  --border:#333339;
-  --border2:#44444C;
-  --text:#F0EEE8;
-  --muted:#A0A0AA;
-  --muted2:#707078;
-  --normal:#FFE500;
-  --roast:#FF3B30;
-  --roast-dim:#3A1210;
+  --bg:#111113;--surface:#1A1A1E;--surface2:#222228;
+  --border:#333339;--border2:#44444C;--text:#F0EEE8;
+  --muted:#A0A0AA;--muted2:#707078;
+  --normal:#FFE500;--roast:#FF3B30;--roast-dim:#3A1210;
   --font-disp:'Bebas Neue',sans-serif;
   --font-mono:'IBM Plex Mono',monospace;
   --font-body:'IBM Plex Sans',sans-serif;
@@ -28,7 +21,6 @@
 html,body{height:100%;overflow:hidden}
 body{font-family:var(--font-body);background:var(--bg);color:var(--text);display:flex;flex-direction:column;}
 
-/* HEADER */
 header{flex-shrink:0;padding:1rem 1.75rem;border-bottom:1px solid var(--border);
   display:flex;align-items:center;justify-content:space-between;background:#0D0D0F;}
 h1{font-family:var(--font-disp);font-size:clamp(2rem,5vw,3.2rem);letter-spacing:.05em;text-transform:uppercase;}
@@ -38,14 +30,12 @@ h1 span{color:var(--normal);animation:flicker 5s infinite;}
 .status-dot{width:8px;height:8px;border-radius:50%;background:#4CAF50;animation:pulse-dot 2.5s infinite;}
 @keyframes pulse-dot{0%,100%{opacity:1}50%{opacity:.25}}
 
-/* ROAST BANNER */
 .roast-banner{display:none;flex-shrink:0;padding:6px 1.75rem;background:var(--roast);
   font-family:var(--font-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
   color:#fff;text-align:center;font-weight:500;}
 .roast-banner.visible{display:block;}
 
-/* MODE BAR */
-.mode-bar{flex-shrink:0;display:flex;align-items:center;gap:10px;padding:.65rem 1.75rem;
+.mode-bar{flex-shrink:0;display:flex;align-items:center;gap:8px;padding:.65rem 1.75rem;
   border-bottom:1px solid var(--border);background:var(--surface);flex-wrap:wrap;}
 .mode-label{font-family:var(--font-mono);font-size:11px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;}
 .mode-toggle{display:flex;border:1px solid var(--border2);border-radius:7px;overflow:hidden;}
@@ -55,29 +45,25 @@ h1 span{color:var(--normal);animation:flicker 5s infinite;}
 .mode-btn.active-roast{background:var(--roast);color:#fff;}
 .mode-btn:not(.active-normal):not(.active-roast):hover{background:var(--surface2);color:var(--text);}
 .mode-spacer{flex:1;}
-
-/* EXTRA BUTTONS — prominent */
-.extra-btns{display:flex;gap:8px;flex-wrap:wrap;}
+.extra-btns{display:flex;gap:7px;flex-wrap:wrap;}
 .extra-btn{font-family:var(--font-mono);font-size:11px;font-weight:500;letter-spacing:.05em;
-  padding:8px 16px;border-radius:7px;border:1.5px solid var(--border2);
+  padding:7px 14px;border-radius:7px;border:1.5px solid var(--border2);
   background:var(--surface2);color:var(--text);cursor:pointer;transition:all .18s;
-  text-transform:uppercase;white-space:nowrap;display:flex;align-items:center;gap:6px;}
+  text-transform:uppercase;white-space:nowrap;display:flex;align-items:center;gap:5px;}
 .extra-btn:hover{border-color:var(--normal);color:var(--normal);background:rgba(255,229,0,.07);}
-.extra-btn.chef:hover{border-color:var(--roast);color:var(--roast);background:rgba(255,59,48,.07);}
+.extra-btn.red:hover{border-color:var(--roast);color:var(--roast);background:rgba(255,59,48,.07);}
+.extra-btn.orange{border-color:#F5A623;color:#F5A623;}
+.extra-btn.orange:hover{background:rgba(245,166,35,.1);}
 
-/* KEVIN QUOTE */
 .qod-bar{flex-shrink:0;padding:.6rem 1.75rem;border-bottom:1px solid var(--border);
   background:var(--surface);display:flex;align-items:center;gap:10px;}
 .qod-label{font-family:var(--font-mono);font-size:10px;color:var(--normal);
   letter-spacing:.1em;text-transform:uppercase;white-space:nowrap;flex-shrink:0;font-weight:500;}
 .qod-text{font-family:var(--font-mono);font-size:11px;color:var(--muted);letter-spacing:.02em;font-style:italic;}
 
-/* LIVE COUNTER */
 #liveCounter{flex-shrink:0;font-family:var(--font-mono);font-size:11px;
-  padding:6px 1.75rem;color:var(--muted);border-bottom:1px solid var(--border);
-  background:var(--bg);}
+  padding:6px 1.75rem;color:var(--muted);border-bottom:1px solid var(--border);background:var(--bg);}
 
-/* STARTERS */
 .starters{flex-shrink:0;padding:.65rem 1.75rem;border-bottom:1px solid var(--border);
   display:flex;gap:8px;flex-wrap:wrap;align-items:center;background:var(--bg);}
 .starters-label{font-family:var(--font-mono);font-size:10px;color:var(--muted);
@@ -88,28 +74,24 @@ h1 span{color:var(--normal);animation:flicker 5s infinite;}
 .starter-btn:hover{border-color:var(--normal);color:var(--normal);background:rgba(255,229,0,.06);}
 .starter-loading{font-family:var(--font-mono);font-size:11px;color:var(--muted2);font-style:italic;}
 
-/* CHAT */
 .chat-scroll{flex:1;overflow-y:auto;padding:1.5rem 1.75rem;}
 .chat-scroll::-webkit-scrollbar{width:4px;}
 .chat-scroll::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px;}
 .chat-inner{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:1.25rem;min-height:100%;}
 
-/* EMPTY STATE */
 .empty-state{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
   text-align:center;gap:.75rem;padding:2rem 1rem;min-height:200px;}
 .empty-icon{font-size:2.5rem;opacity:.35;}
 .empty-title{font-family:var(--font-disp);font-size:2.2rem;letter-spacing:.06em;color:var(--muted);}
 .empty-sub{font-family:var(--font-mono);font-size:12px;color:var(--muted2);max-width:340px;line-height:1.8;}
 
-/* MESSAGES */
 .message{display:flex;flex-direction:column;gap:5px;animation:msgIn .22s ease;}
 @keyframes msgIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
-.message.user{align-items:flex-end;}
-.message.kevin{align-items:flex-start;}
+.message.user{align-items:flex-end;}.message.kevin{align-items:flex-start;}
 .msg-label{font-family:var(--font-mono);font-size:10px;color:var(--muted2);letter-spacing:.1em;padding:0 4px;}
 .msg-bubble{max-width:70%;padding:12px 16px;border-radius:10px;font-size:15px;line-height:1.65;font-weight:300;}
-.message.user .msg-bubble{background:var(--surface2);border:1px solid var(--border2);border-bottom-right-radius:3px;color:var(--text);}
-.message.kevin .msg-bubble{background:var(--surface);border:1px solid var(--border);border-bottom-left-radius:3px;color:var(--text);}
+.message.user .msg-bubble{background:var(--surface2);border:1px solid var(--border2);border-bottom-right-radius:3px;}
+.message.kevin .msg-bubble{background:var(--surface);border:1px solid var(--border);border-bottom-left-radius:3px;}
 .message.kevin.roast-msg .msg-bubble{background:var(--roast-dim);border-color:#5A2020;}
 .kevin-header{display:flex;align-items:center;gap:8px;}
 .kevin-avatar{width:26px;height:26px;border-radius:50%;background:var(--normal);color:#0D0D0F;
@@ -117,26 +99,22 @@ h1 span{color:var(--normal);animation:flicker 5s infinite;}
   display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 .kevin-avatar.roast{background:var(--roast);color:#fff;}
 
-/* MSG ACTIONS */
-.msg-actions{display:flex;gap:7px;margin-top:3px;}
-.share-btn,.screenshot-btn{font-family:var(--font-mono);font-size:10px;letter-spacing:.06em;
+.msg-actions{display:flex;gap:7px;margin-top:3px;flex-wrap:wrap;}
+.action-btn{font-family:var(--font-mono);font-size:10px;letter-spacing:.06em;
   padding:4px 12px;border:1px solid var(--border2);border-radius:100px;
   background:transparent;color:var(--muted);cursor:pointer;transition:all .18s;text-transform:uppercase;}
-.share-btn:hover{border-color:var(--normal);color:var(--normal);}
-.share-btn.copied{border-color:#4CAF50;color:#4CAF50;}
-.screenshot-btn:hover{border-color:var(--muted);color:var(--text);}
+.action-btn:hover{border-color:var(--normal);color:var(--normal);}
+.action-btn.wa:hover{border-color:#25D366;color:#25D366;}
+.action-btn.copied{border-color:#4CAF50;color:#4CAF50;}
 
-/* TYPING */
 #typingMsg{display:none;}
 .typing-bubble{display:flex;align-items:center;gap:6px;padding:12px 16px;
   background:var(--surface);border:1px solid var(--border);
   border-radius:10px;border-bottom-left-radius:3px;width:fit-content;}
 .typing-dot{width:7px;height:7px;border-radius:50%;background:var(--muted2);animation:bounce .9s infinite;}
-.typing-dot:nth-child(2){animation-delay:.18s}
-.typing-dot:nth-child(3){animation-delay:.36s}
+.typing-dot:nth-child(2){animation-delay:.18s}.typing-dot:nth-child(3){animation-delay:.36s}
 @keyframes bounce{0%,80%,100%{transform:translateY(0);opacity:.35}40%{transform:translateY(-6px);opacity:1}}
 
-/* INPUT */
 .input-bar{flex-shrink:0;background:var(--surface);border-top:1px solid var(--border);padding:.85rem 1.75rem;}
 .input-inner{max-width:760px;margin:0 auto;display:flex;gap:10px;align-items:flex-end;}
 .chat-input{flex:1;background:var(--bg);border:1.5px solid var(--border2);border-radius:8px;
@@ -155,33 +133,22 @@ h1 span{color:var(--normal);animation:flicker 5s infinite;}
 .send-btn.roast{background:var(--roast);color:#fff;}
 .send-btn:disabled{opacity:.35;cursor:not-allowed;transform:none;filter:none;}
 
-/* FOOTER */
 .footer-bar{flex-shrink:0;padding:.6rem 1.75rem;border-top:1px solid var(--border);
   font-family:var(--font-mono);font-size:10px;color:var(--muted);
   letter-spacing:.05em;display:flex;justify-content:space-between;align-items:center;background:#0D0D0F;}
-.donate-btn{display:inline-flex;align-items:center;gap:7px;
-  font-family:var(--font-mono);font-size:12px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;
-  padding:7px 18px;border-radius:7px;border:1.5px solid #F5A623;color:#F5A623;
-  background:transparent;cursor:pointer;transition:all .2s;white-space:nowrap;}
-.donate-btn:hover{background:#F5A623;color:#0D0D0F;}
 
-/* ─── MODALS ─── */
+/* MODALS */
 .modal-overlay{display:none;position:fixed;inset:0;z-index:9999;
   background:rgba(0,0,0,.85);align-items:center;justify-content:center;padding:1rem;}
 .modal-overlay.visible{display:flex;}
 .modal{background:var(--surface);border:1px solid var(--border2);
   border-radius:14px;padding:2rem;width:100%;max-width:420px;
-  display:flex;flex-direction:column;gap:1.35rem;position:relative;
-  max-height:90vh;overflow-y:auto;}
-.modal-close{position:absolute;top:14px;right:16px;
-  font-family:var(--font-mono);font-size:18px;
+  display:flex;flex-direction:column;gap:1.35rem;position:relative;max-height:90vh;overflow-y:auto;}
+.modal-close{position:absolute;top:14px;right:16px;font-family:var(--font-mono);font-size:18px;
   color:var(--muted);background:none;border:none;cursor:pointer;transition:color .18s;line-height:1;}
 .modal-close:hover{color:var(--text);}
-.modal-title{font-family:var(--font-disp);font-size:2.2rem;
-  letter-spacing:.05em;text-transform:uppercase;color:var(--text);line-height:1.05;}
-.modal-title .y{color:var(--normal);}
-.modal-title .r{color:var(--roast);}
-.modal-title .o{color:#F5A623;}
+.modal-title{font-family:var(--font-disp);font-size:2.2rem;letter-spacing:.05em;text-transform:uppercase;color:var(--text);line-height:1.05;}
+.modal-title .y{color:var(--normal);}.modal-title .r{color:var(--roast);}.modal-title .o{color:#F5A623;}.modal-title .g{color:#25D366;}
 .modal-desc{font-family:var(--font-mono);font-size:11px;color:var(--muted);line-height:1.8;}
 .modal-desc strong{color:var(--text);font-weight:500;}
 .modal-input{background:var(--bg);border:1.5px solid var(--border2);border-radius:8px;
@@ -195,25 +162,46 @@ h1 span{color:var(--normal);animation:flicker 5s infinite;}
 .modal-action-btn.yellow{background:var(--normal);color:#0D0D0F;}
 .modal-action-btn.red{background:var(--roast);color:#fff;}
 .modal-action-btn.orange{background:#F5A623;color:#0D0D0F;}
+.modal-action-btn.green{background:#25D366;color:#fff;}
 .modal-action-btn.ghost{background:var(--surface2);color:var(--muted);border:1px solid var(--border2);}
 .modal-skip{font-family:var(--font-mono);font-size:10px;color:var(--muted2);
   text-align:center;letter-spacing:.05em;cursor:pointer;transition:color .18s;}
 .modal-skip:hover{color:var(--muted);}
 .modal-quote{font-family:var(--font-mono);font-size:11px;color:var(--muted);
   font-style:italic;padding:.85rem 1.1rem;border-left:2px solid var(--border2);line-height:1.7;}
-
-/* RATING */
-.rating-result{display:none;flex-direction:column;gap:1rem;}
-.rating-result.visible{display:flex;}
-.rating-score{font-family:var(--font-disp);font-size:5rem;color:var(--roast);
-  letter-spacing:.02em;line-height:1;text-align:center;}
-.rating-score span{font-size:2rem;color:var(--muted);}
-.rating-text{font-family:var(--font-mono);font-size:12px;color:var(--muted);line-height:1.8;
+.result-box{font-family:var(--font-mono);font-size:12px;color:var(--muted);line-height:1.8;
   background:var(--bg);padding:1rem 1.1rem;border-radius:8px;border:1px solid var(--border);}
+.big-score{font-family:var(--font-disp);font-size:5rem;letter-spacing:.02em;line-height:1;text-align:center;}
+.big-score span{font-size:2rem;color:var(--muted);}
+.score-label{font-family:var(--font-mono);font-size:10px;color:var(--muted2);text-align:center;letter-spacing:.08em;text-transform:uppercase;}
+
+/* TINDER CARD */
+.tinder-card{background:var(--bg);border:1px solid var(--border2);border-radius:16px;
+  padding:1.5rem;display:flex;flex-direction:column;gap:1rem;}
+.tinder-avatar{width:70px;height:70px;border-radius:50%;background:var(--roast);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-disp);font-size:2rem;color:#fff;align-self:center;}
+.tinder-name{font-family:var(--font-disp);font-size:2rem;letter-spacing:.04em;color:var(--text);text-align:center;line-height:1;}
+.tinder-age{font-family:var(--font-mono);font-size:11px;color:var(--muted);text-align:center;}
+.tinder-bio{font-family:var(--font-mono);font-size:11px;color:var(--muted);line-height:1.75;
+  padding:.85rem 1rem;background:var(--surface2);border-radius:8px;border:1px solid var(--border);}
+.tinder-tags{display:flex;gap:6px;flex-wrap:wrap;}
+.tinder-tag{font-family:var(--font-mono);font-size:10px;padding:4px 10px;border-radius:100px;
+  border:1px solid var(--border2);color:var(--muted2);}
+.swipe-btns{display:flex;gap:10px;}
+.swipe-btn{flex:1;padding:12px;border-radius:10px;border:none;cursor:pointer;
+  font-family:var(--font-mono);font-size:18px;font-weight:500;transition:all .2s;}
+.swipe-btn.nope{background:var(--roast);color:#fff;}
+.swipe-btn.nope:hover{filter:brightness(1.1);}
+.swipe-btn.like{background:var(--normal);color:#0D0D0F;}
+.swipe-btn.like:hover{filter:brightness(1.1);}
+
+/* KÜNDIGUNG */
+.kuendigung-text{font-family:var(--font-mono);font-size:11px;color:var(--muted);line-height:1.9;
+  background:var(--bg);padding:1.25rem;border-radius:8px;border:1px solid var(--border);
+  white-space:pre-wrap;max-height:220px;overflow-y:auto;}
 
 /* TEST */
-.test-step{display:none;flex-direction:column;gap:1rem;}
-.test-step.visible{display:flex;}
 .test-question{font-family:var(--font-mono);font-size:12px;color:var(--text);line-height:1.7;}
 .test-options{display:flex;flex-direction:column;gap:8px;}
 .test-opt{font-family:var(--font-mono);font-size:11px;padding:11px 15px;
@@ -227,25 +215,19 @@ h1 span{color:var(--normal);animation:flicker 5s infinite;}
   display:flex;flex-direction:column;gap:14px;border:1px solid #1A1A1E;}
 .ss-header{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:.05em;color:#F0EEE8;}
 .ss-header span{color:#FFE500;}
-.ss-user-bubble{align-self:flex-end;background:#222228;border:1px solid #44444C;
+.ss-user{align-self:flex-end;background:#222228;border:1px solid #44444C;
   padding:10px 14px;border-radius:10px;border-bottom-right-radius:3px;
   font-family:'IBM Plex Sans',sans-serif;font-size:13px;color:#F0EEE8;max-width:82%;line-height:1.5;}
-.ss-kevin-bubble{align-self:flex-start;background:#1A1A1E;border:1px solid #333339;
+.ss-kevin{align-self:flex-start;background:#1A1A1E;border:1px solid #333339;
   padding:10px 14px;border-radius:10px;border-bottom-left-radius:3px;
   font-family:'IBM Plex Sans',sans-serif;font-size:13px;color:#F0EEE8;max-width:82%;line-height:1.6;}
-.ss-footer{font-family:'IBM Plex Mono',monospace;font-size:9px;color:#707078;
-  letter-spacing:.08em;text-align:center;margin-top:4px;}
+.ss-footer{font-family:'IBM Plex Mono',monospace;font-size:9px;color:#707078;letter-spacing:.08em;text-align:center;}
 
 @media(max-width:600px){
-  header{padding:.75rem 1rem;}
-  h1{font-size:1.9rem;}
-  .mode-bar{padding:.5rem 1rem;}
-  .chat-scroll{padding:1rem;}
-  .input-bar{padding:.7rem 1rem;}
-  .footer-bar{padding:.5rem 1rem;}
-  .msg-bubble{max-width:86%;font-size:14px;}
-  .footer-bar span:first-child{display:none;}
-  .starters,.qod-bar,#liveCounter{padding-left:1rem;padding-right:1rem;}
+  header{padding:.75rem 1rem;}h1{font-size:1.9rem;}
+  .mode-bar,.starters,.qod-bar,#liveCounter{padding-left:1rem;padding-right:1rem;}
+  .chat-scroll{padding:1rem;}.input-bar{padding:.7rem 1rem;}.footer-bar{padding:.5rem 1rem;}
+  .msg-bubble{max-width:86%;font-size:14px;}.footer-bar span:first-child{display:none;}
 }
 </style>
 </head>
@@ -253,15 +235,10 @@ h1 span{color:var(--normal);animation:flicker 5s infinite;}
 
 <header>
   <h1>Kollegen<span>hölle</span></h1>
-  <div class="kevin-status">
-    <span class="status-dot"></span>
-    <span>Kevin ist leider anwesend</span>
-  </div>
+  <div class="kevin-status"><span class="status-dot"></span><span>Kevin ist leider anwesend</span></div>
 </header>
 
-<div class="roast-banner" id="roastBanner">
-  ⚠ ROAST MODUS AKTIV — KEVIN HAT KEINE HEMMUNGEN MEHR ⚠
-</div>
+<div class="roast-banner" id="roastBanner">⚠ ROAST MODUS AKTIV — KEVIN HAT KEINE HEMMUNGEN MEHR ⚠</div>
 
 <div class="mode-bar">
   <span class="mode-label">Modus:</span>
@@ -271,9 +248,12 @@ h1 span{color:var(--normal);animation:flicker 5s infinite;}
   </div>
   <div class="mode-spacer"></div>
   <div class="extra-btns">
-    <button class="extra-btn chef" onclick="openModal('chefModal')">👔 Chef bewerten</button>
-    <button class="extra-btn" onclick="startTest()">🧠 Persönlichkeitstest</button>
-    <button class="donate-btn" onclick="openModal('donateModal')">☕ Spende</button>
+    <button class="extra-btn red" onclick="openModal('chefModal')">👔 Chef bewerten</button>
+    <button class="extra-btn red" onclick="openModal('tinderModal')">💘 Kollegen-Tinder</button>
+    <button class="extra-btn" onclick="openModal('kuendigungModal')">📝 Kündigung</button>
+    <button class="extra-btn" onclick="openModal('gehaltModal')">💸 Gehalt</button>
+    <button class="extra-btn" onclick="startTest()">🧠 Test</button>
+    <button class="extra-btn orange" onclick="openModal('donateModal')">☕ Spende</button>
   </div>
 </div>
 
@@ -294,7 +274,7 @@ h1 span{color:var(--normal);animation:flicker 5s infinite;}
     <div class="empty-state" id="emptyState">
       <span class="empty-icon">😑</span>
       <p class="empty-title">Kevin wartet.</p>
-      <p class="empty-sub">Schreib irgendetwas oder wähle ein Thema oben.</p>
+      <p class="empty-sub">Schreib irgendetwas oder wähle ein Feature oben.</p>
     </div>
     <div class="message kevin" id="typingMsg">
       <div class="kevin-header">
@@ -327,21 +307,92 @@ h1 span{color:var(--normal);animation:flicker 5s infinite;}
   <div class="modal">
     <button class="modal-close" onclick="closeModal('chefModal')">✕</button>
     <p class="modal-title">Kevin <span class="r">bewertet</span><br>deinen Chef.</p>
-    <p class="modal-desc">Gib den Namen ein. Kevin gibt eine vernichtende aber akkurate Bewertung ab. <strong>Kein Erbarmen.</strong></p>
-    <input class="modal-input" id="chefName" placeholder="z.B. Thorsten, Sabine, Der da oben..." maxlength="40"
-      onkeydown="if(event.key==='Enter')rateChef()">
-    <button class="modal-action-btn red" onclick="rateChef()" id="rateBtn">🔥 Chef vernichten</button>
-    <div class="rating-result" id="ratingResult">
-      <div class="rating-score" id="ratingScore">2<span>/10</span></div>
-      <div class="rating-text" id="ratingText"></div>
-      <button class="modal-action-btn yellow" onclick="shareRating()">↗ Bewertung teilen</button>
-      <button class="modal-action-btn ghost" onclick="resetRating()">↩ Anderen Chef bewerten</button>
+    <p class="modal-desc" id="chefDesc">Name eingeben. Kevin gibt eine vernichtende Bewertung ab. <strong>Kein Erbarmen.</strong></p>
+    <input class="modal-input" id="chefName" placeholder="z.B. Thorsten, Sabine, Der da oben..." maxlength="40" onkeydown="if(event.key==='Enter')rateChef()">
+    <button class="modal-action-btn red" id="rateBtn" onclick="rateChef()">🔥 Chef vernichten</button>
+    <div id="chefResult" style="display:none;flex-direction:column;gap:1rem;">
+      <div class="big-score r" id="chefScore" style="color:var(--roast)">2<span>/10</span></div>
+      <div class="result-box" id="chefText"></div>
+      <button class="modal-action-btn yellow" onclick="shareChef()">↗ Teilen</button>
+      <button class="modal-action-btn green" onclick="shareChefWA()">💬 WhatsApp</button>
+      <button class="modal-action-btn ghost" onclick="resetChef()">↩ Anderen Chef</button>
     </div>
     <p class="modal-skip" onclick="closeModal('chefModal')">nein danke, ich schütze meinen Chef</p>
   </div>
 </div>
 
-<!-- PERSÖNLICHKEITSTEST MODAL -->
+<!-- TINDER MODAL -->
+<div class="modal-overlay" id="tinderModal" onclick="closeModalOverlay(event,'tinderModal')">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('tinderModal')">✕</button>
+    <p class="modal-title">Kollegen<span class="r">-Tinder</span></p>
+    <p class="modal-desc" id="tinderDesc">Name + Job deines Kollegen eingeben. Kevin erstellt ein vernichtendes Tinder-Profil.</p>
+    <input class="modal-input" id="tinderName" placeholder="Name des Kollegen..." maxlength="30" style="margin-bottom:0">
+    <input class="modal-input" id="tinderJob" placeholder="Job/Eigenschaft z.B. 'Sales Manager, redet viel'" maxlength="60" onkeydown="if(event.key==='Enter')generateTinder()">
+    <button class="modal-action-btn red" id="tinderBtn" onclick="generateTinder()">💘 Profil erstellen</button>
+    <div id="tinderCard" style="display:none;flex-direction:column;gap:1rem;">
+      <div class="tinder-card">
+        <div class="tinder-avatar" id="tinderAvatar">?</div>
+        <div>
+          <p class="tinder-name" id="tinderCardName"></p>
+          <p class="tinder-age" id="tinderCardAge"></p>
+        </div>
+        <div class="tinder-bio" id="tinderBio"></div>
+        <div class="tinder-tags" id="tinderTags"></div>
+        <div class="swipe-btns">
+          <button class="swipe-btn nope" onclick="swipeNope()">✕ Nope</button>
+          <button class="swipe-btn like" onclick="swipeLike()">♥ Like</button>
+        </div>
+      </div>
+      <button class="modal-action-btn yellow" onclick="shareTinder()">↗ Profil teilen</button>
+      <button class="modal-action-btn green" onclick="shareTinderWA()">💬 WhatsApp</button>
+      <button class="modal-action-btn ghost" onclick="resetTinder()">↩ Anderen Kollegen</button>
+    </div>
+    <p class="modal-skip" onclick="closeModal('tinderModal')">meine Kollegen verdienen kein Profil</p>
+  </div>
+</div>
+
+<!-- KÜNDIGUNG MODAL -->
+<div class="modal-overlay" id="kuendigungModal" onclick="closeModalOverlay(event,'kuendigungModal')">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('kuendigungModal')">✕</button>
+    <p class="modal-title">Kevin <span class="y">schreibt</span><br>deine Kündigung.</p>
+    <p class="modal-desc" id="kuendigDesc">Firma + Grund eingeben. Kevin schreibt eine dramatisch-passive Kündigung.</p>
+    <input class="modal-input" id="kuendigFirma" placeholder="Firmenname..." maxlength="50" style="margin-bottom:0">
+    <input class="modal-input" id="kuendigGrund" placeholder="Warum kündigst du? (optional)" maxlength="100" onkeydown="if(event.key==='Enter')generateKuendigung()">
+    <button class="modal-action-btn yellow" id="kuendigBtn" onclick="generateKuendigung()">📝 Kündigung schreiben</button>
+    <div id="kuendigResult" style="display:none;flex-direction:column;gap:1rem;">
+      <div class="kuendigung-text" id="kuendigText"></div>
+      <button class="modal-action-btn yellow" onclick="shareKuendigung()">↗ Teilen</button>
+      <button class="modal-action-btn green" onclick="shareKuendigungWA()">💬 WhatsApp</button>
+      <button class="modal-action-btn ghost" onclick="resetKuendigung()">↩ Neue Kündigung</button>
+    </div>
+    <p class="modal-skip" onclick="closeModal('kuendigungModal')">ich bin zu feige zum Kündigen</p>
+  </div>
+</div>
+
+<!-- GEHALT MODAL -->
+<div class="modal-overlay" id="gehaltModal" onclick="closeModalOverlay(event,'gehaltModal')">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('gehaltModal')">✕</button>
+    <p class="modal-title">Kevin <span class="r">bewertet</span><br>dein Gehalt.</p>
+    <p class="modal-desc" id="gehaltDesc">Gehalt + Job eingeben. Kevin erklärt dir wie schlecht du bezahlt wirst.</p>
+    <input class="modal-input" id="gehaltBetrag" placeholder="Gehalt z.B. 2800 Euro brutto..." maxlength="30" style="margin-bottom:0">
+    <input class="modal-input" id="gehaltJob" placeholder="Dein Job z.B. Projektleiter" maxlength="50" onkeydown="if(event.key==='Enter')rateGehalt()">
+    <button class="modal-action-btn red" id="gehaltBtn" onclick="rateGehalt()">💸 Gehalt bewerten</button>
+    <div id="gehaltResult" style="display:none;flex-direction:column;gap:1rem;">
+      <div class="big-score" id="gehaltScore" style="color:var(--roast)">3<span>/10</span></div>
+      <p class="score-label">Angemessenheit</p>
+      <div class="result-box" id="gehaltText"></div>
+      <button class="modal-action-btn yellow" onclick="shareGehalt()">↗ Teilen</button>
+      <button class="modal-action-btn green" onclick="shareGehaltWA()">💬 WhatsApp</button>
+      <button class="modal-action-btn ghost" onclick="resetGehalt()">↩ Anderes Gehalt</button>
+    </div>
+    <p class="modal-skip" onclick="closeModal('gehaltModal')">ich will es lieber nicht wissen</p>
+  </div>
+</div>
+
+<!-- TEST MODAL -->
 <div class="modal-overlay" id="testModal" onclick="closeModalOverlay(event,'testModal')">
   <div class="modal">
     <button class="modal-close" onclick="closeModal('testModal')">✕</button>
@@ -349,10 +400,11 @@ h1 span{color:var(--normal);animation:flicker 5s infinite;}
     <p class="modal-desc" id="testIntro">Kevin analysiert deine Bürosituation in 5 Fragen. Das Ergebnis ist <strong>nicht aufbauend</strong>.</p>
     <div id="testSteps"></div>
     <div id="testResultBox" style="display:none;flex-direction:column;gap:1rem;">
-      <div class="rating-score" id="testScore" style="color:var(--normal)">7<span>/10</span></div>
-      <p style="font-family:var(--font-mono);font-size:10px;color:var(--muted2);text-align:center;letter-spacing:.08em;text-transform:uppercase;">Hoffnungslosigkeit</p>
-      <div class="rating-text" id="testResultText"></div>
-      <button class="modal-action-btn yellow" onclick="shareTest()">↗ Ergebnis teilen</button>
+      <div class="big-score" id="testScore" style="color:var(--normal)">7<span>/10</span></div>
+      <p class="score-label">Hoffnungslosigkeit</p>
+      <div class="result-box" id="testResultText"></div>
+      <button class="modal-action-btn yellow" onclick="shareTest()">↗ Teilen</button>
+      <button class="modal-action-btn green" onclick="shareTestWA()">💬 WhatsApp</button>
       <button class="modal-action-btn ghost" onclick="startTest()">↩ Nochmal</button>
     </div>
     <p class="modal-skip" onclick="closeModal('testModal')">ich will die Wahrheit nicht wissen</p>
@@ -366,8 +418,8 @@ h1 span{color:var(--normal);animation:flicker 5s infinite;}
     <p class="modal-title"><span class="y">Screenshot</span><br>für die Nachwelt.</p>
     <div class="screenshot-card" id="screenshotCard">
       <div class="ss-header">Kollegen<span>hölle</span></div>
-      <div class="ss-user-bubble" id="ssUserText"></div>
-      <div class="ss-kevin-bubble" id="ssKevinText"></div>
+      <div class="ss-user" id="ssUserText"></div>
+      <div class="ss-kevin" id="ssKevinText"></div>
       <div class="ss-footer">kollegenhoelle.vercel.app — powered by Sebastian™</div>
     </div>
     <button class="modal-action-btn yellow" onclick="downloadScreenshot()">📸 Als Bild speichern</button>
@@ -380,16 +432,10 @@ h1 span{color:var(--normal);animation:flicker 5s infinite;}
   <div class="modal">
     <button class="modal-close" onclick="closeModal('donateModal')">✕</button>
     <p class="modal-title">Kevin <span class="o">dankt</span><br>dir nicht.</p>
-    <p class="modal-desc">
-      Jede Kevin-Antwort kostet echtes Geld — API-Tokens, Server, Infrastruktur, alles.<br><br>
+    <p class="modal-desc">Jede Kevin-Antwort kostet echtes Geld — API-Tokens, Server, alles.<br><br>
       Kevin beschwert sich über alles, aber über <strong>fehlende Serverkosten</strong> am meisten.
-      Wenn dir seine passive Aggression den Tag gerettet hat, freut sich <strong>Sebastian</strong> über einen Kaffee.
-    </p>
-    <p class="modal-quote">
-      „Natürlich muss ich das selbst finanzieren. Natürlich. Wenigstens funktioniert hier mal etwas —
-      anders als die IT, die seit Dienstag auf meine Ticket-Anfrage wartet. Aber gut. Was soll's."
-      <br><br>— Kevin, resigniert
-    </p>
+      Wenn dir seine passive Aggression den Tag gerettet hat, freut sich <strong>Sebastian</strong> über einen Kaffee.</p>
+    <p class="modal-quote">„Natürlich muss ich das selbst finanzieren. Wenigstens funktioniert hier mal etwas — anders als die IT. Aber gut. Was soll's."<br><br>— Kevin, resigniert</p>
     <a class="modal-action-btn orange" href="https://paypal.me/sebastianledwinka" target="_blank" rel="noopener">☕ Kevin einen Kaffee spendieren</a>
     <p class="modal-skip" onclick="closeModal('donateModal')">nein danke — ich bin wie Kevin und gebe nichts zurück</p>
   </div>
@@ -397,227 +443,248 @@ h1 span{color:var(--normal);animation:flicker 5s infinite;}
 
 <script defer src="/_vercel/insights/script.js"></script>
 <script>
-  let currentMode='normal', isLoading=false, history=[], lastUserMsg='', lastKevinMsg='';
-  let complaints=parseInt(localStorage.getItem('complaints')||'0');
-  const chatInner=document.getElementById('chatInner');
-  const typingMsg=document.getElementById('typingMsg');
+let currentMode='normal',isLoading=false,history=[],lastUserMsg='',lastKevinMsg='';
+let complaints=parseInt(localStorage.getItem('complaints')||'0');
+const chatInner=document.getElementById('chatInner'),typingMsg=document.getElementById('typingMsg');
 
-  // QUOTE OF DAY
-  const quotes=["Ich gebe nicht auf. Ich warte nur darauf, dass andere aufgeben.","Natürlich war ich nicht eingeladen. Natürlich.","Meine Idee. Sein Erfolg. Mein Schweigen. Das System.","Die IT hat geantwortet. In 6 Wochen. Typisch.","Ich mache Überstunden damit andere pünktlich gehen können. Schön.","Das Jahresgespräch war konstruktiv. Konstruktiv wie ein Erdbeben.","Homeoffice ist schön. Niemand sieht wie ich leide.","Das war mein Vorschlag. Vor drei Jahren. Aber gut.","Wir sind ein Team. Ich arbeite, das Team feiert.","Die Kaffeemaschine ist kaputt. Wie mein Wille zu leben.","Feedback-Kultur heißt: alle sagen mir was falsch ist. Toll.","Manche Menschen hier bekommen Beförderungen. Interessant."];
-  document.getElementById('qodText').textContent='"'+quotes[new Date().getDate()%quotes.length]+'"';
+const quotes=["Ich gebe nicht auf. Ich warte nur darauf, dass andere aufgeben.","Natürlich war ich nicht eingeladen. Natürlich.","Meine Idee. Sein Erfolg. Mein Schweigen. Das System.","Die IT hat geantwortet. In 6 Wochen. Typisch.","Ich mache Überstunden damit andere pünktlich gehen können. Schön.","Das Jahresgespräch war konstruktiv. Konstruktiv wie ein Erdbeben.","Homeoffice ist schön. Niemand sieht wie ich leide.","Das war mein Vorschlag. Vor drei Jahren. Aber gut.","Wir sind ein Team. Ich arbeite, das Team feiert.","Die Kaffeemaschine ist kaputt. Wie mein Wille zu leben.","Feedback-Kultur: alle sagen mir was falsch ist. Toll.","Manche Menschen hier bekommen Beförderungen. Interessant."];
+document.getElementById('qodText').textContent='"'+quotes[new Date().getDate()%quotes.length]+'"';
 
-  // FAKE VISITORS
-  let base=18+Math.floor(Math.random()*15);
-  document.getElementById('liveCounter').innerText=base+' Kollegen beschweren sich gerade • '+complaints+' Beschwerden heute';
-  setInterval(()=>{
-    base+=Math.floor(Math.random()*5)-2;
-    if(base<12)base=12; if(base>45)base=45;
-    document.getElementById('liveCounter').innerText=base+' Kollegen beschweren sich gerade • '+complaints+' Beschwerden heute';
-  },4000);
+let base=18+Math.floor(Math.random()*15);
+document.getElementById('liveCounter').innerText=base+' Kollegen beschweren sich gerade • '+complaints+' Beschwerden heute';
+setInterval(()=>{base+=Math.floor(Math.random()*5)-2;if(base<12)base=12;if(base>45)base=45;
+  document.getElementById('liveCounter').innerText=base+' Kollegen beschweren sich gerade • '+complaints+' Beschwerden heute';},4000);
 
-  // STARTERS
-  const emojis=['😤','💻','😩','📧','🙄','😴','🤡','📋','😶','🫠','☕','🏖️'];
-  async function renderStarters(){
-    try{
-      const res=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({message:'Generiere genau 5 kurze kreative deutsche Beschwerden ueber den Bueroalltag als JSON-Array. Nur das Array. Beispiel: ["Mein Chef nervt","IT schlaeft wieder"]. Max 6 Woerter.',history:[],mode:'starters'})});
-      const data=await res.json();
-      const match=(data.reply||'').match(/\[.*?\]/s);
-      const items=match?JSON.parse(match[0]):[];
-      if(items.length>0){
-        document.getElementById('starterBtns').innerHTML=items.slice(0,5)
-          .map((m,i)=>`<button class="starter-btn" onclick="quickSend('${escAttr(m)}')">${emojis[i%emojis.length]} ${escHtml(m)}</button>`).join('');
-      } else fallbackStarters();
-    } catch{fallbackStarters();}
-  }
-  function fallbackStarters(){
-    document.getElementById('starterBtns').innerHTML=['Chef klaut Ideen','IT antwortet nicht','Sinnloses Meeting','Überstunden wieder','Kollege befördert']
-      .map((m,i)=>`<button class="starter-btn" onclick="quickSend('${escAttr(m)}')">${emojis[i]} ${m}</button>`).join('');
-  }
-  renderStarters();
+const emojis=['😤','💻','😩','📧','🙄','😴','🤡','📋','😶','🫠','☕','🏖️'];
+async function renderStarters(){
+  try{
+    const res=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({message:'Generiere genau 5 kurze deutsche Bürobeschwerden als JSON-Array. Nur das Array. Beispiel: ["Chef nervt","IT schlaeft"]. Max 6 Woerter.',history:[],mode:'starters'})});
+    const data=await res.json();
+    const match=(data.reply||'').match(/\[.*?\]/s);
+    const items=match?JSON.parse(match[0]):[];
+    if(items.length>0)document.getElementById('starterBtns').innerHTML=items.slice(0,5).map((m,i)=>`<button class="starter-btn" onclick="quickSend('${escAttr(m)}')">${emojis[i%emojis.length]} ${escHtml(m)}</button>`).join('');
+    else fallbackStarters();
+  }catch{fallbackStarters();}
+}
+function fallbackStarters(){document.getElementById('starterBtns').innerHTML=['Chef klaut Ideen','IT antwortet nicht','Sinnloses Meeting','Überstunden wieder','Kollege befördert'].map((m,i)=>`<button class="starter-btn" onclick="quickSend('${escAttr(m)}')">${emojis[i]} ${m}</button>`).join('');}
+renderStarters();
 
-  function setMode(mode){
-    currentMode=mode;
-    document.getElementById('btnNormal').className='mode-btn'+(mode==='normal'?' active-normal':'');
-    document.getElementById('btnRoast').className='mode-btn'+(mode==='roast'?' active-roast':'');
-    document.getElementById('sendBtn').className='send-btn'+(mode==='roast'?' roast':'');
-    document.getElementById('chatInput').className='chat-input'+(mode==='roast'?' roast-mode':'');
-    document.getElementById('roastBanner').className='roast-banner'+(mode==='roast'?' visible':'');
-    document.getElementById('typingAvatar').className='kevin-avatar'+(mode==='roast'?' roast':'');
-    document.getElementById('chatInput').placeholder=mode==='roast'?'🔥 Schreib etwas... wenn du dich traust.':'Schreib Kevin etwas... er freut sich bestimmt.';
-  }
+function setMode(m){currentMode=m;
+  document.getElementById('btnNormal').className='mode-btn'+(m==='normal'?' active-normal':'');
+  document.getElementById('btnRoast').className='mode-btn'+(m==='roast'?' active-roast':'');
+  document.getElementById('sendBtn').className='send-btn'+(m==='roast'?' roast':'');
+  document.getElementById('chatInput').className='chat-input'+(m==='roast'?' roast-mode':'');
+  document.getElementById('roastBanner').className='roast-banner'+(m==='roast'?' visible':'');
+  document.getElementById('typingAvatar').className='kevin-avatar'+(m==='roast'?' roast':'');
+  document.getElementById('chatInput').placeholder=m==='roast'?'🔥 Schreib etwas... wenn du dich traust.':'Schreib Kevin etwas... er freut sich bestimmt.';}
 
-  function openModal(id){document.getElementById(id).classList.add('visible');}
-  function closeModal(id){document.getElementById(id).classList.remove('visible');}
-  function closeModalOverlay(e,id){if(e.target===document.getElementById(id))closeModal(id);}
+function openModal(id){document.getElementById(id).classList.add('visible');}
+function closeModal(id){document.getElementById(id).classList.remove('visible');}
+function closeModalOverlay(e,id){if(e.target===document.getElementById(id))closeModal(id);}
+function quickSend(t){document.getElementById('chatInput').value=t;sendMessage();}
+function autoResize(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,130)+'px';}
+function handleKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMessage();}}
+function scrollToBottom(){const s=document.getElementById('chatScroll');s.scrollTop=s.scrollHeight;}
+function hideEmpty(){document.getElementById('emptyState')?.remove();}
+function escHtml(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');}
+function escAttr(s){return String(s||'').replace(/'/g,'&#39;').replace(/"/g,'&quot;');}
 
-  function quickSend(t){document.getElementById('chatInput').value=t;sendMessage();}
-  function autoResize(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,130)+'px';}
-  function handleKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMessage();}}
-  function scrollToBottom(){const s=document.getElementById('chatScroll');s.scrollTop=s.scrollHeight;}
-  function hideEmpty(){document.getElementById('emptyState')?.remove();}
-  function escHtml(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');}
-  function escAttr(s){return String(s||'').replace(/'/g,'&#39;').replace(/"/g,'&quot;');}
+function waShare(text){window.open('https://wa.me/?text='+encodeURIComponent(text),'_blank');}
 
-  function shareMessage(u,k){
-    navigator.clipboard.writeText(`Ich zu Kevin: "${u}"\n\nKevin: "${k}"\n\n😑 kollegenhoelle.vercel.app`).then(()=>{
-      document.querySelectorAll('.share-btn').forEach(b=>{
-        if(b.dataset.kevin===k){b.textContent='✓ Kopiert!';b.classList.add('copied');setTimeout(()=>{b.textContent='↗ Teilen';b.classList.remove('copied');},2000);}
-      });
-    });
-  }
-  function openScreenshot(u,k){
-    document.getElementById('ssUserText').textContent=u;
-    document.getElementById('ssKevinText').textContent=k;
-    openModal('screenshotModal');
-  }
-  async function downloadScreenshot(){
-    try{
-      const canvas=await html2canvas(document.getElementById('screenshotCard'),{backgroundColor:'#0D0D0F',scale:2,useCORS:true,logging:false});
-      const a=document.createElement('a');a.download='kollegenhoelle.png';a.href=canvas.toDataURL('image/png');a.click();
-    }catch{alert('Screenshot fehlgeschlagen. Kevin ist auch nicht überrascht.');}
-  }
+function shareMsg(text,btn){navigator.clipboard.writeText(text).then(()=>{const t=btn.textContent;btn.textContent='✓ Kopiert!';btn.classList.add('copied');setTimeout(()=>{btn.textContent=t;btn.classList.remove('copied');},2000);});}
 
-  function appendMessage(role,text,mode){
-    hideEmpty();
-    const div=document.createElement('div');
-    div.className='message '+role+(role==='kevin'&&mode==='roast'?' roast-msg':'');
-    if(role==='user'){
-      lastUserMsg=text;
-      div.innerHTML=`<span class="msg-label">Du</span><div class="msg-bubble">${escHtml(text)}</div>`;
-    } else {
-      lastKevinMsg=text;
-      const u=escAttr(lastUserMsg),k=escAttr(text);
-      div.innerHTML=`<div class="kevin-header"><div class="kevin-avatar ${mode==='roast'?'roast':''}">K</div><span class="msg-label">Kevin</span></div>
-        <div class="msg-bubble">${escHtml(text)}</div>
-        <div class="msg-actions">
-          <button class="share-btn" data-kevin="${k}" onclick="shareMessage('${u}',this.dataset.kevin)">↗ Teilen</button>
-          <button class="screenshot-btn" onclick="openScreenshot('${u}','${k}')">📸 Screenshot</button>
-        </div>`;
-    }
-    chatInner.insertBefore(div,typingMsg);
-    scrollToBottom();
+function appendMessage(role,text,mode){
+  hideEmpty();
+  const div=document.createElement('div');
+  div.className='message '+role+(role==='kevin'&&mode==='roast'?' roast-msg':'');
+  if(role==='user'){
+    lastUserMsg=text;
+    div.innerHTML=`<span class="msg-label">Du</span><div class="msg-bubble">${escHtml(text)}</div>`;
+  }else{
+    lastKevinMsg=text;
+    const u=escAttr(lastUserMsg),k=escAttr(text);
+    const shareText=encodeURIComponent(`Ich zu Kevin: "${lastUserMsg}"\n\nKevin: "${text}"\n\n😑 kollegenhoelle.vercel.app`);
+    div.innerHTML=`<div class="kevin-header"><div class="kevin-avatar ${mode==='roast'?'roast':''}">K</div><span class="msg-label">Kevin</span></div>
+      <div class="msg-bubble">${escHtml(text)}</div>
+      <div class="msg-actions">
+        <button class="action-btn" onclick="navigator.clipboard.writeText('Ich zu Kevin: &quot;${u}&quot;\\n\\nKevin: &quot;${k}&quot;\\n\\n😑 kollegenhoelle.vercel.app');this.textContent='✓ Kopiert!';this.classList.add('copied');setTimeout(()=>{this.textContent='↗ Teilen';this.classList.remove('copied');},2000)">↗ Teilen</button>
+        <button class="action-btn wa" onclick="window.open('https://wa.me/?text='+encodeURIComponent('Ich zu Kevin: &quot;${lastUserMsg}&quot;\\n\\nKevin: &quot;${text}&quot;\\n\\n😑 kollegenhoelle.vercel.app'),'_blank')">💬 WhatsApp</button>
+        <button class="action-btn" onclick="openScreenshot('${u}','${k}')">📸 Screenshot</button>
+      </div>`;
   }
+  chatInner.insertBefore(div,typingMsg);scrollToBottom();
+}
 
-  async function sendMessage(){
-    const input=document.getElementById('chatInput'),sendBtn=document.getElementById('sendBtn');
-    const msg=input.value.trim();
-    if(!msg||isLoading)return;
-    isLoading=true;sendBtn.disabled=true;input.value='';input.style.height='auto';
-    appendMessage('user',msg,currentMode);
-    history.push({role:'user',content:msg});
-    complaints++;localStorage.setItem('complaints',complaints);
-    typingMsg.style.display='flex';scrollToBottom();
-    try{
-      const res=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({message:msg,history:history.slice(-6),mode:currentMode})});
-      const data=await res.json();
-      typingMsg.style.display='none';
-      const reply=data.reply||'*Kevin hat die Frage mit einem Augenrollen quittiert.*';
-      appendMessage('kevin',reply,currentMode);
-      history.push({role:'assistant',content:reply});
-      if(history.length>20)history=history.slice(-20);
-    }catch{
-      typingMsg.style.display='none';
-      appendMessage('kevin','Kevin seufzt. Die API ist down. Natuerlich.',currentMode);
-    }
-    isLoading=false;sendBtn.disabled=false;input.focus();
-  }
+async function sendMessage(){
+  const input=document.getElementById('chatInput'),sendBtn=document.getElementById('sendBtn');
+  const msg=input.value.trim();if(!msg||isLoading)return;
+  isLoading=true;sendBtn.disabled=true;input.value='';input.style.height='auto';
+  appendMessage('user',msg,currentMode);history.push({role:'user',content:msg});
+  complaints++;localStorage.setItem('complaints',complaints);
+  typingMsg.style.display='flex';scrollToBottom();
+  try{
+    const res=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({message:msg,history:history.slice(-6),mode:currentMode})});
+    const data=await res.json();
+    typingMsg.style.display='none';
+    const reply=data.reply||'*Kevin hat die Frage mit einem Augenrollen quittiert.*';
+    appendMessage('kevin',reply,currentMode);
+    history.push({role:'assistant',content:reply});
+    if(history.length>20)history=history.slice(-20);
+  }catch{typingMsg.style.display='none';appendMessage('kevin','Kevin seufzt. Die API ist down. Natuerlich.',currentMode);}
+  isLoading=false;sendBtn.disabled=false;input.focus();
+}
 
-  // CHEF BEWERTEN
-  async function rateChef(){
-    const name=document.getElementById('chefName').value.trim();
-    if(!name)return;
-    const btn=document.getElementById('rateBtn');
-    btn.textContent='Kevin denkt nach...';btn.disabled=true;
-    try{
-      const res=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({message:`Bewerte den Chef namens "${name}" auf einer Skala von 1-10 (10=schlimmst). NUR dieses Format: SCORE: [Zahl]\nBEWERTUNG: [2-3 vernichtend-witzige Saetze. Kein Markdown, keine Quellenangaben.]`,history:[],mode:'normal'})});
-      const data=await res.json();
-      const reply=data.reply||'';
-      const sM=reply.match(/SCORE:\s*(\d+)/i),tM=reply.match(/BEWERTUNG:\s*([\s\S]+)/i);
-      const score=sM?Math.min(10,Math.max(1,parseInt(sM[1]))):Math.floor(Math.random()*4)+6;
-      const text=tM?tM[1].trim():reply;
-      document.getElementById('ratingScore').innerHTML=score+'<span>/10</span>';
-      document.getElementById('ratingText').textContent=text;
-      document.getElementById('ratingResult').style.cssText='display:flex;flex-direction:column;';
-      btn.style.display='none';
-      document.getElementById('chefName').style.display='none';
-      document.querySelector('#chefModal .modal-desc').style.display='none';
-    }catch{
-      document.getElementById('ratingText').textContent='Kevin konnte den Chef nicht bewerten. Wahrscheinlich ist er selbst im Meeting.';
-      document.getElementById('ratingResult').style.cssText='display:flex;flex-direction:column;';
-    }
-    btn.textContent='🔥 Chef vernichten';btn.disabled=false;
-  }
-  function resetRating(){
-    document.getElementById('ratingResult').style.display='none';
-    document.getElementById('rateBtn').style.display='flex';
-    document.getElementById('chefName').style.cssText='display:block;';
-    document.getElementById('chefName').value='';
-    document.querySelector('#chefModal .modal-desc').style.display='block';
-  }
-  function shareRating(){
-    const name=document.getElementById('chefName').value||'mein Chef';
-    const score=document.getElementById('ratingScore').textContent;
-    const text=document.getElementById('ratingText').textContent;
-    navigator.clipboard.writeText(`Kevin bewertet "${name}": ${score} Hoffnungslosigkeit\n\n"${text}"\n\n😑 kollegenhoelle.vercel.app`);
-    alert('Kopiert! Kevin würde es nicht teilen. Aber du kannst.');
-  }
+// SCREENSHOT
+function openScreenshot(u,k){document.getElementById('ssUserText').textContent=u;document.getElementById('ssKevinText').textContent=k;openModal('screenshotModal');}
+async function downloadScreenshot(){
+  try{const c=await html2canvas(document.getElementById('screenshotCard'),{backgroundColor:'#0D0D0F',scale:2,useCORS:true,logging:false});
+    const a=document.createElement('a');a.download='kollegenhoelle.png';a.href=c.toDataURL('image/png');a.click();}
+  catch{alert('Screenshot fehlgeschlagen. Kevin ist nicht überrascht.');}
+}
 
-  // PERSÖNLICHKEITSTEST
-  const testQs=[
-    {q:'Dein Chef schickt um 17:58 Uhr eine E-Mail mit „kurze Frage". Was machst du?',opts:['Sofort antworten, ich bin Teamplayer 😇','Ich lese sie, antworte aber erst morgen','Ich sehe sie. Ich lasse sie ungelesen.','Ich kündige innerlich zum 47. Mal']},
-    {q:'Wie viele Meetings hättest du diese Woche auch als E-Mail verschicken können?',opts:['Keines, ich liebe Meetings 🤡','1-2 vielleicht','Alle außer einem','Was ist ein Meeting das keine E-Mail wäre?']},
-    {q:'Dein Kollege bekommt die Beförderung für die du gearbeitet hast.',opts:['Ich freue mich für ihn ehrlich','Ich schlucke es runter und lächle','Ich rede mit HR — haha, nur ein Witz','Ich aktualisiere still meinen LinkedIn']},
-    {q:'Wie beschreibst du deine Work-Life-Balance?',opts:['Ausgewogen und gesund 🌈','Könnte besser sein','Work hat gewonnen, Leben kapituliert','Welches Leben?']},
-    {q:'Es ist Freitagabend. Du denkst an...',opts:['Das Wochenende, endlich!','Die E-Mails die ich noch nicht beantwortet habe','Den Montag. Schon.','Nichts. Ich fühle nichts mehr.']}
-  ];
-  let testAnswers=[],testStep=0;
+// CHEF BEWERTEN
+async function rateChef(){
+  const name=document.getElementById('chefName').value.trim();if(!name)return;
+  const btn=document.getElementById('rateBtn');btn.textContent='Kevin denkt nach...';btn.disabled=true;
+  try{
+    const res=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({message:`Bewerte Chef "${name}" von 1-10 (10=schlimmst). NUR: SCORE: [Zahl]\nBEWERTUNG: [2-3 witzige Saetze. Kein Markdown.]`,history:[],mode:'normal'})});
+    const data=await res.json(),reply=data.reply||'';
+    const sM=reply.match(/SCORE:\s*(\d+)/i),tM=reply.match(/BEWERTUNG:\s*([\s\S]+)/i);
+    const score=sM?Math.min(10,Math.max(1,parseInt(sM[1]))):7;
+    document.getElementById('chefScore').innerHTML=score+'<span>/10</span>';
+    document.getElementById('chefText').textContent=tM?tM[1].trim():reply;
+    document.getElementById('chefResult').style.cssText='display:flex;flex-direction:column;';
+    document.getElementById('chefDesc').style.display='none';
+    document.getElementById('chefName').style.display='none';
+    btn.style.display='none';
+  }catch{document.getElementById('chefText').textContent='Kevin konnte nicht bewerten. Er ist selbst im Meeting.';document.getElementById('chefResult').style.cssText='display:flex;flex-direction:column;';}
+  btn.textContent='🔥 Chef vernichten';btn.disabled=false;
+}
+function resetChef(){document.getElementById('chefResult').style.display='none';document.getElementById('rateBtn').style.cssText='display:flex;';document.getElementById('chefName').style.cssText='display:block;';document.getElementById('chefName').value='';document.getElementById('chefDesc').style.display='block';}
+function shareChef(){const n=document.getElementById('chefName').value||'mein Chef',s=document.getElementById('chefScore').textContent,t=document.getElementById('chefText').textContent;navigator.clipboard.writeText(`Kevin bewertet "${n}": ${s}\n\n"${t}"\n\n😑 kollegenhoelle.vercel.app`);alert('Kopiert!');}
+function shareChefWA(){const n=document.getElementById('chefName').value||'mein Chef',s=document.getElementById('chefScore').textContent,t=document.getElementById('chefText').textContent;waShare(`Kevin bewertet "${n}": ${s}\n\n"${t}"\n\n😑 kollegenhoelle.vercel.app`);}
 
-  function startTest(){
-    testAnswers=[];testStep=0;
-    document.getElementById('testIntro').style.display='block';
-    document.getElementById('testResultBox').style.display='none';
-    renderTestStep();
-    openModal('testModal');
-  }
-  function renderTestStep(){
-    const c=document.getElementById('testSteps');
-    if(testStep>=testQs.length){c.innerHTML='';analyzeTest();return;}
-    const q=testQs[testStep];
-    c.innerHTML=`<div class="test-step visible">
-      <p class="test-progress">Frage ${testStep+1} von ${testQs.length}</p>
-      <p class="test-question">${q.q}</p>
-      <div class="test-options">${q.opts.map((o,i)=>`<button class="test-opt" onclick="answerTest(${i})">${o}</button>`).join('')}</div>
-    </div>`;
-  }
-  function answerTest(i){testAnswers.push(i);testStep++;renderTestStep();}
-  async function analyzeTest(){
-    document.getElementById('testSteps').innerHTML='<p class="starter-loading" style="padding:.5rem 0">Kevin analysiert dein Leid...</p>';
-    const score=Math.round((testAnswers.reduce((s,a)=>s+a,0)/(testQs.length*3))*10);
-    try{
-      const summary=testAnswers.map((a,i)=>testQs[i].opts[a]).join(', ');
-      const res=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({message:`Jemand hat einen Buerostress-Test gemacht. Antworten: ${summary}. Hoffnungslosigkeits-Score: ${score}/10. Schreib eine kurze (2-3 Saetze) vernichtend-witzige Kevin-Analyse. Kein Markdown.`,history:[],mode:'normal'})});
-      const data=await res.json();
-      document.getElementById('testSteps').innerHTML='';
-      document.getElementById('testScore').innerHTML=score+'<span>/10</span>';
-      document.getElementById('testResultText').textContent=data.reply||'Kevin ist sprachlos. Fast.';
-      document.getElementById('testResultBox').style.cssText='display:flex;flex-direction:column;';
-      document.getElementById('testIntro').style.display='none';
-    }catch{
-      document.getElementById('testResultText').textContent='Kevin konnte dich nicht analysieren. Er steckt selbst in einer Sinnkrise.';
-      document.getElementById('testResultBox').style.cssText='display:flex;flex-direction:column;';
-      document.getElementById('testSteps').innerHTML='';
-    }
-  }
-  function shareTest(){
-    const score=document.getElementById('testScore').textContent;
-    const text=document.getElementById('testResultText').textContent;
-    navigator.clipboard.writeText(`Mein Büro-Hoffnungslosigkeits-Score: ${score}\n\nKevin sagt: "${text}"\n\n😑 kollegenhoelle.vercel.app`);
-    alert('Kopiert! Teile es mit deinen leidenden Kollegen.');
-  }
+// KOLLEGEN-TINDER
+async function generateTinder(){
+  const name=document.getElementById('tinderName').value.trim();
+  const job=document.getElementById('tinderJob').value.trim();
+  if(!name)return;
+  const btn=document.getElementById('tinderBtn');btn.textContent='Kevin erstellt Profil...';btn.disabled=true;
+  try{
+    const res=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({message:`Erstelle ein vernichtendes Tinder-Profil fuer Kollege "${name}"${job?' ('+job+')':''}. NUR dieses Format:\nALTER: [Zahl zwischen 28-55]\nBIO: [2-3 passive-aggressive, witzige Saetze als Tinder-Bio]\nINTERESSEN: [4 komma-getrennte absurde Interessen]`,history:[],mode:'normal'})});
+    const data=await res.json(),reply=data.reply||'';
+    const ageM=reply.match(/ALTER:\s*(\d+)/i),bioM=reply.match(/BIO:\s*([\s\S]+?)(?=INTERESSEN:|$)/i),intM=reply.match(/INTERESSEN:\s*([\s\S]+)/i);
+    document.getElementById('tinderAvatar').textContent=name.charAt(0).toUpperCase();
+    document.getElementById('tinderCardName').textContent=name+', '+(ageM?ageM[1]:'42');
+    document.getElementById('tinderCardAge').textContent=job||'Kollege';
+    document.getElementById('tinderBio').textContent=bioM?bioM[1].trim():'Kevin hat die Bio verweigert.';
+    const tags=(intM?intM[1].trim():'Excel, Meetings, Kaffee, Beschwerden').split(',').map(t=>t.trim()).filter(Boolean);
+    document.getElementById('tinderTags').innerHTML=tags.map(t=>`<span class="tinder-tag">${t}</span>`).join('');
+    document.getElementById('tinderCard').style.cssText='display:flex;flex-direction:column;';
+    document.getElementById('tinderDesc').style.display='none';
+    document.getElementById('tinderName').style.display='none';
+    document.getElementById('tinderJob').style.display='none';
+    btn.style.display='none';
+  }catch{alert('Tinder-Profil fehlgeschlagen. Kevin streikt.');}
+  btn.textContent='💘 Profil erstellen';btn.disabled=false;
+}
+function swipeNope(){document.getElementById('tinderAvatar').style.background='var(--roast)';setTimeout(()=>resetTinder(),800);}
+function swipeLike(){document.getElementById('tinderAvatar').style.background='#25D366';setTimeout(()=>resetTinder(),800);}
+function resetTinder(){document.getElementById('tinderCard').style.display='none';document.getElementById('tinderBtn').style.cssText='display:flex;';document.getElementById('tinderName').style.cssText='display:block;';document.getElementById('tinderJob').style.cssText='display:block;';document.getElementById('tinderName').value='';document.getElementById('tinderJob').value='';document.getElementById('tinderDesc').style.display='block';document.getElementById('tinderAvatar').style.background='var(--roast)';}
+function shareTinder(){const n=document.getElementById('tinderCardName').textContent,b=document.getElementById('tinderBio').textContent;navigator.clipboard.writeText(`Kollegen-Tinder: ${n}\n\n"${b}"\n\n😑 kollegenhoelle.vercel.app`);alert('Kopiert!');}
+function shareTinderWA(){const n=document.getElementById('tinderCardName').textContent,b=document.getElementById('tinderBio').textContent;waShare(`Kollegen-Tinder: ${n}\n\n"${b}"\n\n😑 kollegenhoelle.vercel.app`);}
+
+// KÜNDIGUNG
+async function generateKuendigung(){
+  const firma=document.getElementById('kuendigFirma').value.trim();
+  const grund=document.getElementById('kuendigGrund').value.trim();
+  if(!firma)return;
+  const btn=document.getElementById('kuendigBtn');btn.textContent='Kevin schreibt...';btn.disabled=true;
+  try{
+    const res=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({message:`Schreib eine kurze dramatisch-passive Kuendigung fuer die Firma "${firma}"${grund?' wegen: '+grund:''}. Kevin-Stil: passiv-aggressiv, resigniert, mit unterschwelligem Sarkasmus. Formeller Brief, aber mit Kevin-Energie. Kein Markdown. Ca. 5-7 Saetze.`,history:[],mode:'normal'})});
+    const data=await res.json();
+    document.getElementById('kuendigText').textContent=data.reply||'Kevin verweigerte die Kündigung. Er bleibt aus Trotz.';
+    document.getElementById('kuendigResult').style.cssText='display:flex;flex-direction:column;';
+    document.getElementById('kuendigDesc').style.display='none';
+    document.getElementById('kuendigFirma').style.display='none';
+    document.getElementById('kuendigGrund').style.display='none';
+    btn.style.display='none';
+  }catch{alert('Kündigung fehlgeschlagen. Kevin hat aufgehört zu tippen.');}
+  btn.textContent='📝 Kündigung schreiben';btn.disabled=false;
+}
+function resetKuendigung(){document.getElementById('kuendigResult').style.display='none';document.getElementById('kuendigBtn').style.cssText='display:flex;';['kuendigFirma','kuendigGrund'].forEach(id=>{document.getElementById(id).style.cssText='display:block;';document.getElementById(id).value='';});document.getElementById('kuendigDesc').style.display='block';}
+function shareKuendigung(){navigator.clipboard.writeText(document.getElementById('kuendigText').textContent+'\n\n😑 kollegenhoelle.vercel.app');alert('Kopiert! Jetzt noch abschicken.');}
+function shareKuendigungWA(){waShare(document.getElementById('kuendigText').textContent+'\n\n😑 kollegenhoelle.vercel.app');}
+
+// GEHALT
+async function rateGehalt(){
+  const betrag=document.getElementById('gehaltBetrag').value.trim();
+  const job=document.getElementById('gehaltJob').value.trim();
+  if(!betrag)return;
+  const btn=document.getElementById('gehaltBtn');btn.textContent='Kevin rechnet...';btn.disabled=true;
+  try{
+    const res=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({message:`Bewerte Gehalt "${betrag}"${job?' fuer Job: '+job:''} von 1-10 (10=top bezahlt). NUR: SCORE: [Zahl]\nBEWERTUNG: [2-3 passive-aggressive Saetze wie schlecht bezahlt die Person ist. Kein Markdown.]`,history:[],mode:'normal'})});
+    const data=await res.json(),reply=data.reply||'';
+    const sM=reply.match(/SCORE:\s*(\d+)/i),tM=reply.match(/BEWERTUNG:\s*([\s\S]+)/i);
+    const score=sM?Math.min(10,Math.max(1,parseInt(sM[1]))):3;
+    document.getElementById('gehaltScore').innerHTML=score+'<span>/10</span>';
+    document.getElementById('gehaltText').textContent=tM?tM[1].trim():reply;
+    document.getElementById('gehaltResult').style.cssText='display:flex;flex-direction:column;';
+    document.getElementById('gehaltDesc').style.display='none';
+    document.getElementById('gehaltBetrag').style.display='none';
+    document.getElementById('gehaltJob').style.display='none';
+    btn.style.display='none';
+  }catch{alert('Gehaltsbewertung fehlgeschlagen.');}
+  btn.textContent='💸 Gehalt bewerten';btn.disabled=false;
+}
+function resetGehalt(){document.getElementById('gehaltResult').style.display='none';document.getElementById('gehaltBtn').style.cssText='display:flex;';['gehaltBetrag','gehaltJob'].forEach(id=>{document.getElementById(id).style.cssText='display:block;';document.getElementById(id).value='';});document.getElementById('gehaltDesc').style.display='block';}
+function shareGehalt(){const s=document.getElementById('gehaltScore').textContent,t=document.getElementById('gehaltText').textContent;navigator.clipboard.writeText(`Kevin bewertet mein Gehalt: ${s} Angemessenheit\n\n"${t}"\n\n😑 kollegenhoelle.vercel.app`);alert('Kopiert!');}
+function shareGehaltWA(){const s=document.getElementById('gehaltScore').textContent,t=document.getElementById('gehaltText').textContent;waShare(`Kevin bewertet mein Gehalt: ${s} Angemessenheit\n\n"${t}"\n\n😑 kollegenhoelle.vercel.app`);}
+
+// PERSÖNLICHKEITSTEST
+const testQs=[
+  {q:'Dein Chef schickt um 17:58 Uhr eine E-Mail mit „kurze Frage". Was machst du?',opts:['Sofort antworten, ich bin Teamplayer 😇','Lesen, aber erst morgen antworten','Ich sehe sie. Ich lasse sie ungelesen.','Ich kündige innerlich zum 47. Mal']},
+  {q:'Wie viele Meetings hättest du diese Woche auch als E-Mail verschicken können?',opts:['Keines, ich liebe Meetings 🤡','1-2 vielleicht','Alle außer einem','Was ist ein Meeting das keine E-Mail wäre?']},
+  {q:'Dein Kollege bekommt die Beförderung für die du gearbeitet hast.',opts:['Ich freue mich für ihn','Ich schlucke es runter','Ich rede mit HR — nur ein Witz','Ich aktualisiere still meinen LinkedIn']},
+  {q:'Wie beschreibst du deine Work-Life-Balance?',opts:['Ausgewogen 🌈','Könnte besser sein','Work hat gewonnen','Welches Leben?']},
+  {q:'Es ist Freitagabend. Du denkst an...',opts:['Das Wochenende!','Die unbeantworteten E-Mails','Den Montag. Schon.','Nichts. Ich fühle nichts mehr.']}
+];
+let testAnswers=[],testStep=0;
+function startTest(){testAnswers=[];testStep=0;document.getElementById('testIntro').style.display='block';document.getElementById('testResultBox').style.display='none';renderTestStep();openModal('testModal');}
+function renderTestStep(){
+  const c=document.getElementById('testSteps');
+  if(testStep>=testQs.length){c.innerHTML='';analyzeTest();return;}
+  const q=testQs[testStep];
+  c.innerHTML=`<div style="display:flex;flex-direction:column;gap:1rem;">
+    <p class="test-progress">Frage ${testStep+1} von ${testQs.length}</p>
+    <p class="test-question">${q.q}</p>
+    <div class="test-options">${q.opts.map((o,i)=>`<button class="test-opt" onclick="answerTest(${i})">${o}</button>`).join('')}</div>
+  </div>`;
+}
+function answerTest(i){testAnswers.push(i);testStep++;renderTestStep();}
+async function analyzeTest(){
+  document.getElementById('testSteps').innerHTML='<p class="starter-loading" style="padding:.5rem 0">Kevin analysiert dein Leid...</p>';
+  const score=Math.round((testAnswers.reduce((s,a)=>s+a,0)/(testQs.length*3))*10);
+  try{
+    const summary=testAnswers.map((a,i)=>testQs[i].opts[a]).join(', ');
+    const res=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({message:`Buerostress-Test. Antworten: ${summary}. Score: ${score}/10. Schreib 2-3 Saetze vernichtend-witzige Kevin-Analyse. Kein Markdown.`,history:[],mode:'normal'})});
+    const data=await res.json();
+    document.getElementById('testSteps').innerHTML='';
+    document.getElementById('testScore').innerHTML=score+'<span>/10</span>';
+    document.getElementById('testResultText').textContent=data.reply||'Kevin ist sprachlos. Fast.';
+    document.getElementById('testResultBox').style.cssText='display:flex;flex-direction:column;';
+    document.getElementById('testIntro').style.display='none';
+  }catch{document.getElementById('testResultText').textContent='Kevin steckt selbst in einer Sinnkrise.';document.getElementById('testResultBox').style.cssText='display:flex;flex-direction:column;';document.getElementById('testSteps').innerHTML='';}
+}
+function shareTest(){const s=document.getElementById('testScore').textContent,t=document.getElementById('testResultText').textContent;navigator.clipboard.writeText(`Mein Büro-Hoffnungslosigkeits-Score: ${s}\n\nKevin: "${t}"\n\n😑 kollegenhoelle.vercel.app`);alert('Kopiert!');}
+function shareTestWA(){const s=document.getElementById('testScore').textContent,t=document.getElementById('testResultText').textContent;waShare(`Mein Büro-Hoffnungslosigkeits-Score: ${s}\n\nKevin: "${t}"\n\n😑 kollegenhoelle.vercel.app`);}
 </script>
 </body>
 </html>
