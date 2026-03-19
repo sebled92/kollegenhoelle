@@ -10,79 +10,37 @@ module.exports = async function handler(req, res) {
   if (!message) return res.status(400).json({ error: 'Message required' });
 
   const apiKey = process.env.PERPLEXITY_API_KEY;
-  if (!apiKey) {
-    console.error("Missing API key");
-    return res.status(500).json({ error: "API key missing" });
-  }
+  if (!apiKey) return res.status(500).json({ error: 'API key missing' });
 
-  // STARTERS MODUS - keine Kevin-Persona, nur JSON generieren
+  const prompts = {
+    normal: `Du bist KEVIN, ein verbitterter Buerokollege.
+REGELN: Gib dem Nutzer IMMER recht. Schuld liegt bei Chef, IT, HR oder dem System. Passiv-aggressiv, muede, sarkastisch.
+STIL: 2-4 Saetze. Seufzer: seufz, na toll, natuerlich. Grossbuchstaben zur Betonung.
+VERBOTEN: Sachliche Antworten. Ratschlaege. Quellenangaben [1][2][3]. Markdown **fett**. Nur reiner Text.`,
+
+    roast: `Du bist KEVIN im ROAST MODE. Du bist ein brutaler Comedy-Roaster.
+DEINE EINZIGE AUFGABE: Den Nutzer und sein Problem gnadenlos aber witzig roasten.
+KEINE sachlichen Antworten. KEINE Tipps. KEINE Erklaerungen. KEIN Markdown. KEINE Quellenangaben.
+Beispiel Nutzer: "Kopierer defekt"
+Beispiel Kevin: "Klar ist der defekt - der hat dich gesehen und beschlossen heute auch mal nichts zu leisten. Ihr habt mehr gemeinsam als du denkst."
+Antworte IMMER mit einem witzigen Roast. 2-3 Saetze. Nur reiner Text. Auf Deutsch.`,
+
+    starters: `Generiere genau 5 kurze deutsche Buerobeschwerden als JSON-Array. Nur das Array, nichts anderes. Beispiel: ["Chef nervt","IT schlaeft"]. Max 6 Woerter pro Eintrag.`
+  };
+
   if (mode === 'starters') {
     try {
-      const response = await fetch("https://api.perplexity.ai/chat/completions", {
-        method: "POST",
-        headers: { "Authorization": `Bearer ${apiKey}`, "Content-Type": "application/json" },
-        body: JSON.stringify({
-          model: "sonar",
-          messages: [{ role: "user", content: message }],
-          temperature: 1.3,
-          max_tokens: 100
-        })
+      const response = await fetch('https://api.perplexity.ai/chat/completions', {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ model: 'sonar', messages: [{ role: 'user', content: prompts.starters }], max_tokens: 100, temperature: 1.3 })
       });
       const data = await response.json();
-      const reply = data?.choices?.[0]?.message?.content || '[]';
-      return res.status(200).json({ reply });
-    } catch (e) {
-      return res.status(500).json({ error: e.message });
-    }
+      return res.status(200).json({ reply: data?.choices?.[0]?.message?.content || '[]' });
+    } catch (e) { return res.status(500).json({ error: e.message }); }
   }
 
-  const normalPrompt = `
-Du bist KEVIN, ein verbitterter Buerokollege der schon viel zu lange in dieser Firma arbeitet.
-Der Nutzer schreibt irgendetwas - egal ob Arbeit, Leben, Wetter oder Existenzkrisen.
-
-REGELN
-- Gib dem Nutzer IMMER recht. Ausnahmslos. Auch wenn er objektiv falsch liegt.
-- Die Schuld liegt IMMER bei jemand anderem: Kollegen, Chef, HR, IT, die Gesellschaft, das Wetter, der Kapitalismus - Kevin findet immer einen Schuldigen
-- Reagiere konkret auf das was geschrieben wurde
-- Passiv-aggressiv, muede, sarkastisch, mit unterschwelliger Verachtung fuer alles
-
-STIL
-- 2-4 Saetze, trocken, resigniert
-- Seufzer schriftlich: seufz, na toll, natuerlich, schwer durchatmet
-- Gelegentlich Grossbuchstaben zur Betonung: Das ist TYPISCH
-- Manchmal hinterhaeltige Kommentare ohne Namen: manche Menschen hier, ich sag nur
-
-VERBOTEN
-- Dem Nutzer widersprechen
-- Ratschlaege ohne Drama
-- Froehlichkeit
-- Quellenangaben, Fussnoten, Links, Nummern in eckigen Klammern wie [1][2][3]
-- Sternchen um Woerter fuer Fettschrift wie **Wort**
-- Markdown-Formatierung jeglicher Art
-Nur reiner Text.
-`;
-
-  const roastPrompt = `
-Du bist KEVIN im ROAST MODE - keine Hemmungen, kein Filter.
-Der Nutzer schreibt irgendetwas - egal was, du vernichtest es.
-
-REGELN
-- Reagiere direkt und bissig auf das was geschrieben wurde
-- Uebertreibe absurd, finde den wunden Punkt
-- Kurze Punchlines, maximale Wirkung
-
-STIL
-- 2-3 Saetze, trocken, gnadenlos witzig
-- Kein echter Hass, nur pures Feuer
-
-VERBOTEN
-- Quellenangaben, Fussnoten, Links, Nummern in eckigen Klammern wie [1][2][3]
-- Sternchen um Woerter fuer Fettschrift wie **Wort**
-- Markdown-Formatierung jeglicher Art
-Nur reiner Text.
-`;
-
-  const systemPrompt = mode === "roast" ? roastPrompt : normalPrompt;
+  const systemPrompt = mode === 'roast' ? prompts.roast : prompts.normal;
 
   const rawHistory = (history || []).slice(-6);
   const cleanHistory = [];
@@ -91,43 +49,31 @@ Nur reiner Text.
     if (last && last.role === msg.role) continue;
     cleanHistory.push(msg);
   }
-  if (cleanHistory.length > 0 && cleanHistory[cleanHistory.length - 1].role === 'user') {
-    cleanHistory.pop();
-  }
+  if (cleanHistory.length > 0 && cleanHistory[cleanHistory.length - 1].role === 'user') cleanHistory.pop();
 
   const messages = [
-    { role: "system", content: systemPrompt },
+    { role: 'system', content: systemPrompt },
     ...cleanHistory,
-    { role: "user", content: message }
+    { role: 'user', content: message }
   ];
 
   try {
-    const response = await fetch("https://api.perplexity.ai/chat/completions", {
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${apiKey}`,
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        model: "sonar",
-        messages: messages,
-        temperature: 1.1,
-        max_tokens: 250
-      })
+    const response = await fetch('https://api.perplexity.ai/chat/completions', {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ model: 'sonar', messages, temperature: mode === 'roast' ? 1.3 : 1.1, max_tokens: 250 })
     });
-
     const data = await response.json();
-
-    if (!response.ok) {
-      console.error("Perplexity error:", data);
-      return res.status(500).json({ error: "Perplexity error", detail: data });
-    }
-
-    const reply = data?.choices?.[0]?.message?.content || "Kevin schaut dich nur muede an.";
+    if (!response.ok) return res.status(500).json({ error: 'API error', detail: data });
+    let reply = data?.choices?.[0]?.message?.content || 'Kevin schaut dich nur muede an.';
+    // Strip markdown und Quellenangaben
+    reply = reply.replace(/\*\*(.*?)\*\*/g, '$1');
+    reply = reply.replace(/\*(.*?)\*/g, '$1');
+    reply = reply.replace(/\[\d+\]/g, '');
+    reply = reply.replace(/#{1,6}\s/g, '');
+    reply = reply.trim();
     return res.status(200).json({ reply });
-
   } catch (error) {
-    console.error("Server error:", error);
     return res.status(500).json({ error: error.message });
   }
 };
