@@ -420,6 +420,79 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);display:flex;
 /* KÜNDIGUNG */
 .kuend{font-family:var(--mono);font-size:12px;color:var(--ink2);line-height:1.9;background:var(--surface2);padding:1.1rem;border-radius:var(--r);border:1px solid var(--border);white-space:pre-wrap;max-height:200px;overflow-y:auto;}
 
+/* META BAR */
+.meta-bar{
+  flex-shrink:0;background:var(--bg);
+  border-bottom:1px solid var(--border);
+  padding:.5rem 1.25rem;
+  display:flex;align-items:center;gap:8px;
+  overflow-x:auto;-webkit-overflow-scrolling:touch;
+}
+.meta-bar::-webkit-scrollbar{display:none;}
+.streak-pill,.name-pill,.verdict-pill{
+  font-family:var(--mono);font-size:11px;font-weight:500;
+  padding:5px 12px;border-radius:var(--r-full);
+  border:1.5px solid var(--border);background:var(--surface);
+  color:var(--ink2);white-space:nowrap;flex-shrink:0;
+}
+.streak-pill{border-color:#FED7AA;background:#FFF7ED;color:#C2410C;}
+.name-pill{border-color:#BBF7D0;background:#F0FFF4;color:#166534;}
+.verdict-pill{border-color:var(--red-border);background:var(--red-bg);color:var(--red);transition:all .18s;}
+.verdict-pill:hover{background:var(--red);color:#fff;}
+
+/* HALL OF FAME */
+.hof-entry{
+  background:var(--surface2);border-radius:var(--r);
+  padding:.9rem 1rem;border:1px solid var(--border);
+  display:flex;flex-direction:column;gap:.5rem;
+}
+.hof-q{font-family:var(--mono);font-size:11px;color:var(--ink3);font-style:italic;}
+.hof-a{font-size:14px;color:var(--ink2);line-height:1.65;}
+.hof-meta{font-family:var(--mono);font-size:10px;color:var(--ink3);display:flex;align-items:center;justify-content:space-between;}
+.hof-vote{
+  font-family:var(--mono);font-size:11px;
+  padding:3px 10px;border-radius:var(--r-full);
+  border:1px solid var(--border);background:transparent;
+  color:var(--ink3);cursor:pointer;transition:all .15s;
+}
+.hof-vote:hover{border-color:var(--red);color:var(--red);}
+.hof-empty{font-family:var(--mono);font-size:12px;color:var(--ink3);text-align:center;padding:2rem;font-style:italic;}
+
+/* ZERTIFIKAT */
+.cert-card{
+  background:linear-gradient(135deg,var(--hdr) 0%,#1E1E1C 100%);
+  border-radius:var(--r-lg);padding:1.75rem;
+  display:flex;flex-direction:column;gap:.85rem;
+  position:relative;overflow:hidden;
+}
+.cert-card::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at 80% 20%,rgba(217,48,37,.15) 0%,transparent 60%);
+}
+.cert-logo{font-family:var(--disp);font-size:1.3rem;letter-spacing:.06em;color:rgba(255,255,255,.5);}
+.cert-logo span{color:var(--red);}
+.cert-title{font-family:var(--disp);font-size:1.6rem;letter-spacing:.04em;color:#fff;line-height:1.1;}
+.cert-name{font-family:var(--disp);font-size:2.2rem;letter-spacing:.04em;color:var(--yellow);line-height:1;}
+.cert-score{font-family:var(--disp);font-size:3.5rem;color:var(--red);line-height:1;}
+.cert-score span{font-size:1.4rem;color:rgba(255,255,255,.4);}
+.cert-text{font-family:var(--mono);font-size:11px;color:rgba(255,255,255,.5);line-height:1.7;}
+.cert-seal{
+  align-self:flex-end;
+  width:52px;height:52px;border-radius:50%;
+  border:2px solid var(--yellow);
+  display:flex;align-items:center;justify-content:center;
+  font-size:22px;
+}
+
+/* VERDICT */
+.verdict-card{
+  background:var(--hdr);border-radius:var(--r-lg);
+  padding:1.5rem;display:flex;flex-direction:column;gap:.85rem;
+}
+.verdict-label{font-family:var(--mono);font-size:10px;color:rgba(255,255,255,.4);letter-spacing:.1em;text-transform:uppercase;}
+.verdict-text{font-size:16px;color:#fff;line-height:1.7;font-style:italic;}
+.verdict-date{font-family:var(--mono);font-size:10px;color:rgba(255,255,255,.3);}
+
 /* HOROSCOPE */
 .star-signs{display:flex;flex-wrap:wrap;gap:8px;}
 .star-btn{
@@ -489,6 +562,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);display:flex;
   <button class="tb-btn" onclick="show('horoscopSheet')">🔮 Horoskop</button>
   <button class="tb-btn" onclick="show('bsSheet')">💼 Sprech</button>
   <button class="tb-btn" onclick="show('emailSheet')">📨 E-Mail</button>
+  <button class="tb-btn" onclick="show('nameSheet')">👤 Dein Name</button>
+  <button class="tb-btn" onclick="show('hofSheet')">🏆 Hall of Fame</button>
   <button class="tb-btn cash" onclick="show('donateSheet')">☕ Spende</button>
 </div>
 
@@ -500,6 +575,11 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);display:flex;
 <div class="ctr" id="ctr">— Kollegen beschweren sich gerade</div>
 
 <!-- STARTERS -->
+<div class="meta-bar" id="metaBar" style="display:none">
+  <div class="streak-pill" id="streakPill">🔥 <span id="streakNum">1</span> Tag</div>
+  <div class="name-pill" id="namePill" style="display:none">😑 <span id="nameDisplay"></span></div>
+  <div class="verdict-pill" id="verdictPill" style="display:none;cursor:pointer" onclick="show('verdictSheet')">⚖️ Tages-Urteil</div>
+</div>
 <div class="starters" id="starterRow">
   <span style="font-family:var(--mono);font-size:11px;color:var(--ink3);font-style:italic;white-space:nowrap;flex-shrink:0">Kevin denkt nach…</span>
 </div>
@@ -753,6 +833,68 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);display:flex;
   </div>
 </div>
 
+
+<!-- NAME SHEET -->
+<div class="ov" id="nameSheet" onclick="bgX(event,'nameSheet')">
+  <div class="sheet">
+    <div class="handle"></div>
+    <button class="sh-x" onclick="hide('nameSheet')">✕</button>
+    <p class="sh-title">Wie <span class="y">heißt</span><br>du eigentlich?</p>
+    <p class="sh-desc">Kevin ignoriert deinen Namen. Aber er wird ihn trotzdem benutzen — auf seine Art.</p>
+    <input class="sh-in" id="userNameInput" placeholder="Dein Name…" maxlength="30" onkeydown="if(event.key==='Enter')saveName()">
+    <button class="btn dark" onclick="saveName()">😑 Kevin informieren</button>
+    <p class="skip" onclick="hide('nameSheet')">Kevin soll meinen Namen nicht wissen</p>
+  </div>
+</div>
+
+<!-- HALL OF FAME -->
+<div class="ov" id="hofSheet" onclick="bgX(event,'hofSheet')">
+  <div class="sheet">
+    <div class="handle"></div>
+    <button class="sh-x" onclick="hide('hofSheet')">✕</button>
+    <p class="sh-title">Hall of <span class="r">Fame</span></p>
+    <p class="sh-desc">Die besten Kevin-Antworten. Von echten Kollegen gesammelt.</p>
+    <div id="hofList" style="display:flex;flex-direction:column;gap:.75rem;"></div>
+    <button class="btn ghost" id="hofSubmitBtn" onclick="submitToHof()" style="display:none">+ Meine beste Antwort einreichen</button>
+    <p class="skip" onclick="hide('hofSheet')">schließen</p>
+  </div>
+</div>
+
+<!-- TAGES-URTEIL -->
+<div class="ov" id="verdictSheet" onclick="bgX(event,'verdictSheet')">
+  <div class="sheet">
+    <div class="handle"></div>
+    <button class="sh-x" onclick="hide('verdictSheet')">✕</button>
+    <p class="sh-title">Kevin's <span class="r">Urteil</span></p>
+    <div class="verdict-card" id="verdictCard">
+      <p class="verdict-label">Tages-Urteil</p>
+      <p class="verdict-text" id="verdictText">Kevin analysiert noch…</p>
+      <p class="verdict-date" id="verdictDate"></p>
+    </div>
+    <button class="btn yel" onclick="cpVerdict()">↗ Teilen</button>
+    <button class="btn grn" onclick="waVerdict()">💬 WhatsApp</button>
+    <p class="skip" onclick="hide('verdictSheet')">ich akzeptiere Kevins Urteil nicht</p>
+  </div>
+</div>
+
+<!-- ZERTIFIKAT -->
+<div class="ov" id="certSheet" onclick="bgX(event,'certSheet')">
+  <div class="sheet">
+    <div class="handle"></div>
+    <button class="sh-x" onclick="hide('certSheet')">✕</button>
+    <p class="sh-title">Dein <span class="y">Zertifikat</span></p>
+    <div class="cert-card" id="certCard">
+      <div class="cert-logo">Kollegen<span>hölle</span></div>
+      <p class="cert-title">Hiermit bestätigt Kevin offiziell:</p>
+      <p class="cert-name" id="certName">Unbekannte Person</p>
+      <p class="cert-score" id="certScore">—<span>/10</span></p>
+      <p class="cert-text" id="certText">ist offiziell hoffnungslos. Kevin hat gesprochen.</p>
+      <div class="cert-seal">😑</div>
+    </div>
+    <button class="btn dark" onclick="dlCert()">📄 Zertifikat speichern</button>
+    <p class="skip" onclick="hide('certSheet')">ich brauche kein Zertifikat meiner Hoffnungslosigkeit</p>
+  </div>
+</div>
 <script defer src="/_vercel/insights/script.js"></script>
 <script>
 let mode='normal',busy=false,hist=[],lastMe='',lastKv='';
@@ -1057,6 +1199,205 @@ function waEmail() { const t=document.getElementById('emailTxt').textContent; wa
 ${t}
 
 😑 kollegenhoelle.vercel.app`); }
+
+
+// ── STREAK ──
+function getStreak() {
+  const today = new Date().toDateString();
+  const last = localStorage.getItem('kh_last_day');
+  let streak = parseInt(localStorage.getItem('kh_streak') || '1');
+  if (last !== today) {
+    const yesterday = new Date(); yesterday.setDate(yesterday.getDate() - 1);
+    if (last === yesterday.toDateString()) { streak++; }
+    else if (last && last !== today) { streak = 1; }
+    localStorage.setItem('kh_streak', streak);
+    localStorage.setItem('kh_last_day', today);
+  }
+  return streak;
+}
+function initStreak() {
+  const s = getStreak();
+  document.getElementById('streakNum').textContent = s;
+  document.getElementById('metaBar').style.display = 'flex';
+  const pill = document.getElementById('streakPill');
+  if (s >= 7) pill.style.cssText += 'background:#FEF3C7;border-color:#FCD34D;color:#92400E;';
+  if (s >= 30) pill.style.cssText += 'background:#EDE9FE;border-color:#C4B5FD;color:#5B21B6;';
+}
+initStreak();
+
+// ── NAME ──
+let userName = localStorage.getItem('kh_name') || '';
+function initName() {
+  if (userName) {
+    document.getElementById('nameDisplay').textContent = userName;
+    document.getElementById('namePill').style.display = 'block';
+    document.getElementById('userNameInput').value = userName;
+  }
+}
+initName();
+function saveName() {
+  const n = document.getElementById('userNameInput').value.trim();
+  if (!n) return;
+  userName = n;
+  localStorage.setItem('kh_name', n);
+  document.getElementById('nameDisplay').textContent = n;
+  document.getElementById('namePill').style.display = 'block';
+  hide('nameSheet');
+}
+
+// Inject name into system — patch the send function to include name
+const _origSnd = snd;
+
+// ── TAGES-URTEIL ──
+let todayMsgs = JSON.parse(localStorage.getItem('kh_today_msgs') || '[]');
+let verdictGenerated = localStorage.getItem('kh_verdict_date') === new Date().toDateString();
+let verdictText = localStorage.getItem('kh_verdict_text') || '';
+
+function trackMsg(role, text) {
+  if (role === 'kv') {
+    const today = new Date().toDateString();
+    const msgs = JSON.parse(localStorage.getItem('kh_today_msgs') || '[]');
+    msgs.push(text);
+    localStorage.setItem('kh_today_msgs', JSON.stringify(msgs.slice(-10)));
+    if (msgs.length >= 3 && localStorage.getItem('kh_verdict_date') !== today) {
+      generateVerdict(msgs);
+    }
+  }
+}
+
+async function generateVerdict(msgs) {
+  try {
+    const r = await fetch('/api/chat', {method:'POST',headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({message:`Basierend auf diesen heutigen Gespraechen: "${msgs.slice(-5).join(' | ')}" — schreib ein kurzes vernichtendes Kevin-Tages-Urteil ueber diese Person. ${userName?'Ihr Name ist '+userName+'.':''} 1-2 Saetze, passiv-aggressiv, resigniert. Kein Markdown.`, history:[], mode:'normal'})});
+    const d = await r.json();
+    verdictText = d.reply || 'Hoffnungslos. Wie immer.';
+    localStorage.setItem('kh_verdict_text', verdictText);
+    localStorage.setItem('kh_verdict_date', new Date().toDateString());
+    document.getElementById('verdictText').textContent = verdictText;
+    document.getElementById('verdictDate').textContent = new Date().toLocaleDateString('de-DE', {weekday:'long',day:'numeric',month:'long'});
+    document.getElementById('verdictPill').style.display = 'block';
+    verdictGenerated = true;
+  } catch {}
+}
+
+function initVerdict() {
+  if (verdictGenerated && verdictText) {
+    document.getElementById('verdictText').textContent = verdictText;
+    document.getElementById('verdictDate').textContent = new Date().toLocaleDateString('de-DE', {weekday:'long',day:'numeric',month:'long'});
+    document.getElementById('verdictPill').style.display = 'block';
+  }
+}
+initVerdict();
+function cpVerdict() { navigator.clipboard.writeText(`Kevin's Tages-Urteil: "${verdictText}"
+
+😑 kollegenhoelle.vercel.app`); alert('Kopiert!'); }
+function waVerdict() { wa(`Kevin's Tages-Urteil: "${verdictText}"
+
+😑 kollegenhoelle.vercel.app`); }
+
+// ── HALL OF FAME (localStorage-based) ──
+const DEFAULT_HOF = [
+  {q:'René riecht nach Wurst', a:'Natuerlich tut er das. Ich sitze seit drei Jahren neben ihm und habe innerlich bereits gekuendigt. Manche Menschen hier sind eine Geruchsbeleidigung fuer das gesamte Grossraumbuero. Ich sag nur.', votes:42, date:'heute'},
+  {q:'Das Meeting haette eine E-Mail sein koennen', a:'NATUERLICH haette es das. Zwei Stunden meines Lebens die ich nie zurueckbekomme. Wir haben beschlossen was wir haetten in einer Mail entscheiden koennen. Das System ist kaputt. Ich bin kaputt.', votes:38, date:'gestern'},
+  {q:'Chef hat meine Idee geklaut', a:'seufz. Natuerlich hat er das. Das ist SO typisch fuer diese Firma. Manche Menschen da oben nehmen sich alles und geben nichts zurueck. Du hast vollkommen recht — und weisst du was? Ich sag nur.', votes:31, date:'vor 2 Tagen'},
+];
+
+function loadHof() {
+  const stored = JSON.parse(localStorage.getItem('kh_hof') || 'null');
+  return stored || DEFAULT_HOF;
+}
+function saveHof(hof) { localStorage.setItem('kh_hof', JSON.stringify(hof)); }
+
+function renderHof() {
+  const hof = loadHof().sort((a,b) => b.votes - a.votes).slice(0, 8);
+  const el = document.getElementById('hofList');
+  if (hof.length === 0) { el.innerHTML = '<p class="hof-empty">Noch keine Einträge. Schreib Kevin etwas Gutes!</p>'; return; }
+  el.innerHTML = hof.map((e, i) => `
+    <div class="hof-entry">
+      <p class="hof-q">"${e.q}"</p>
+      <p class="hof-a">${e.a}</p>
+      <div class="hof-meta">
+        <span>${e.date}</span>
+        <button class="hof-vote" onclick="voteHof(${i})">❤️ ${e.votes}</button>
+      </div>
+    </div>`).join('');
+  // show submit btn if user has messages
+  if (lastKv) document.getElementById('hofSubmitBtn').style.display = 'flex';
+}
+
+function voteHof(i) {
+  const hof = loadHof();
+  hof.sort((a,b) => b.votes - a.votes)[i].votes++;
+  saveHof(hof); renderHof();
+}
+
+function submitToHof() {
+  if (!lastMe || !lastKv) return;
+  const hof = loadHof();
+  hof.push({ q: lastMe.slice(0, 80), a: lastKv.slice(0, 200), votes: 1, date: 'gerade eben' });
+  saveHof(hof); renderHof();
+  alert('Eingereicht! Kevin würde sich nicht bedanken.');
+}
+
+// Patch show() for hofSheet to auto-render
+const _origShow = show;
+window.show = function(id) {
+  _origShow(id);
+  if (id === 'hofSheet') renderHof();
+};
+
+// ── ZERTIFIKAT ──
+function showCert(name, score, text) {
+  document.getElementById('certName').textContent = name || 'Unbekannte Person';
+  document.getElementById('certScore').innerHTML = score + '<span>/10</span>';
+  document.getElementById('certText').textContent = text || 'ist offiziell hoffnungslos. Kevin hat gesprochen.';
+  show('certSheet');
+}
+async function dlCert() {
+  try {
+    const c = await html2canvas(document.getElementById('certCard'), {backgroundColor:'#141412', scale:2, useCORS:true, logging:false});
+    const a = document.createElement('a'); a.download = 'kevin-zertifikat.png'; a.href = c.toDataURL('image/png'); a.click();
+  } catch { alert('Fehlgeschlagen.'); }
+}
+
+// Auto-show cert after test
+const _origAnalyze = analyzeTest;
+window.analyzeTest = async function() {
+  await _origAnalyze();
+  setTimeout(() => {
+    const score = document.getElementById('testScore')?.textContent || '?';
+    const text = document.getElementById('testTxt')?.textContent || '';
+    const name = userName || 'Unbekannte Person';
+    document.getElementById('certName').textContent = name;
+    document.getElementById('certScore').innerHTML = score.replace('/10','') + '<span>/10</span>';
+    document.getElementById('certText').textContent = text.slice(0, 120);
+    // Add cert button to test result
+    const res = document.getElementById('testRes');
+    if (res && !document.getElementById('certBtn')) {
+      const btn = document.createElement('button');
+      btn.id = 'certBtn'; btn.className = 'btn dark';
+      btn.textContent = '🎓 Zertifikat erstellen';
+      btn.onclick = () => show('certSheet');
+      res.insertBefore(btn, res.lastElementChild);
+    }
+  }, 500);
+};
+
+// ── TRACK MESSAGES FOR VERDICT ──
+const _origAddMsg = addMsg;
+window.addMsg = function(role, text) {
+  _origAddMsg(role, text);
+  trackMsg(role, text);
+};
+
+// ── PERSONALIZED GREETING ──
+function updatePlaceholder() {
+  if (userName) {
+    const inp = document.getElementById('inp');
+    if (inp) inp.placeholder = `Schreib Kevin etwas, ${userName}…`;
+  }
+}
+updatePlaceholder();
 
 </script>
 </body>
