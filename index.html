@@ -420,6 +420,36 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);display:flex;
 /* KÜNDIGUNG */
 .kuend{font-family:var(--mono);font-size:12px;color:var(--ink2);line-height:1.9;background:var(--surface2);padding:1.1rem;border-radius:var(--r);border:1px solid var(--border);white-space:pre-wrap;max-height:200px;overflow-y:auto;}
 
+/* HOROSCOPE */
+.star-signs{display:flex;flex-wrap:wrap;gap:8px;}
+.star-btn{
+  font-family:var(--mono);font-size:12px;
+  padding:8px 14px;border-radius:var(--r);
+  border:1.5px solid var(--border);background:var(--surface);
+  color:var(--ink2);cursor:pointer;transition:all .18s;
+  display:flex;align-items:center;gap:5px;
+}
+.star-btn:hover,.star-btn.picked{border-color:var(--ink);background:var(--ink);color:#fff;}
+
+/* BABBEL / SPRECH */
+.bs-in{
+  background:var(--surface2);border:1.5px solid var(--border);border-radius:var(--r);
+  color:var(--ink);font-family:var(--font);font-size:14px;
+  padding:11px 14px;outline:none;width:100%;resize:none;
+  min-height:90px;line-height:1.6;transition:border-color .2s;
+}
+.bs-in:focus{border-color:var(--ink);background:var(--surface);}
+.translation-box{
+  background:var(--surface2);border-radius:var(--r);
+  padding:1.1rem;font-size:14px;color:var(--ink2);
+  line-height:1.8;border:1px solid var(--border);
+  font-style:italic;
+}
+.translation-label{
+  font-family:var(--mono);font-size:10px;color:var(--ink3);
+  letter-spacing:.1em;text-transform:uppercase;margin-bottom:.5rem;
+}
+
 @media(min-width:640px){
   .ov{align-items:center;padding:1.5rem;}
   .sheet{border-radius:24px;max-height:85vh;animation:scaleIn .25s cubic-bezier(.32,.72,0,1);}
@@ -456,6 +486,9 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);display:flex;
   <button class="tb-btn" onclick="show('kuendigSheet')">📝 Kündigung</button>
   <button class="tb-btn" onclick="show('gehaltSheet')">💸 Gehalt</button>
   <button class="tb-btn" onclick="doTest()">🧠 Test</button>
+  <button class="tb-btn" onclick="show('horoscopSheet')">🔮 Horoskop</button>
+  <button class="tb-btn" onclick="show('bsSheet')">💼 Sprech</button>
+  <button class="tb-btn" onclick="show('emailSheet')">📨 E-Mail</button>
   <button class="tb-btn cash" onclick="show('donateSheet')">☕ Spende</button>
 </div>
 
@@ -645,6 +678,78 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);display:flex;
     <p class="sh-quote">„Natürlich muss ich das selbst finanzieren. Wenigstens funktioniert hier mal etwas — anders als die IT. Aber gut. Was soll's." — Kevin, resigniert</p>
     <a class="btn org" href="https://paypal.me/sebastianledwinka" target="_blank" rel="noopener">☕ Kevin einen Kaffee spendieren</a>
     <p class="skip" onclick="hide('donateSheet')">nein danke — ich gebe nichts zurück</p>
+  </div>
+</div>
+
+
+<!-- HOROSKOP -->
+<div class="ov" id="horoscopSheet" onclick="bgX(event,'horoscopSheet')">
+  <div class="sheet">
+    <div class="handle"></div>
+    <button class="sh-x" onclick="hide('horoscopSheet')">✕</button>
+    <p class="sh-title">Kevin <span class="r">prophezeit</span><br>deinen Tag.</p>
+    <p class="sh-desc" id="horoDesc">Wähle dein Sternzeichen. Kevin weiß bereits was heute schiefgeht.</p>
+    <div class="star-signs" id="starSigns">
+      <button class="star-btn" onclick="doHoro('Widder',this)">♈ Widder</button>
+      <button class="star-btn" onclick="doHoro('Stier',this)">♉ Stier</button>
+      <button class="star-btn" onclick="doHoro('Zwillinge',this)">♊ Zwillinge</button>
+      <button class="star-btn" onclick="doHoro('Krebs',this)">♋ Krebs</button>
+      <button class="star-btn" onclick="doHoro('Löwe',this)">♌ Löwe</button>
+      <button class="star-btn" onclick="doHoro('Jungfrau',this)">♍ Jungfrau</button>
+      <button class="star-btn" onclick="doHoro('Waage',this)">♎ Waage</button>
+      <button class="star-btn" onclick="doHoro('Skorpion',this)">♏ Skorpion</button>
+      <button class="star-btn" onclick="doHoro('Schütze',this)">♐ Schütze</button>
+      <button class="star-btn" onclick="doHoro('Steinbock',this)">♑ Steinbock</button>
+      <button class="star-btn" onclick="doHoro('Wassermann',this)">♒ Wassermann</button>
+      <button class="star-btn" onclick="doHoro('Fische',this)">♓ Fische</button>
+    </div>
+    <div id="horoRes" style="display:none;flex-direction:column;gap:1rem;">
+      <div class="res-card" id="horoTxt" style="font-style:italic;font-size:14px;line-height:1.85;"></div>
+      <button class="btn yel" onclick="cpHoro()">↗ Teilen</button>
+      <button class="btn grn" onclick="waHoro()">💬 WhatsApp</button>
+      <button class="btn ghost" onclick="resetHoro()">↩ Anderes Zeichen</button>
+    </div>
+    <p class="skip" onclick="hide('horoscopSheet')">ich glaube nicht an Horoskope (lüge)</p>
+  </div>
+</div>
+
+<!-- UNTERNEHMENSSPRECH -->
+<div class="ov" id="bsSheet" onclick="bgX(event,'bsSheet')">
+  <div class="sheet">
+    <div class="handle"></div>
+    <button class="sh-x" onclick="hide('bsSheet')">✕</button>
+    <p class="sh-title">Kevin <span class="y">übersetzt</span><br>Unternehmenssprech.</p>
+    <p class="sh-desc" id="bsDesc">Firmen-Bullshit eingeben. Kevin übersetzt in ehrliches Deutsch.</p>
+    <textarea class="bs-in" id="bsInput" placeholder="z.B. Wir investieren in deine Entwicklung. Wir sind eine agile, dynamische Familie…" maxlength="300" oninput="rsz(this)"></textarea>
+    <button class="btn dark" id="bsBtn" onclick="doBS()">💼 Übersetzen</button>
+    <div id="bsRes" style="display:none;flex-direction:column;gap:.85rem;">
+      <p class="translation-label">Kevin übersetzt:</p>
+      <div class="translation-box" id="bsTxt"></div>
+      <button class="btn yel" onclick="cpBS()">↗ Teilen</button>
+      <button class="btn grn" onclick="waBS()">💬 WhatsApp</button>
+      <button class="btn ghost" onclick="resetBS()">↩ Neuer Text</button>
+    </div>
+    <p class="skip" onclick="hide('bsSheet')">mein Chef meint das alles ernst</p>
+  </div>
+</div>
+
+<!-- E-MAIL UMSCHREIBER -->
+<div class="ov" id="emailSheet" onclick="bgX(event,'emailSheet')">
+  <div class="sheet">
+    <div class="handle"></div>
+    <button class="sh-x" onclick="hide('emailSheet')">✕</button>
+    <p class="sh-title">Kevin <span class="r">macht</span><br>deine E-Mail.</p>
+    <p class="sh-desc" id="emailDesc">Langweilige E-Mail oder Nachricht eingeben. Kevin schreibt sie passiv-aggressiv um.</p>
+    <textarea class="bs-in" id="emailInput" placeholder="z.B. Hallo zusammen, zur Erinnerung: das Meeting findet heute statt…" maxlength="400" oninput="rsz(this)"></textarea>
+    <button class="btn red" id="emailBtn" onclick="doEmail()">📨 E-Mail Kevin-ifizieren</button>
+    <div id="emailRes" style="display:none;flex-direction:column;gap:.85rem;">
+      <p class="translation-label">Kevin-Version:</p>
+      <div class="translation-box" id="emailTxt" style="font-style:normal;"></div>
+      <button class="btn yel" onclick="cpEmail()">↗ Teilen</button>
+      <button class="btn grn" onclick="waEmail()">💬 WhatsApp</button>
+      <button class="btn ghost" onclick="resetEmail()">↩ Neue E-Mail</button>
+    </div>
+    <p class="skip" onclick="hide('emailSheet')">meine E-Mails sind schon passiv-aggressiv genug</p>
   </div>
 </div>
 
@@ -853,6 +958,106 @@ async function analyzeTest(){
 }
 function cpTest(){const s=document.getElementById('testScore').textContent,t=document.getElementById('testTxt').textContent;navigator.clipboard.writeText(`Mein Hoffnungslosigkeits-Score: ${s}\n\nKevin: "${t}"\n\n😑 kollegenhoelle.vercel.app`);alert('Kopiert!');}
 function waTest(){const s=document.getElementById('testScore').textContent,t=document.getElementById('testTxt').textContent;wa(`Mein Hoffnungslosigkeits-Score: ${s}\n\nKevin: "${t}"\n\n😑 kollegenhoelle.vercel.app`);}
+
+// ── HOROSKOP ──
+let curSign = '';
+async function doHoro(sign, btn) {
+  document.querySelectorAll('.star-btn').forEach(b => b.classList.remove('picked'));
+  btn.classList.add('picked');
+  curSign = sign;
+  btn.textContent = '⏳ Kevin prophezeit…';
+  btn.disabled = true;
+  try {
+    const r = await fetch('/api/chat', {method:'POST',headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({message:`Schreib ein kurzes vernichtendes Buero-Horoskop fuer ${sign} fuer heute. Kevin-Stil: passiv-aggressiv, resigniert, prophezeit hauptsaechlich Schlechtes. 3-4 Saetze. Kein Markdown. Auf Deutsch.`, history:[], mode:'normal'})});
+    const d = await r.json();
+    document.getElementById('horoTxt').textContent = d.reply || 'Kevin verweigert die Prophezeiung.';
+    document.getElementById('horoRes').style.cssText = 'display:flex;flex-direction:column;';
+    document.getElementById('horoDesc').style.display = 'none';
+    document.getElementById('starSigns').style.display = 'none';
+  } catch { document.getElementById('horoTxt').textContent = 'Kevin konnte nicht in die Zukunft schauen. Die Glaskugel ist bei der IT zur Reparatur.'; document.getElementById('horoRes').style.cssText = 'display:flex;flex-direction:column;'; }
+  document.querySelectorAll('.star-btn').forEach(b => { b.disabled = false; });
+  const signs = {'Widder':'♈','Stier':'♉','Zwillinge':'♊','Krebs':'♋','Löwe':'♌','Jungfrau':'♍','Waage':'♎','Skorpion':'♏','Schütze':'♐','Steinbock':'♑','Wassermann':'♒','Fische':'♓'};
+  btn.textContent = (signs[sign]||'') + ' ' + sign;
+}
+function resetHoro() {
+  document.getElementById('horoRes').style.display = 'none';
+  document.getElementById('horoDesc').style.display = 'block';
+  document.getElementById('starSigns').style.cssText = 'display:flex;';
+  document.querySelectorAll('.star-btn').forEach(b => b.classList.remove('picked'));
+  curSign = '';
+}
+function cpHoro() { const t = document.getElementById('horoTxt').textContent; navigator.clipboard.writeText(`Kevin-Horoskop ${curSign}:
+
+"${t}"
+
+😑 kollegenhoelle.vercel.app`); alert('Kopiert!'); }
+function waHoro() { const t = document.getElementById('horoTxt').textContent; wa(`Kevin-Horoskop ${curSign}:
+
+"${t}"
+
+😑 kollegenhoelle.vercel.app`); }
+
+// ── UNTERNEHMENSSPRECH ──
+async function doBS() {
+  const txt = document.getElementById('bsInput').value.trim(); if (!txt) return;
+  const btn = document.getElementById('bsBtn'); btn.textContent = 'Kevin übersetzt…'; btn.disabled = true;
+  try {
+    const r = await fetch('/api/chat', {method:'POST',headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({message:`Uebersetze diesen Unternehmenssprech ins ehrliche Deutsch. Fuer jeden Satz oder Phrase eine kurze, passiv-aggressive Kevin-Uebersetzung. Kein Markdown. Auf Deutsch.
+
+Text: "${txt}"`, history:[], mode:'normal'})});
+    const d = await r.json();
+    document.getElementById('bsTxt').textContent = d.reply || 'Kevin verweigert die Übersetzung.';
+    document.getElementById('bsRes').style.cssText = 'display:flex;flex-direction:column;';
+    document.getElementById('bsDesc').style.display = 'none';
+    document.getElementById('bsInput').style.display = 'none';
+    btn.style.display = 'none';
+  } catch { alert('Fehlgeschlagen.'); }
+  btn.textContent = '💼 Übersetzen'; btn.disabled = false;
+}
+function resetBS() { document.getElementById('bsRes').style.display='none'; document.getElementById('bsBtn').style.cssText='display:flex;'; document.getElementById('bsInput').style.cssText='display:block;'; document.getElementById('bsInput').value=''; document.getElementById('bsDesc').style.display='block'; }
+function cpBS() { const t=document.getElementById('bsTxt').textContent; navigator.clipboard.writeText(`Kevin übersetzt Unternehmenssprech:
+
+"${t}"
+
+😑 kollegenhoelle.vercel.app`); alert('Kopiert!'); }
+function waBS() { const t=document.getElementById('bsTxt').textContent; wa(`Kevin übersetzt Unternehmenssprech:
+
+"${t}"
+
+😑 kollegenhoelle.vercel.app`); }
+
+// ── E-MAIL UMSCHREIBER ──
+async function doEmail() {
+  const txt = document.getElementById('emailInput').value.trim(); if (!txt) return;
+  const btn = document.getElementById('emailBtn'); btn.textContent = 'Kevin schreibt…'; btn.disabled = true;
+  try {
+    const r = await fetch('/api/chat', {method:'POST',headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({message:`Schreib diese E-Mail im Kevin-Stil um: passiv-aggressiv, unterschwellig sarkastisch, mit kaum verhohlener Muedigkeit — aber trotzdem noch bueromaessig hoeflich. Kein Markdown. Auf Deutsch.
+
+Original: "${txt}"`, history:[], mode:'normal'})});
+    const d = await r.json();
+    document.getElementById('emailTxt').textContent = d.reply || 'Kevin verweigerte das Schreiben.';
+    document.getElementById('emailRes').style.cssText = 'display:flex;flex-direction:column;';
+    document.getElementById('emailDesc').style.display = 'none';
+    document.getElementById('emailInput').style.display = 'none';
+    btn.style.display = 'none';
+  } catch { alert('Fehlgeschlagen.'); }
+  btn.textContent = '📨 E-Mail Kevin-ifizieren'; btn.disabled = false;
+}
+function resetEmail() { document.getElementById('emailRes').style.display='none'; document.getElementById('emailBtn').style.cssText='display:flex;'; document.getElementById('emailInput').style.cssText='display:block;'; document.getElementById('emailInput').value=''; document.getElementById('emailDesc').style.display='block'; }
+function cpEmail() { const t=document.getElementById('emailTxt').textContent; navigator.clipboard.writeText(`Kevin-E-Mail:
+
+${t}
+
+😑 kollegenhoelle.vercel.app`); alert('Kopiert!'); }
+function waEmail() { const t=document.getElementById('emailTxt').textContent; wa(`Kevin-E-Mail:
+
+${t}
+
+😑 kollegenhoelle.vercel.app`); }
+
 </script>
 </body>
 </html>
